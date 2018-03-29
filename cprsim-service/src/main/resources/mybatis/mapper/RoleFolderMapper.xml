@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.RoleFolderMapper">
+    <resultMap id="BaseResultMap" type="com.bolean.entity.RoleFolder">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="folder_id" jdbcType="INTEGER" property="folderId"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+    </resultMap>
+
+    <resultMap id="RoleFolderMap" type="com.bolean.entity.RoleFolder" extends="BaseResultMap">
+        <result column="key_name" jdbcType="VARCHAR" property="keyName"/>
+        <result column="folder_name" jdbcType="VARCHAR" property="folderName"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_key_name" jdbcType="VARCHAR" property="roleKeyName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, folder_id, role_id
+    </sql>
+    <sql id="Role_Column_List">
+      key_name role_key_name, role_name
+    </sql>
+    <sql id="Folder_Column_List">
+      folder_name, key_name, parent_id, sort, url
+    </sql>
+
+    <sql id="Role_Folder_Column_List">
+        rf.id, rf.role_id, rf.folder_id, r.key_name role_key_name, r.role_name, f.folder_name, f.key_name, f.parent_id, f.sort, f.url
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="folderId !=null and folderId != ''">
+                AND rf.folder_id = #{folderId,jdbcType=BIGINT}
+            </if>
+            <if test="roleId !=null and roleId != ''">
+                AND rf.role_id = #{roleId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByInfo" resultMap="RoleFolderMap" parameterType="java.lang.Object">
+        select
+            <include refid="Role_Folder_Column_List" />
+        FROM cpr_role_folder rf
+        LEFT JOIN cpr_role r ON rf.role_id=r.role_id
+        LEFT JOIN cpr_folder f ON f.folder_id=rf.folder_id
+        <include refid="where"/>
+    </select>
+
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer">
+        DELETE FROM cpr_role_folder
+        WHERE role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+</mapper>

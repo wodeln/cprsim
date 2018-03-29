@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.bolean.entity.User">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="head_img" jdbcType="VARCHAR" property="headImg"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
+        <result column="sex" jdbcType="BIT" property="sex"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_tel" jdbcType="VARCHAR" property="userTel"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_id" jdbcType="INTEGER" property="createId"/>
+        <result column="create_name" jdbcType="VARCHAR" property="createName"/>
+        <result column="update_id" jdbcType="INTEGER" property="updateId"/>
+        <result column="update_name" jdbcType="VARCHAR" property="updateName"/>
+        <result column="memo" jdbcType="VARCHAR" property="memo"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    user_id, head_img, password, real_name, sex, status, user_name, user_tel, create_time,
+    update_time, create_id, create_name, update_id, update_name, memo, role_id
+    </sql>
+
+    <sql id="User_Role_Column_List" >
+    ur.id, ur.role_id, ur.user_id, ur.create_time, ur.update_time, ur.create_id, ur.create_name, ur.update_id,
+    ur.update_name, ur.memo, r.role_name, r.key_name, u.head_img, u.real_name, u.sex, u.status, u.user_name, u.user_tel
+    </sql>
+
+    <sql id="Role_Column_List">
+        role_id, key_name, role_name
+    </sql>
+
+    <sql id="where">
+        <where>
+            <if test="userId !=null and userId != ''">
+                AND user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="realName != null and realName !=''">
+                AND real_name = #{realName,jdbcType=VARCHAR} OR real_name LIKE
+                CONCAT('%',#{realName,jdbcType=VARCHAR},'%' )
+            </if>
+            <if test="sex != null and sex !=''">
+                AND sex = #{sex,jdbcType=BIT}
+            </if>
+            <if test="roleId != null and roleId !=''">
+                AND role_id = #{roleId,jdbcType=INTEGER}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status,jdbcType=BIT}
+            </if>
+            <!--AND status != 0-->
+            <if test="userTel != null and userTel != ''">
+                AND user_tel = #{userTel,jdbcType=VARCHAR}
+            </if>
+            <if test="nut != null and nut != ''">
+                AND (user_tel LIKE CONCAT('%',#{nut},'%')
+                OR user_name LIKE CONCAT('%',#{nut},'%')
+                OR real_name LIKE CONCAT('%',#{nut},'%'))
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
+        select
+        <include refid="Base_Column_List"/>
+        from cpr_user
+        <include refid="where"/>
+    </select>
+
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        u.user_id,
+	u.head_img,
+	u.PASSWORD,
+	u.real_name,
+	u.sex,
+	u.STATUS,
+	u.user_name,
+	u.user_tel,
+	u.create_time,
+	u.update_time,
+	u.create_id,
+	u.create_name,
+	u.update_id,
+	u.update_name,
+	u.memo,
+	u.role_id,
+	ur.id,
+	ur.role_id,
+	ur.user_id,
+	ur.create_time,
+	ur.update_time,
+	ur.create_id,
+	ur.create_name,
+	ur.update_id,
+	ur.update_name,
+	ur.memo,
+	u.head_img,
+	u.real_name,
+	u.sex,
+	u. STATUS,
+	u.user_name,
+	u.user_tel
+        from cpr_user u
+        LEFT JOIN cpr_user_role ur ON u.user_id=ur.user_id
+        WHERE u.user_name = #{_parameter,jdbcType=VARCHAR}
+    </select>
+
+    <update id="batchDel" parameterType="Map">
+        UPDATE cpr_user SET
+        status=0,
+        update_id = #{updateId,jdbcType=INTEGER},
+        update_name = #{updateName,jdbcType=VARCHAR},
+        update_time = #{updateTime,jdbcType=TIMESTAMP}
+        WHERE user_id IN (${ids});
+    </update>
+</mapper>

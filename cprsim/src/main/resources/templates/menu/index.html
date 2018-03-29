@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_list_layout.html"){
+        <div class="dd" id="nestable2" style="width: 60%;margin-left: 40px;">
+            <ol class="dd-list">
+                @for(menu in menus){
+                <li class="dd-item" data-id="${menu.folderId}">
+                        <span class="menu-opt-bar pull-right">
+                            @if(so.hasPermission('MENU_EDIT')){
+                            <a href="${ctxPath}/menu/edit_menu.html?folderId=${menu.folderId}"><i class="glyphicon glyphicon-pencil"></i></a>
+                            @}
+                            &nbsp;&nbsp;
+                            @if(so.hasPermission('MENU_DEL')){
+                            <a href="${ctxPath}/menu/del_menu.html?folderId=${menu.folderId}"><i class="glyphicon glyphicon-trash"></i></a>
+                            @}
+                        </span>
+                    <div class="dd-handle">
+                            <span class="@if(menu.icoStr!=''){
+                                        label
+                                       @}
+                                       label-info"><i class="fa ${menu.icoStr}"></i></span>${menu.folderName}
+                    </div>
+                    @if(!isEmpty(menu.childFolders)){
+                    <ol class="dd-list">
+                        @for(child in menu.childFolders){
+                        <li class="dd-item" data-id="${child.folderId}">
+                                <span class="menu-opt-bar pull-right">
+                                    @if(so.hasPermission('MENU_EDIT')){
+                                    <a href="${ctxPath}/menu/edit_menu.html?folderId=${child.folderId}"><i class="glyphicon glyphicon-pencil"></i></a>
+                                    @}
+                                &nbsp;&nbsp;
+                                    @if(so.hasPermission('MENU_DEL')){
+                                    <a href="${ctxPath}/menu/del_menu.html?folderId=${child.folderId}"><i class="glyphicon glyphicon-trash"></i></a>
+                                    @}
+                                </span>
+                            <div class="dd-handle">
+                                    <span class="@if(child.icoStr!=''){
+                                       label
+                                       @}
+                                     label-info"><i class="fa ${child.icoStr}"></i></span> ${child.folderName}
+                            </div>
+                        </li>
+                        @}
+                    </ol>
+                    @}
+                </li>
+                @}
+            </ol>
+            @if(so.hasPermission("MENU_ADD")){
+            <a href="${ctxPath}/menu/add_menu.html" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> 添加</a>
+            @}
+
+        </div>
+@}
+</body>
+<script>
+    $('#nestable2').nestable({
+        group: 1,
+        maxDepth : 2,
+    }).on('change', function(){
+        var r = $('.dd').nestable('serialize');
+        // $("#nestable2-output").html(JSON.stringify(r));    //改变排序之后的数据
+    });
+</script>
+</html>

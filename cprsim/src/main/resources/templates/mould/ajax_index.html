@@ -1,0 +1,93 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="check_all"></th>
+        <th>模型编号</th>
+        <th>设备名称</th>
+        <th>型号</th>
+        <th>唯一标识码</th>
+        <th>购入时间</th>
+        <th>保修期限</th>
+        <th>存放地点</th>
+        <th>使用此时</th>
+        <th>维修电话</th>
+        <th>设备状态</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(list in page_info.list){
+    <tr>
+        <td><input type="checkbox" class="i-checks" name="input[]" value="${list.mId}"></td>
+        <td>${list.mNo}</td>
+        <td>${list.mName}</td>
+        <td>${list.mVersion}</td>
+        <td>${list.mSerialNumber}</td>
+        <td>${list.mBuyTime,"yyyy-MM-dd"}</td>
+        <td>${list.mRepairDays} 天</td>
+        <td>${list.mPlace}</td>
+        <td>${list.mUseTime} 次</td>
+        <td>${list.mRepairTel} </td>
+        <td>
+            <input type="checkbox" name="my-checkbox" @if(list.mStatus==1){
+                   checked
+                   @}
+                   m-id="${list.mId}" data-size="mini">
+        </td>
+        <td>
+            @if(so.hasPermission('MOULD_EDIT')){
+            <a href="${ctxPath}/mould/edit.html?mId=${list.mId}"><i class="glyphicon glyphicon-pencil"></i></a>
+            @}
+            &nbsp;&nbsp;
+            @if(so.hasPermission('MOULD_DEL')){
+            <a href="${ctxPath}/mould/del.html?mId=${list.mId}" onclick="return confirm('删除后不可恢复, 确定删除?')"><i class="glyphicon glyphicon-trash"></i></a>
+            @}
+        </td>
+    </tr>
+    @}
+    </tbody>
+</table>
+<div class="col-sm-8 pull-right text-right">${pages}</div>
+<script src="/js/plugins/bootstrap-switch/bootstrap-switch.js"></script>
+<script>
+
+    $("[name='my-checkbox']").bootstrapSwitch({
+        onText:"正常",
+        offText:"故障",
+        onColor:"success",
+        offColor:"danger",
+        onSwitchChange:function(event,state){
+            var mId = $(this).attr("m-id");
+            $.ajax({
+                type : "POST",
+                url:"${ctxPath}/mould/changeStatus",
+                data : {
+                    mId: mId,
+                    mStatus: state==true ? 1:0
+                }
+            });
+
+        }
+    });
+    $(".pagination  a").click(function(){
+        var page = ($this).data('p');
+        ajax_get_table('search-form',page);
+    });
+
+    $("#check_all").click(function () {
+        if($('#check_all').is(':checked')) {
+            $(".i-checks").prop("checked", "checked");
+            // $(".i-checks").
+        }else {
+            $(".i-checks").removeAttr("checked");
+        }
+    });
+
+    $(".i-checks").click(function () {
+        if($("input[class='i-checks']:checked").length<10){
+            $("#check_all").prop("checked", false);
+        }else {
+            $("#check_all").prop("checked", true);
+        }
+    });
+</script>

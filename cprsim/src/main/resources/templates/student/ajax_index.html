@@ -1,0 +1,87 @@
+<table class="table tree table-striped table-bordered table-hover">
+    @for(grade in grades){
+    <tr class="treegrid-${grade.gradeId}">
+        <td>${grade.gradeName}</td>
+        <td>学号</td>
+        <td>年龄</td>
+        <td>联系电话</td>
+        <td>性别</td>
+        <td>添加人</td>
+        <td>添加时间</td>
+        <td>编辑人</td>
+        <td>编辑时间</td>
+        <td>操作</td>
+    </tr>
+        @if(!isEmpty(grade.classes)){
+            @for(clazz in grade.classes){
+            <tr class="treegrid-${grade.gradeId}-${clazz.classId} treegrid-parent-${grade.gradeId}">
+                <td>${clazz.classYear,"yyyy"}学年 ${grade.gradeName} (${clazz.className})</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+                @if(!isEmpty(clazz.students)){
+                    @for(student in clazz.students){
+                    <tr class="treegrid-${grade.gradeId}-${clazz.classId}-${student.studentId} treegrid-parent-${grade.gradeId}-${clazz.classId}">
+                        <td>${student.studentName}</td>
+                        <td>${student.studentCode}</td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @if(student.studentSex==1){
+                            男
+                            @}else{
+                            女
+                            @}
+                        </td>
+                        <td>${student.createName}</td>
+                        <td>${student.createTime,"yyyy-MM-dd HH:mm"}</td>
+                        <td>${student.updateName}</td>
+                        <td>${student.updateTime,"yyyy-MM-dd HH:mm"}</td>
+                        <td></td>
+                    </tr>
+                    @}
+                @}
+            @}
+        @}
+    @}
+</table>
+
+<script>
+
+    $(document).ready(function() {
+        $('.tree').treegrid({
+            expanderExpandedClass: 'glyphicon glyphicon-minus',
+            expanderCollapsedClass: 'glyphicon glyphicon-plus',
+            initialState:"collapsed"
+        });
+    });
+
+    $(".pagination  a").click(function(){
+        var page = $(this).data('p');
+        ajax_get_table('search-form2',page);
+    });
+
+    $("#check_all").click(function () {
+        if($('#check_all').is(':checked')) {
+            $(".i-checks").prop("checked", "checked");
+            // $(".i-checks").
+        }else {
+            $(".i-checks").removeAttr("checked");
+        }
+    });
+
+    $(".i-checks").click(function () {
+        if($("input[class='i-checks']:checked").length<10){
+            $("#check_all").prop("checked", false);
+        }else {
+            $("#check_all").prop("checked", true);
+        }
+    });
+</script>

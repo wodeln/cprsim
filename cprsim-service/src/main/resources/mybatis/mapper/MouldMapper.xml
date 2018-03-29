@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.MouldMapper">
+  <resultMap id="BaseResultMap" type="com.bolean.entity.Mould">
+    <id column="m_id" jdbcType="INTEGER" property="mId" />
+    <result column="m_name" jdbcType="VARCHAR" property="mName" />
+    <result column="m_version" jdbcType="VARCHAR" property="mVersion" />
+    <result column="m_no" jdbcType="VARCHAR" property="mNo" />
+    <result column="m_serial_number" jdbcType="VARCHAR" property="mSerialNumber" />
+    <result column="m_buy_time" jdbcType="TIMESTAMP" property="mBuyTime" />
+    <result column="m_repair_days" jdbcType="VARCHAR" property="mRepairDays" />
+    <result column="m_place" jdbcType="VARCHAR" property="mPlace" />
+    <result column="m_use_time" jdbcType="INTEGER" property="mUseTime" />
+    <result column="m_status" jdbcType="INTEGER" property="mStatus" />
+    <result column="m_repair_tel" jdbcType="VARCHAR" property="mRepairTel" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    m_id, m_name, m_version, m_no, m_serial_number, m_buy_time, m_repair_days, m_place, m_use_time,
+    m_repair_tel, m_status
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="mId !=null and mId != ''">
+        AND m_id = #{mId,jdbcType=BIGINT}
+      </if>
+      <if test="mName != null and mName !=''">
+        AND m_name = #{mName,jdbcType=VARCHAR} OR m_name LIKE
+        CONCAT('%',#{mName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="mVersion != null and mVersion !=''">
+        AND m_version = #{mVersion,jdbcType=BIT}
+      </if>
+      <if test="mNo != null and mNo !=''">
+        AND m_no = #{mNo,jdbcType=INTEGER}
+      </if>
+      <if test="mSerialNumber != null and mSerialNumber !=''">
+        AND m_serial_number = #{mSerialNumber,jdbcType=INTEGER}
+      </if>
+      <if test="mBuyTime != null and mBuyTime != ''">
+        AND m_buy_time = #{mBuyTime,jdbcType=BIT}
+      </if>
+      <!--AND status != 0-->
+      <if test="mRepairDays != null and mRepairDays != ''">
+        AND m_repair_days = #{mRepairDays,jdbcType=VARCHAR}
+      </if>
+
+      <if test="mPlace != null and mPlace != ''">
+        AND m_place = #{mPlace,jdbcType=VARCHAR}
+      </if>
+      <if test="mUseTime != null and mUseTime != ''">
+        AND m_use_time = #{mUseTime,jdbcType=VARCHAR}
+      </if>
+      <if test="mRepairTel != null and mRepairTel != ''">
+        AND m_repair_tel = #{mRepairTel,jdbcType=VARCHAR}
+      </if>
+
+      <if test="mStatus != null and mStatus != ''">
+        AND m_status = #{mStatus,jdbcType=VARCHAR}
+      </if>
+
+    </where>
+  </sql>
+
+  <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
+    select
+    <include refid="Base_Column_List"/>
+    from cpr_mould
+    <include refid="where"/>
+  </select>
+
+</mapper>

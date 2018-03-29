@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.bolean.entity.Student">
+    <id column="student_id" jdbcType="INTEGER" property="studentId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
+    <result column="student_ali_id" jdbcType="VARCHAR" property="studentAliId" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="student_age" jdbcType="INTEGER" property="studentAge" />
+    <result column="student_card_num" jdbcType="VARCHAR" property="studentCardNum" />
+    <result column="h_province" jdbcType="VARCHAR" property="hProvince" />
+    <result column="h_district" jdbcType="VARCHAR" property="hDistrict" />
+    <result column="h_address" jdbcType="VARCHAR" property="hAddress" />
+    <result column="now_address" jdbcType="VARCHAR" property="nowAddress" />
+    <result column="contact_num" jdbcType="VARCHAR" property="contactNum" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="student_code" jdbcType="VARCHAR" property="studentCode" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="student_sex" jdbcType="BIT" property="studentSex" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="update_id" jdbcType="INTEGER" property="updateId" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="isIn" jdbcType="BIT" property="isin" />
+    <result column="is_in" jdbcType="INTEGER" property="isIn" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    student_id, class_id, head_img, status, student_age, student_card_num, student_code, 
+    student_name, student_sex, create_time, update_time, create_id, create_name, update_id, 
+    update_name, memo, isIn, is_in, student_ali_id, h_province, h_district, h_address, now_address,
+    contact_num, contact_name
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="studentId !=null and studentId != ''">
+        AND student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="classId != null and classId != ''">
+        AND class_id = #{classId,jdbcType=BIGINT}
+      </if>
+      <if test="studentName != null and studentName !=''">
+        AND student_name = #{studentName,jdbcType=VARCHAR}  OR student_name LIKE CONCAT('%',#{studentName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="studentSex != null and studentSex !=null">
+        AND student_sex = #{studentSex,jdbcType=BIT}
+      </if>
+      <if test="status != null and status != ''">
+        AND status = #{status,jdbcType=BIT}
+      </if>
+      <if test="studentAge != null and studentAge != ''">
+        AND student_age = #{studentAge,jdbcType=BIGINT}
+      </if>
+      <if test="studentCode != null and studentCode != ''">
+        AND student_code = #{studentCode,jdbcType=VARCHAR}
+      </if>
+      <if test="studentCardNum != null and studentCardNum != ''">
+        AND student_card_num = #{studentCardNum,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+
+  <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
+      SELECT
+        <include refid="Base_Column_List"/>
+      from cpr_student
+        <include refid="where"/>
+  </select>
+</mapper>
