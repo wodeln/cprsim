@@ -2,21 +2,30 @@ package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Mould;
+import com.bolean.entity.Student;
 import com.bolean.service.MouldService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import utils.DateHelper;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+
+import static utils.DateHelper.getCurrentYear;
 
 @Controller
 @RequestMapping("/mould")
@@ -115,6 +124,72 @@ public class MouldController extends BaseController{
         return rstFulBody;
     }
 
+    @RequestMapping("batch_add.html")
+    public String batchAddStudentUI(){
+        return "/mould/batch_add.html";
+    }
+
+    @ResponseBody
+    @RequestMapping("import_excel")
+    public Map<String,Object> importExcel(MultipartFile file) throws IOException {
+
+        Map<String,Object> stateMap = upload(file);
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",0);
+        List<Mould> moulds = new ArrayList<>();
+        if(file!=null){
+            Workbook book = null;
+            try {
+                book = new XSSFWorkbook(new FileInputStream(ResourceUtils.getFile(stateMap.get("fileInfo")+"")));
+//                book = new XSSFWorkbook(new FileInputStream(ResourceUtils.getFile("D:\\workspace\\analyse-parent\\analyse-student\\target\\classes\\upload\\20180202\\20180202150140247.xlsx")));
+            } catch (Exception ex) {
+                book = new HSSFWorkbook(new FileInputStream(ResourceUtils.getFile(stateMap.get("fileInfo")+"")));
+//                book = new HSSFWorkbook(new FileInputStream(ResourceUtils.getFile("D:\\workspace\\analyse-parent\\analyse-student\\target\\classes\\upload\\20180202\\20180202150140247.xlsx")));
+            }
+
+            Sheet sheet = book.getSheetAt(0);
+
+            List errorList = new ArrayList();
+            String str = "";
+            for(int i=2; i<sheet.getLastRowNum()+1; i++) {
+                Mould mould = new Mould();
+                Row row = sheet.getRow(i);
+
+                if(row.getCell(0).getStringCellValue()==""){
+                    str = "第"+i+"行"+"名称不能为空";
+                    errorList.add(str);
+                }else {
+                    mould.setmName(row.getCell(0).getStringCellValue());
+                }
+                if(row.getCell(2).getStringCellValue()==""){
+                    str = "第"+i+"行"+"型号不能为空";
+                    errorList.add(str);
+                }else {
+                    mould.setmNo(row.getCell(2).getStringCellValue());
+                }
+                mould.setmVersion(row.getCell(1).getStringCellValue());
+                mould.setmSerialNumber(row.getCell(3).getStringCellValue());
+                mould.setmBuyTime(row.getCell(4).getDateCellValue());
+                mould.setmRepairDays(row.getCell(5).getStringCellValue());
+                mould.setmPlace(row.getCell(6).getStringCellValue());
+                mould.setmUseTime(Integer.parseInt(row.getCell(7).getStringCellValue()));
+                mould.setmRepairTel(row.getCell(8).getStringCellValue());
+                moulds.add(mould);
+            }
+
+            if(errorList.size() == 0) {
+                result.put("status",1);
+                int res=mouldService.insertList(moulds);
+                if(res ==0 )result.put("status",0);
+            }else {
+                result.put("status",2);
+                result.put("errors",errorList);
+            }
+
+        }
+
+        return result;
+    }
     /*private String MD5(String pwd) {
         //用于加密的字符
         char md5String[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

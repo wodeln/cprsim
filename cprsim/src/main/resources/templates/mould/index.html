@@ -28,6 +28,8 @@
                             <div class="col-lg-2 pull-right text-right">
                                 @if(so.hasPermission('MOULD_ADD')){
                                     <a href="${ctxPath}/mould/add.html" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a>
+
+                                    <a href="${ctxPath}/mould/batch_add.html" class="btn btn-sm btn-primary" title="批量添加"><i class="fa fa-file-excel-o"></i></a>
                                 @}
                                 @if(so.hasPermission('MOULD_BATCH_DEL')){
                                     <span id="batch_del" class="btn btn-sm btn-primary"><i class="fa fa-trash-o"></i></span>
