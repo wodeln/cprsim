@@ -70,4 +70,7 @@
     <include refid="where"/>
   </select>
 
+  <delete id="batchDel" parameterType="Map">
+    DELETE FROM cpr_mould WHERE m_id IN (${ids});
+  </delete>
 </mapper>

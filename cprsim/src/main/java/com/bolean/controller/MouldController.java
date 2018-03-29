@@ -2,12 +2,7 @@ package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Mould;
-import com.bolean.entity.Mould;
-import com.bolean.entity.User;
 import com.bolean.service.MouldService;
-import com.bolean.service.RoleService;
-import com.bolean.service.UserRoleService;
-import com.bolean.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +24,6 @@ public class MouldController extends BaseController{
 
     @Autowired
     private MouldService mouldService;
-
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("/index.html")
     public String getAll(){
@@ -110,23 +102,20 @@ public class MouldController extends BaseController{
         return "redirect:/mould/index.html";
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @RequestMapping("batch_del")
     public RSTFulBody batchDel(@RequestParam(required = true) String ids){
-        User sessionUser = getSessionUser();
+
         Map<String, Object> map = new HashMap<>();
         map.put("ids",ids);
-        map.put("updateName",sessionUser.getRealName());
-        map.put("updateId",sessionUser.getUserId());
-        map.put("updateTime",new Date());
-        int res = userService.batchDel(map);
+        int res = mouldService.batchDel(map);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success(res);
         else  rstFulBody.fail("删除失败！");
         return rstFulBody;
     }
 
-    private String MD5(String pwd) {
+    /*private String MD5(String pwd) {
         //用于加密的字符
         char md5String[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                 'A', 'B', 'C', 'D', 'E', 'F' };

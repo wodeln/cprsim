@@ -29,7 +29,7 @@
                                 @if(so.hasPermission('MOULD_ADD')){
                                     <a href="${ctxPath}/mould/add.html" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a>
                                 @}
-                                @if(so.hasPermission('USER_BATCH_DEL')){
+                                @if(so.hasPermission('MOULD_BATCH_DEL')){
                                     <span id="batch_del" class="btn btn-sm btn-primary"><i class="fa fa-trash-o"></i></span>
                                 @}
                             </div>
@@ -90,7 +90,7 @@
 
                 $.ajax({
                     type : "POST",
-                    url:"${ctxPath}/user/batch_del",//+tab,
+                    url:"${ctxPath}/mould/batch_del",//+tab,
                     data : {
                         ids: delIds
                     },
