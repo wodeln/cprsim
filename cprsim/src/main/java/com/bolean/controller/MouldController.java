@@ -2,7 +2,6 @@ package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Mould;
-import com.bolean.entity.Student;
 import com.bolean.service.MouldService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,8 +23,6 @@ import utils.DateHelper;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
-
-import static utils.DateHelper.getCurrentYear;
 
 @Controller
 @RequestMapping("/mould")
