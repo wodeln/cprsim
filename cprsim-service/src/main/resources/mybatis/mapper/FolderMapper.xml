@@ -63,6 +63,7 @@
         <include refid="Base_Column_List"/>
         from cpr_folder
         <include refid="where"/>
+        ORDER BY sort ASC
     </select>
 
     <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
