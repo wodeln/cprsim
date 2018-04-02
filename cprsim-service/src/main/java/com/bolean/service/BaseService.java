@@ -1,6 +1,7 @@
 package com.bolean.service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BaseService<T> {
 
@@ -75,9 +76,8 @@ public interface BaseService<T> {
 
 
     int deleteByPrimaryKey(Long id);
-/*
 
     List<T> selectByInfo(T t);
 
-    List<T> selectByInfo(Map<String,Object> map);*/
+    List<T> selectByInfo(Map<String,Object> map);
 }
