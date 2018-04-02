@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Map;
+
 @Service("SysDictService")
 public class SysDictServiceImpl implements SysDictService {
     @Autowired
@@ -66,6 +68,16 @@ public class SysDictServiceImpl implements SysDictService {
     @Override
     public int deleteByPrimaryKey(Long id) {
         return 0;
+    }
+
+    @Override
+    public List<SysDict> selectByInfo(SysDict sysDict) {
+        return null;
+    }
+
+    @Override
+    public List<SysDict> selectByInfo(Map<String, Object> map) {
+        return null;
     }
 
     @Override
