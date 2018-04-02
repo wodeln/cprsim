@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.ExamMapper">
+  <resultMap id="BaseResultMap" type="com.bolean.entity.Exam">
+    <id column="exam_id" jdbcType="INTEGER" property="examId" />
+    <result column="exam_name" jdbcType="VARCHAR" property="examName" />
+    <result column="train_id" jdbcType="INTEGER" property="trainId" />
+    <result column="exam_type" jdbcType="BIT" property="examType" />
+    <result column="exam_time" jdbcType="TIMESTAMP" property="examTime" />
+    <result column="exam_minutes" jdbcType="INTEGER" property="examMinutes" />
+    <result column="exam_place" jdbcType="VARCHAR" property="examPlace" />
+    <result column="exam_kind" jdbcType="VARCHAR" property="examKind" />
+    <result column="exam_status" jdbcType="BIT" property="examStatus" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    exam_id, exam_name, train_id, exam_type, exam_time, exam_minutes, exam_kind, exam_place, exam_status
+  </sql>
+
+  <sql id="where">
+    <where>
+      <if test="examId !=null and examId != ''">
+        AND exam_id = #{examId,jdbcType=BIGINT}
+      </if>
+      <if test="examName != null and examName !=''">
+        AND exam_name = #{examName,jdbcType=VARCHAR} OR exam_name LIKE
+        CONCAT('%',#{examName,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="startTime != null and endTime !=''">
+        AND exam_time <![CDATA[ >= ]]> #{startTime,jdbcType=DATE} AND exam_time <![CDATA[ <= ]]> #{startTime,jdbcType=DATE}
+      </if>
+      <if test="examMinutes != null and examMinutes !=''">
+        AND exam_minutes = #{examMinutes,jdbcType=INTEGER}
+      </if>
+      <if test="examPlace != null and examPlace !=''">
+        AND exam_place = #{examPlace,jdbcType=INTEGER}
+      </if>
+      <if test="examStatus != null and examStatus !=''">
+        AND exam_status = #{examStatus,jdbcType=BIT}
+      </if>
+
+    </where>
+  </sql>
+
+  <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
+    select
+    <include refid="Base_Column_List"/>
+    from cpr_exam
+    <include refid="where"/>
+  </select>
+
+  <delete id="batchDel" parameterType="Map">
+    DELETE FROM cpr_exam WHERE exam_id IN (${ids});
+  </delete>
+</mapper>
