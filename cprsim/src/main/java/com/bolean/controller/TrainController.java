@@ -95,15 +95,20 @@ public class TrainController extends BaseController{
     }
 
     @RequestMapping("edit.html")
-    public String editUI(Model model,String mId){
-        Train train = trainService.selectByPrimaryKey((long)Integer.parseInt(mId));
+    public String editUI(Model model,String trainId){
+        Train train = trainService.selectByPrimaryKey((long)Integer.parseInt(trainId));
+        List<Exam> exams = examService.selectAll();
+        model.addAttribute("exams",exams);
         model.addAttribute("obj",train);
         return "/train/edit.html";
     }
 
     @ResponseBody
     @RequestMapping("edit")
-    public RSTFulBody edit(Train train){
+    public RSTFulBody edit(Train train,
+                           @RequestParam(required = true) String trainBeginTimes){
+        Date trainBeginTime = DateHelper.getDate4StrDate(trainBeginTimes,"yyyy-MM-dd");
+        train.setTrainBeginTime(trainBeginTime);
         int res = trainService.updateByPrimaryKeySelective(train);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("修改成功！");
@@ -129,66 +134,4 @@ public class TrainController extends BaseController{
         else  rstFulBody.fail("删除失败！");
         return rstFulBody;
     }
-
-    /*@ResponseBody
-    @RequestMapping("import_excel")
-    public Map<String,Object> importExcel(MultipartFile file) throws IOException {
-
-        Map<String,Object> stateMap = upload(file);
-        Map<String,Object> result = new HashMap<>();
-        result.put("status",0);
-        List<Train> trains = new ArrayList<>();
-        if(file!=null){
-            Workbook book = null;
-            try {
-                book = new XSSFWorkbook(new FileInputStream(ResourceUtils.getFile(stateMap.get("fileInfo")+"")));
-//                book = new XSSFWorkbook(new FileInputStream(ResourceUtils.getFile("D:\\workspace\\analyse-parent\\analyse-student\\target\\classes\\upload\\20180202\\20180202150140247.xlsx")));
-            } catch (Exception ex) {
-                book = new HSSFWorkbook(new FileInputStream(ResourceUtils.getFile(stateMap.get("fileInfo")+"")));
-//                book = new HSSFWorkbook(new FileInputStream(ResourceUtils.getFile("D:\\workspace\\analyse-parent\\analyse-student\\target\\classes\\upload\\20180202\\20180202150140247.xlsx")));
-            }
-
-            Sheet sheet = book.getSheetAt(0);
-
-            List errorList = new ArrayList();
-            String str = "";
-            for(int i=2; i<sheet.getLastRowNum()+1; i++) {
-                Train train = new Train();
-                Row row = sheet.getRow(i);
-
-                if(row.getCell(0).getStringCellValue()==""){
-                    str = "第"+i+"行"+"名称不能为空";
-                    errorList.add(str);
-                }else {
-                    train.setmName(row.getCell(0).getStringCellValue());
-                }
-                if(row.getCell(2).getStringCellValue()==""){
-                    str = "第"+i+"行"+"型号不能为空";
-                    errorList.add(str);
-                }else {
-                    train.setmNo(row.getCell(2).getStringCellValue());
-                }
-                train.setmVersion(row.getCell(1).getStringCellValue());
-                train.setmSerialNumber(row.getCell(3).getStringCellValue());
-                train.setmBuyTime(row.getCell(4).getDateCellValue());
-                train.setmRepairDays(row.getCell(5).getStringCellValue());
-                train.setmPlace(row.getCell(6).getStringCellValue());
-                train.setmUseTime(Integer.parseInt(row.getCell(7).getStringCellValue()));
-                train.setmRepairTel(row.getCell(8).getStringCellValue());
-                trains.add(train);
-            }
-
-            if(errorList.size() == 0) {
-                result.put("status",1);
-                int res=trainService.insertList(trains);
-                if(res ==0 )result.put("status",0);
-            }else {
-                result.put("status",2);
-                result.put("errors",errorList);
-            }
-
-        }
-
-        return result;
-    }*/
 }

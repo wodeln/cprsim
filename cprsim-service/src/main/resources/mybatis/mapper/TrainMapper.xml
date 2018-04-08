@@ -36,8 +36,8 @@
       <if test="trainPlace != null and trainPlace !=''">
         AND t.train_place = #{trainPlace,jdbcType=VARCHAR}
       </if>
-      <if test="examStatus != null and examStatus !=''">
-        AND t.exam_status = #{examStatus,jdbcType=BIT}
+      <if test="trainStatus != null and trainStatus !=''">
+        AND t.train_status = #{trainStatus,jdbcType=BIT}
       </if>
       <if test="trainType != null and trainType !=''">
         AND t.train_type = #{trainType,jdbcType=BIT}

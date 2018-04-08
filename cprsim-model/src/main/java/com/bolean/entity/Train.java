@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Train implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer trainId;
+    private Long trainId;
 
     /**
      * 培训项目名称
@@ -57,16 +57,16 @@ public class Train implements Serializable {
      */
     private Integer examId;
 
-
+    @Transient
     private String examName;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getTrainId() {
+    public Long getTrainId() {
         return trainId;
     }
 
-    public void setTrainId(Integer trainId) {
+    public void setTrainId(Long trainId) {
         this.trainId = trainId;
     }
 
