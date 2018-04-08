@@ -16,7 +16,7 @@ public class Exam implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer examId;
+    private Long examId;
 
     /**
      * 练考计划名称
@@ -57,13 +57,33 @@ public class Exam implements Serializable {
     @NotEmpty
     private Boolean examStatus;
 
+    private String examKind;
+
+    private String examTarget;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getExamId() {
+    public String getExamTarget() {
+        return examTarget;
+    }
+
+    public void setExamTarget(String examTarget) {
+        this.examTarget = examTarget;
+    }
+
+    public String getExamKind() {
+        return examKind;
+    }
+
+    public void setExamKind(String examKind) {
+        this.examKind = examKind;
+    }
+
+    public Long getExamId() {
         return examId;
     }
 
-    public void setExamId(Integer examId) {
+    public void setExamId(Long examId) {
         this.examId = examId;
     }
 

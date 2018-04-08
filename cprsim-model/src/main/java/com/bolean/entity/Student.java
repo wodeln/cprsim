@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Long userId;
 
     /**
      * 用户姓名
@@ -32,7 +32,7 @@ public class Student implements Serializable {
     /**
      * 身份证
      */
-    private Integer userCardNo;
+    private String userCardNo;
 
     /**
      * 单位
@@ -54,13 +54,18 @@ public class Student implements Serializable {
      */
     private Integer examId;
 
+    /**
+     * 用户联系电话
+     */
+    private String userPhone;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -88,11 +93,11 @@ public class Student implements Serializable {
         this.userDegree = userDegree;
     }
 
-    public Integer getUserCardNo() {
+    public String getUserCardNo() {
         return userCardNo;
     }
 
-    public void setUserCardNo(Integer userCardNo) {
+    public void setUserCardNo(String userCardNo) {
         this.userCardNo = userCardNo;
     }
 
@@ -126,6 +131,14 @@ public class Student implements Serializable {
 
     public void setExamId(Integer examId) {
         this.examId = examId;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
     }
 
     @Override

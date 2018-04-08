@@ -138,6 +138,7 @@ public class ExamController extends BaseController{
         String pageStr = makePageHtml(pageInfo);
         model.addAttribute("page_info",pageInfo);
         model.addAttribute("pages",pageStr);
+        model.addAttribute("examId",examId);
         return "/exam/ajax_users.html";
     }
 
@@ -146,7 +147,7 @@ public class ExamController extends BaseController{
         model.addAttribute("examId",examId);
         return "/exam/student_add.html";
     }
-
+    //lbhPj3J1WC1CE9RJGhcdAw9iwlIR6KMywMBQbEnZDr9
     @ResponseBody
     @RequestMapping("student_add")
     public RSTFulBody studentAdd(Student student){
@@ -154,6 +155,37 @@ public class ExamController extends BaseController{
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("添加成功！");
         else  rstFulBody.fail("添加失败！");
+        return rstFulBody;
+    }
+
+    @RequestMapping("student_edit.html")
+    public String studentEdit(Model model,String studentId,String examId){
+        Student student = studentService.selectByPrimaryKey((long)Integer.parseInt(studentId));
+        model.addAttribute("obj",student);
+        model.addAttribute("examId",examId);
+        return "/exam/student_edit.html";
+    }
+
+    @ResponseBody
+    @RequestMapping("student_edit")
+    public RSTFulBody StudentEdit(Student student){
+        int res = studentService.updateByPrimaryKeySelective(student);
+        RSTFulBody rstFulBody=new RSTFulBody();
+        if(res>0) rstFulBody.success("修改成功！");
+        else  rstFulBody.fail("修改失败！");
+        return rstFulBody;
+    }
+
+    @ResponseBody
+    @RequestMapping("student_batch_del")
+    public RSTFulBody studentBatchDel(@RequestParam(required = true) String ids){
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("ids",ids);
+        int res = studentService.batchDel(map);
+        RSTFulBody rstFulBody=new RSTFulBody();
+        if(res>0) rstFulBody.success(res);
+        else  rstFulBody.fail("删除失败！");
         return rstFulBody;
     }
 }

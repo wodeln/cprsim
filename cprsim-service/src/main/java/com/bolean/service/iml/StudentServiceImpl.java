@@ -79,4 +79,9 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> selectByInfo(Student student){
         return studentMapper.selectByInfo(student);
     }
+
+    @Override
+    public int batchDel(Map<String, Object> map) {
+        return studentMapper.batchDel(map);
+    }
 }

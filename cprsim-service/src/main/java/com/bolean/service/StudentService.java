@@ -11,4 +11,6 @@ public interface StudentService extends BaseService<Student> {
     List<Student> selectByInfo(Map<String,Object> map);
 
     List<Student> selectByInfo(Student student);
+
+    int batchDel(Map<String, Object> map);
 }
