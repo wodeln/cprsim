@@ -27,11 +27,6 @@ public class Train implements Serializable {
     private String trainContent;
 
     /**
-     * 培训目标
-     */
-    private String trainTarget;
-
-    /**
      * 培训开始时间
      */
     @NotEmpty
@@ -40,7 +35,7 @@ public class Train implements Serializable {
     /**
      * 培训持续时间(天数)
      */
-    private Integer trainDays;
+    private Integer trainMinites;
 
     /**
      * 培训地点
@@ -53,9 +48,17 @@ public class Train implements Serializable {
     private Boolean trainStatus;
 
     /**
+     * 培训分类 0:练习 1:考试
+     */
+    private Boolean trainType;
+
+    /**
      * 所属培训项目ID
      */
     private Integer examId;
+
+
+    private String examName;
 
     private static final long serialVersionUID = 1L;
 
@@ -83,14 +86,6 @@ public class Train implements Serializable {
         this.trainContent = trainContent;
     }
 
-    public String getTrainTarget() {
-        return trainTarget;
-    }
-
-    public void setTrainTarget(String trainTarget) {
-        this.trainTarget = trainTarget;
-    }
-
     public Date getTrainBeginTime() {
         return trainBeginTime;
     }
@@ -99,12 +94,12 @@ public class Train implements Serializable {
         this.trainBeginTime = trainBeginTime;
     }
 
-    public Integer getTrainDays() {
-        return trainDays;
+    public Integer getTrainMinites() {
+        return trainMinites;
     }
 
-    public void setTrainDays(Integer trainDays) {
-        this.trainDays = trainDays;
+    public void setTrainMinites(Integer trainMinites) {
+        this.trainMinites = trainMinites;
     }
 
     public String getTrainPlace() {
@@ -127,8 +122,24 @@ public class Train implements Serializable {
         return examId;
     }
 
+    public Boolean getTrainType() {
+        return trainType;
+    }
+
+    public void setTrainType(Boolean trainType) {
+        this.trainType = trainType;
+    }
+
     public void setExamId(Integer examId) {
         this.examId = examId;
+    }
+
+    public String getExamName() {
+        return examName;
+    }
+
+    public void setExamName(String examName) {
+        this.examName = examName;
     }
 
     @Override
@@ -146,9 +157,8 @@ public class Train implements Serializable {
         return (this.getTrainId() == null ? other.getTrainId() == null : this.getTrainId().equals(other.getTrainId()))
             && (this.getTrainName() == null ? other.getTrainName() == null : this.getTrainName().equals(other.getTrainName()))
             && (this.getTrainContent() == null ? other.getTrainContent() == null : this.getTrainContent().equals(other.getTrainContent()))
-            && (this.getTrainTarget() == null ? other.getTrainTarget() == null : this.getTrainTarget().equals(other.getTrainTarget()))
             && (this.getTrainBeginTime() == null ? other.getTrainBeginTime() == null : this.getTrainBeginTime().equals(other.getTrainBeginTime()))
-            && (this.getTrainDays() == null ? other.getTrainDays() == null : this.getTrainDays().equals(other.getTrainDays()))
+            && (this.getTrainMinites() == null ? other.getTrainMinites() == null : this.getTrainMinites().equals(other.getTrainMinites()))
             && (this.getTrainPlace() == null ? other.getTrainPlace() == null : this.getTrainPlace().equals(other.getTrainPlace()))
             && (this.getTrainStatus() == null ? other.getTrainStatus() == null : this.getTrainStatus().equals(other.getTrainStatus()))
             && (this.getExamId() == null ? other.getExamId() == null : this.getExamId().equals(other.getExamId()));
@@ -161,9 +171,8 @@ public class Train implements Serializable {
         result = prime * result + ((getTrainId() == null) ? 0 : getTrainId().hashCode());
         result = prime * result + ((getTrainName() == null) ? 0 : getTrainName().hashCode());
         result = prime * result + ((getTrainContent() == null) ? 0 : getTrainContent().hashCode());
-        result = prime * result + ((getTrainTarget() == null) ? 0 : getTrainTarget().hashCode());
         result = prime * result + ((getTrainBeginTime() == null) ? 0 : getTrainBeginTime().hashCode());
-        result = prime * result + ((getTrainDays() == null) ? 0 : getTrainDays().hashCode());
+        result = prime * result + ((getTrainMinites() == null) ? 0 : getTrainMinites().hashCode());
         result = prime * result + ((getTrainPlace() == null) ? 0 : getTrainPlace().hashCode());
         result = prime * result + ((getTrainStatus() == null) ? 0 : getTrainStatus().hashCode());
         result = prime * result + ((getExamId() == null) ? 0 : getExamId().hashCode());
@@ -179,9 +188,8 @@ public class Train implements Serializable {
         sb.append(", trainId=").append(trainId);
         sb.append(", trainName=").append(trainName);
         sb.append(", trainContent=").append(trainContent);
-        sb.append(", trainTarget=").append(trainTarget);
         sb.append(", trainBeginTime=").append(trainBeginTime);
-        sb.append(", trainDays=").append(trainDays);
+        sb.append(", trainDays=").append(trainMinites);
         sb.append(", trainPlace=").append(trainPlace);
         sb.append(", trainStatus=").append(trainStatus);
         sb.append(", examId=").append(examId);

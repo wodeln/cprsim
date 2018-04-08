@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_list_layout.html"){
+    <body class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="ibox float-e-margins">
+                <div class="">
+                <form id="search-form">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-2 pull-left">
+                                <div class="input-group">
+                                    <input type="text" name="trainName" id="train_name" placeholder="练考计划名称" class="input-sm form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 pull-left">
+                                <div class="input-group">
+                                <select name="trainStatus" id="train_stutas" class="input-sm form-control" style="font-size: 12px;">
+                                    <option value="">状态</option>
+                                    <option value="1">激活</option>
+                                    <option value="0">关闭</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 pull-left">
+                                <div class="input-group">
+                                    <select name="trainType" id="train_type" class="input-sm form-control" style="font-size: 12px;">
+                                        <option value="">练考类型</option>
+                                        <option value="0">练习</option>
+                                        <option value="1">考试</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2 pull-left">
+                                <div class="input-group">
+                                    <select name="examId" id="exam_id" class="input-sm form-control" style="font-size: 12px;">
+                                        <option value="">所属项目</option>
+                                        @for(exam in exams){
+                                        <option value="${exam.examId}">${exam.examName}</option>
+                                        @}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <a onclick="ajax_get_table('search-form',1)" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</a>
+                            <div class="col-lg-2 pull-right text-right">
+                                @if(so.hasPermission('TRAIN_ADD')){
+                                    <a href="${ctxPath}/train/add.html" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a>
+                                @}
+                                @if(so.hasPermission('TRAIN_BATCH_DEL')){
+                                    <span id="batch_del" class="btn btn-sm btn-primary"><i class="fa fa-trash-o"></i></span>
+                                @}
+                            </div>
+                        </div>
+                        <div class="table-responsive" id="ajax_return">
+
+                        </div>
+
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+@}
+</body>
+<script type="text/javascript">
+    var cur_page=1;
+    $(document).ready(function(){
+        console.log(cur_page);
+        ajax_get_table('search-form',1);
+    });
+
+    function ajax_get_table(tab,page){
+        cur_page = page; //当前页面 保存为全局变量
+        $.ajax({
+            type : "POST",
+            url:"${ctxPath}/train/ajax_index?pageNum="+page+"&pageSize="+${page_size},//+tab,
+            data : $('#'+tab).serialize(),// 你的formid
+            success: function(data){
+                $("#ajax_return").html('');
+                $("#ajax_return").append(data);
+            }
+        });
+    }
+
+    $("#batch_del").click(function () {
+        var num = $("input[class='i-checks']:checked").length;
+        if(num==0){
+            swal({type: "warning", title: "", text: "请正确选择要删除的项目。"})
+        }else {
+            swal({
+                title: "您确定要删除这 "+num+" 条信息吗",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                closeOnConfirm: false
+            }, function () {
+                var delIds = "";
+                $("input[class='i-checks']:checked").each(function(i){
+                    if(0==i){
+                        delIds = $(this).val();
+                    }else{
+                        delIds += (","+$(this).val());
+                    }
+                });
+
+                $.ajax({
+                    type : "POST",
+                    url:"${ctxPath}/train/batch_del",//+tab,
+                    data : {
+                        ids: delIds
+                    },
+                    success: function(data){
+                        if(data['status']==1){
+                            swal("成功删除"+data['body']+"条数据", "", "success")
+                            // setTimeout('window.location.href="/user/index.html"',900);
+                            ajax_get_table('search-form',cur_page);
+                        }else{
+                            swal({type: "warning", title: "", text: data['body']})
+                        }
+                    }
+                });
+            })
+        }
+    });
+</script>
+</html>

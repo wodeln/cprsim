@@ -1,0 +1,97 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="check_all"></th>
+        <th>名称</th>
+        <th>所属培训项目</th>
+        <th>计划类型</th>
+        <th>人数</th>
+        <th>计划时间</th>
+        <th>时长</th>
+        <th>状态</th>
+        <th>统计</th>
+        <th>操作配置</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(list in page_info.list){
+    <tr>
+        <td><input type="checkbox" class="i-checks" name="input[]" value="${list.trainId}"></td>
+        <td>${list.trainName}</td>
+        <td>${list.examName}</td>
+        <td>
+            @if(list.trainType){
+            考试
+            @}else{
+            练习
+            @}
+        </td>
+        <td></td>
+        <td>${list.trainBeginTime,"yyyy-MM-dd"}</td>
+        <td>${list.trainMinites} 分钟</td>
+        <td>
+            <input type="checkbox" name="my-checkbox" @if(list.trainStatus){
+                   checked
+                   @}
+                   train-id="${list.trainId}" data-size="mini">
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+            @if(so.hasPermission('TRAIN_EDIT')){
+            <a href="${ctxPath}/mould/edit.html?mId=${list.trainId}"><i class="glyphicon glyphicon-pencil"></i></a>
+            @}
+            &nbsp;&nbsp;
+            @if(so.hasPermission('TRAIN_DEL')){
+            <a href="${ctxPath}/mould/del.html?mId=${list.trainId}" onclick="return confirm('删除后不可恢复, 确定删除?')"><i class="glyphicon glyphicon-trash"></i></a>
+            @}
+        </td>
+    </tr>
+    @}
+    </tbody>
+</table>
+<div class="col-sm-8 pull-right text-right">${pages}</div>
+<script src="/js/plugins/bootstrap-switch/bootstrap-switch.js"></script>
+<script>
+
+    $("[name='my-checkbox']").bootstrapSwitch({
+        onText:"激活",
+        offText:"关闭",
+        onColor:"success",
+        offColor:"danger",
+        onSwitchChange:function(event,state){
+            var trainId = $(this).attr("train-id");
+            $.ajax({
+                type : "POST",
+                url:"${ctxPath}/train/changeStatus",
+                data : {
+                    trainId: trainId,
+                    trainStatus: state==true ? 1:0
+                }
+            });
+
+        }
+    });
+    $(".pagination  a").click(function(){
+        var page = ($this).data('p');
+        ajax_get_table('search-form',page);
+    });
+
+    $("#check_all").click(function () {
+        if($('#check_all').is(':checked')) {
+            $(".i-checks").prop("checked", "checked");
+            // $(".i-checks").
+        }else {
+            $(".i-checks").removeAttr("checked");
+        }
+    });
+
+    $(".i-checks").click(function () {
+        if($("input[class='i-checks']:checked").length<10){
+            $("#check_all").prop("checked", false);
+        }else {
+            $("#check_all").prop("checked", true);
+        }
+    });
+</script>

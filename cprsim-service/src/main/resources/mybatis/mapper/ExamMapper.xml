@@ -33,7 +33,7 @@
         AND exam_minutes = #{examMinutes,jdbcType=INTEGER}
       </if>
       <if test="examPlace != null and examPlace !=''">
-        AND exam_place = #{examPlace,jdbcType=INTEGER}
+        AND exam_place = #{examPlace,jdbcType=VARCHAR}
       </if>
       <if test="examStatus != null and examStatus !=''">
         AND exam_status = #{examStatus,jdbcType=BIT}
