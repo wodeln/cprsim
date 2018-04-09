@@ -1,6 +1,7 @@
 package com.bolean.service.iml;
 
 import com.bolean.dao.TrainMapper;
+import com.bolean.entity.Student;
 import com.bolean.entity.Train;
 import com.bolean.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,16 @@ public class TrainServiceImpl implements TrainService {
     @Override
     public int batchDel(Map<String, Object> map) {
         return trainMapper.batchDel(map);
+    }
+
+    @Override
+    public List<Student> selectStudentLeft(String trainId) {
+        return trainMapper.selectStudentLeft(trainId);
+    }
+
+    @Override
+    public List<Student> selectStudentRight(String trainId) {
+        return trainMapper.selectStudentRight(trainId);
     }
 
     @Override

@@ -1,62 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bolean.dao.TrainMapper">
-  <resultMap id="BaseResultMap" type="com.bolean.entity.Train">
-    <id column="train_id" jdbcType="INTEGER" property="trainId" />
-    <result column="train_name" jdbcType="VARCHAR" property="trainName" />
-    <result column="train_content" jdbcType="VARCHAR" property="trainContent" />
-    <result column="train_type" jdbcType="VARCHAR" property="trainType" />
-    <result column="train_begin_time" jdbcType="TIMESTAMP" property="trainBeginTime" />
-    <result column="train_minites" jdbcType="INTEGER" property="trainMinites" />
-    <result column="train_place" jdbcType="VARCHAR" property="trainPlace" />
-    <result column="train_status" jdbcType="BIT" property="trainStatus" />
-    <result column="exam_id" jdbcType="INTEGER" property="examId" />
-    <result column="exam_name" jdbcType="VARCHAR" property="examName" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.bolean.entity.Train">
+        <id column="train_id" jdbcType="INTEGER" property="trainId"/>
+        <result column="train_name" jdbcType="VARCHAR" property="trainName"/>
+        <result column="train_content" jdbcType="VARCHAR" property="trainContent"/>
+        <result column="train_type" jdbcType="VARCHAR" property="trainType"/>
+        <result column="train_begin_time" jdbcType="TIMESTAMP" property="trainBeginTime"/>
+        <result column="train_minites" jdbcType="INTEGER" property="trainMinites"/>
+        <result column="train_place" jdbcType="VARCHAR" property="trainPlace"/>
+        <result column="train_status" jdbcType="BIT" property="trainStatus"/>
+        <result column="exam_id" jdbcType="INTEGER" property="examId"/>
+        <result column="exam_name" jdbcType="VARCHAR" property="examName"/>
+    </resultMap>
 
-  <sql id="Base_Column_List">
+    <resultMap id="StudentResultMap" type="com.bolean.entity.Student">
+        <id column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_true_name" jdbcType="VARCHAR" property="userTrueName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
     t.train_id, t.train_name, t.train_content, t.train_type, t.train_begin_time, t.train_minites, t.train_place, t.train_status, t.exam_id,e.exam_name
   </sql>
 
-  <sql id="where">
-    <where>
-      <if test="trainId !=null and trainId != ''">
-        AND t.train_id = #{trainId,jdbcType=BIGINT}
-      </if>
-      <if test="trainName != null and trainName !=''">
-        AND t.train_name = #{trainName,jdbcType=VARCHAR} OR t.train_name LIKE
-        CONCAT('%',#{trainName,jdbcType=VARCHAR},'%' )
-      </if>
-      <if test="trainContent != null and trainContent !=''">
-        AND t.train_content = #{trainContent,jdbcType=VARCHAR}
-      </if>
-      <if test="trainMinites != null and trainMinites !=''">
-        AND t.train_minites = #{trainMinites,jdbcType=INTEGER}
-      </if>
-      <if test="trainPlace != null and trainPlace !=''">
-        AND t.train_place = #{trainPlace,jdbcType=VARCHAR}
-      </if>
-      <if test="trainStatus != null and trainStatus !=''">
-        AND t.train_status = #{trainStatus,jdbcType=BIT}
-      </if>
-      <if test="trainType != null and trainType !=''">
-        AND t.train_type = #{trainType,jdbcType=BIT}
-      </if>
-      <if test="examId !=null and examId != ''">
-        AND t.exam_id = #{examId,jdbcType=BIGINT}
-      </if>
-    </where>
-  </sql>
+    <sql id="where">
+        <where>
+            <if test="trainId !=null and trainId != ''">
+                AND t.train_id = #{trainId,jdbcType=BIGINT}
+            </if>
+            <if test="trainName != null and trainName !=''">
+                AND t.train_name = #{trainName,jdbcType=VARCHAR} OR t.train_name LIKE
+                CONCAT('%',#{trainName,jdbcType=VARCHAR},'%' )
+            </if>
+            <if test="trainContent != null and trainContent !=''">
+                AND t.train_content = #{trainContent,jdbcType=VARCHAR}
+            </if>
+            <if test="trainMinites != null and trainMinites !=''">
+                AND t.train_minites = #{trainMinites,jdbcType=INTEGER}
+            </if>
+            <if test="trainPlace != null and trainPlace !=''">
+                AND t.train_place = #{trainPlace,jdbcType=VARCHAR}
+            </if>
+            <if test="trainStatus != null and trainStatus !=''">
+                AND t.train_status = #{trainStatus,jdbcType=BIT}
+            </if>
+            <if test="trainType != null and trainType !=''">
+                AND t.train_type = #{trainType,jdbcType=BIT}
+            </if>
+            <if test="examId !=null and examId != ''">
+                AND t.exam_id = #{examId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
 
-  <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
-    select
-    <include refid="Base_Column_List"/>
-    from cpr_train AS t
-    LEFT  JOIN cpr_exam AS e ON t.exam_id = e.exam_id
-    <include refid="where"/>
-  </select>
+    <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
+        select
+        <include refid="Base_Column_List"/>
+        from cpr_train AS t
+        LEFT JOIN cpr_exam AS e ON t.exam_id = e.exam_id
+        <include refid="where"/>
+    </select>
 
-  <delete id="batchDel" parameterType="Map">
+    <delete id="batchDel" parameterType="Map">
     DELETE FROM cpr_train WHERE train_id IN (${ids});
   </delete>
+
+    <select id="selectStudentLeft" resultMap="StudentResultMap" parameterType="java.lang.String">
+    SELECT
+      user_id,user_true_name
+    FROM cpr_student
+    WHERE user_id NOT IN (
+      SELECT
+        student_id
+      FROM cpr_train_student
+      WHERE train_id = #{_parameter,jdbcType=VARCHAR}
+    )
+  </select>
+
+    <select id="selectStudentRight" resultMap="StudentResultMap" parameterType="java.lang.String">
+    SELECT
+      s.user_id,s.user_true_name
+    FROM cpr_train_student AS ts
+    LEFT JOIN cpr_student AS s ON ts.student_id = s.user_id
+    WHERE ts.train_id = #{_parameter,jdbcType=VARCHAR}
+  </select>
 </mapper>

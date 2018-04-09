@@ -39,12 +39,10 @@
         <td></td>
         <td></td>
         <td>
+            <a href="${ctxPath}/train/user_add.html?trainId=${list.trainId}"><i class="fa fa-user-plus"></i></a>
+            &nbsp;&nbsp;
             @if(so.hasPermission('TRAIN_EDIT')){
             <a href="${ctxPath}/train/edit.html?trainId=${list.trainId}"><i class="glyphicon glyphicon-pencil"></i></a>
-            @}
-            &nbsp;&nbsp;
-            @if(so.hasPermission('TRAIN_DEL')){
-            <a href="${ctxPath}/mould/del.html?mId=${list.trainId}" onclick="return confirm('删除后不可恢复, 确定删除?')"><i class="glyphicon glyphicon-trash"></i></a>
             @}
         </td>
     </tr>

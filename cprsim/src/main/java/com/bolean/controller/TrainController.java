@@ -2,28 +2,23 @@ package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Exam;
+import com.bolean.entity.Student;
 import com.bolean.entity.Train;
+import com.bolean.entity.TrainStudent;
 import com.bolean.service.ExamService;
 import com.bolean.service.TrainService;
+import com.bolean.service.TrainStudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import utils.DateHelper;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Controller
@@ -35,6 +30,9 @@ public class TrainController extends BaseController{
 
     @Autowired
     private ExamService examService;
+
+    @Autowired
+    private TrainStudentService trainStudentService;
 
     @RequestMapping("/index.html")
     public String getAll(Model model){
@@ -133,5 +131,36 @@ public class TrainController extends BaseController{
         if(res>0) rstFulBody.success(res);
         else  rstFulBody.fail("删除失败！");
         return rstFulBody;
+    }
+
+    @RequestMapping("user_add.html")
+    public String userAdd(Model model,String trainId){
+        List<Student> studentLeft = trainService.selectStudentLeft(trainId);
+        List<Student> studentRight = trainService.selectStudentRight(trainId);
+        model.addAttribute("left",studentLeft);
+        model.addAttribute("right",studentRight);
+        model.addAttribute("trainId",trainId);
+        return "/train/user_add.html";
+    }
+
+    @RequestMapping("add_user")
+    public String addUser(HttpServletRequest request,
+            @RequestParam(required = true) String trainId
+
+    ){
+        String[] to = request.getParameterValues("to[]");
+        List<TrainStudent> trainStudents = new ArrayList<>();
+        if(to !=null){
+            for (String s : to) {
+                TrainStudent trainStudent = new TrainStudent();
+                trainStudent.setTrain_id((long)Integer.parseInt(trainId));
+                trainStudent.setStudent_id((long)Integer.parseInt(s));
+                trainStudents.add(trainStudent);
+            }
+        }
+
+        trainStudentService.deleteByTrainId(trainId);
+        if(trainStudents.size() != 0)trainStudentService.insertList(trainStudents);
+        return "redirect:/train/index.html";
     }
 }
