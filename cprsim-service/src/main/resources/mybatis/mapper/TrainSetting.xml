@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.TrainSettingMapper">
+
+    <resultMap id="BaseResultMap" type="com.bolean.entity.TrainSetting">
+        <id column="train_setting_id" jdbcType="INTEGER" property="trainSettingId"/>
+        <result column="handle_time" jdbcType="INTEGER" property="handleTime"/>
+        <result column="interruption_time" jdbcType="INTEGER" property="interruptionTime"/>
+        <result column="massage_time_percent" jdbcType="INTEGER" property="massageTimePercent"/>
+        <result column="massage_right_percent" jdbcType="INTEGER" property="massageRightPercent"/>
+        <result column="ventilate_right_percent" jdbcType="INTEGER" property="ventilateRightPercent"/>
+        <result column="massage_frequency_percent" jdbcType="INTEGER" property="massageFrequencyPercent"/>
+        <result column="opt_type" jdbcType="BIT" property="optType"/>
+        <result column="massage_speed_min" jdbcType="INTEGER" property="massageSpeedMin"/>
+        <result column="massage_speed_max" jdbcType="INTEGER" property="massageSpeedMax"/>
+        <result column="massage_deep_min" jdbcType="INTEGER" property="massageDeepMin"/>
+        <result column="massage_deep_max" jdbcType="INTEGER" property="massageDeepMax"/>
+        <result column="ventilate_time_min" jdbcType="INTEGER" property="ventilateTimeMin"/>
+        <result column="ventilate_time_max" jdbcType="INTEGER" property="ventilateTimeMax"/>
+        <result column="ventilate_volume_min" jdbcType="INTEGER" property="ventilateVolumeMin"/>
+        <result column="ventilate_volume_max" jdbcType="INTEGER" property="ventilateVolumeMax"/>
+        <result column="rhythm" jdbcType="VARCHAR" property="rhythm"/>
+        <result column="voice_prompt" jdbcType="BIT" property="voicePrompt"/>
+        <result column="defibrillation" jdbcType="BIT" property="defibrillation"/>
+        <result column="defibrillation_times" jdbcType="INTEGER" property="defibrillationTimes"/>
+        <result column="success_condition" jdbcType="VARCHAR" property="successCondition"/>
+        <result column="train_id" jdbcType="INTEGER" property="trainId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        train_setting_id,handle_time,interruption_time,massage_time_percent,massage_right_percent,ventilate_right_percent,massage_frequency_percent,opt_type,
+        massage_speed_min,massage_speed_max,massage_deep_min,massage_deep_max,ventilate_time_min,ventilate_time_max,ventilate_volume_min,ventilate_volume_max,
+        rhythm,voice_prompt,defibrillation,defibrillation_times,success_condition,train_id
+    </sql>
+    
+    <select id="selectByTrainId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from cpr_train_setting WHERE train_id = #{_parameter,jdbcType=VARCHAR};
+    </select>
+
+    <delete id="deleteByTrainId" parameterType="java.lang.String">
+      DELETE FROM cpr_train_setting WHERE train_id = #{_parameter,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

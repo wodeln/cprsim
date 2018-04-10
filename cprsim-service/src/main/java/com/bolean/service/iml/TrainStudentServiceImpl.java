@@ -13,7 +13,7 @@ import java.util.Map;
 public class TrainStudentServiceImpl implements TrainStudentService {
 
     @Autowired
-    TrainStudentMapper trainStudentMapper;
+    private TrainStudentMapper trainStudentMapper;
 
     @Override
     public List<TrainStudent> selectAll() {

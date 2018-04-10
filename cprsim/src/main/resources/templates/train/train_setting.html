@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_form_layout.html"){
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link href="/css/plugins/bootstrap-switch/bootstrap-switch.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-10">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="viladate_form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> 操作时间</label>
+                        <label for="handle_time" class="col-sm-2 control-label"> 操作时间：<span style="color:red">*</span></label>
+                        <div class="col-sm-6">
+                                <input id="handle_time" placeholder="请输入操作时间 (单位-秒)" value="${obj.handleTime!''}" name="handleTime" class="form-control" type="number" required>
+
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> 成功条件</label>
+                        <label for="interruption_time" class="col-sm-2 control-label">中断时间：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <input id="interruption_time" placeholder="" value="${obj.interruptionTime!20}"  name="interruptionTime" class="form-control" type="number">
+                            <span class="input-group-addon"> <input type="checkbox" @if(obj.interruptionTime!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="interruption_time"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> </label>
+                        <label for="massage_time_percent" class="col-sm-2 control-label">按压时间占比：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <input id="massage_time_percent" placeholder="" value="${obj.massageTimePercent!50}" name="massageTimePercent" class="form-control" type="number">
+                            <span class="input-group-addon"> <input type="checkbox" @if(obj.massageTimePercent!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="massage_time_percent"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> </label>
+                        <label for="massage_right_percent" class="col-sm-2 control-label">按压正确率：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <input id="massage_right_percent" placeholder="" value="${obj.massageRightPercent!70}" name="massageRightPercent" class="form-control" type="number">
+                            <span class="input-group-addon"> <input type="checkbox" @if(obj.massageRightPercent!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="massage_right_percent"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> </label>
+                        <label for="ventilate_right_percent" class="col-sm-2 control-label">吹气正确率：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <input id="ventilate_right_percent" placeholder="" value="${obj.ventilateRightPercent!70}" name="ventilateRightPercent" class="form-control" type="number">
+                            <span class="input-group-addon"> <input type="checkbox" @if(obj.ventilateRightPercent!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="ventilate_right_percent"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> </label>
+                        <label for="massage_frequency_percent" class="col-sm-2 control-label">按压频率正确率：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <input id="massage_frequency_percent" placeholder="" value="${obj.massageFrequencyPercent!70}" name="massageFrequencyPercent" class="form-control" type="number">
+                            <span class="input-group-addon"> <input type="checkbox" @if(obj.massageFrequencyPercent!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="massage_frequency_percent"></span>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> 操作模式</label>
+                        <label for="opt_type" class="col-sm-2 control-label">操作模式：</label>
+                        <div class="col-sm-6 input-group m-b">
+                            <select id="opt_type" name="optType" class="form-control">
+                                <option @if(obj.optType==1){
+                                        selected
+                                        @}
+                                        value="1">普及</option>
+                                <option @if(obj.optType==2){
+                                        selected
+                                        @}
+                                        value="2">标准</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"> 参数设置</label>
+                        <label for="massage_speed" class="col-sm-2 control-label">按压速度(bmp)：<span style="color:red">*</span></label>
+                        <div class="col-sm-6 input-group m-b" id="massage_speed">
+                            <span class="col-xs-3"><input id="massage_speed_min" placeholder="" value="${obj.massageSpeedMin!100}" name="massageSpeedMin" class="form-control" type="number" required></span>
+                            <span class="col-xs-1" style="height: 30px;line-height: 30px;">—</span>
+                            <span class="col-xs-3"><input id="massage_speed_Max" placeholder="" value="${obj.massageSpeedMax!120}" name="massageSpeedMax" class="form-control" type="number" required></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="massage_deep" class="col-sm-2 control-label">按压深度(mm)：<span style="color:red">*</span></label>
+                        <div class="col-sm-6 input-group m-b" id="massage_deep">
+                            <span class="col-xs-3"><input id="massage_deep_min" placeholder="" value="${obj.massageDeepMin!50}" name="massageDeepMin" class="form-control" type="number" required></span>
+                            <span class="col-xs-1" style="height: 30px;line-height: 30px;">—</span>
+                            <span class="col-xs-3"><input id="massage_deep_max" placeholder="" value="${obj.massageDeepMax!60}" name="massageDeepMax" class="form-control" type="number" required></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="ventilate_time" class="col-sm-2 control-label">通气时间(msec)：<span style="color:red">*</span></label>
+                        <div class="col-sm-6 input-group m-b" id="ventilate_time">
+                            <span class="col-xs-3"><input id="ventilate_time_min" placeholder="" value="${obj.ventilateTimeMin!500}" name="ventilateTimeMin" class="form-control" type="number" required></span>
+                            <span class="col-xs-1" style="height: 30px;line-height: 30px;">—</span>
+                            <span class="col-xs-3"><input id="ventilate_time_max" placeholder="" value="${obj.ventilateTimeMax!1500}" name="ventilateTimeMax" class="form-control" type="number" required></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="ventilate_volume" class="col-sm-2 control-label">通气体积(ml)：<span style="color:red">*</span></label>
+                        <div class="col-sm-6 input-group m-b" id="ventilate_volume">
+                            <span class="col-xs-3"><input id="ventilate_volume_min" placeholder="" value="${obj.ventilateVolumeMin!500}" name="ventilateVolumeMin" class="form-control" type="number" required></span>
+                            <span class="col-xs-1" style="height: 30px;line-height: 30px;">—</span>
+                            <span class="col-xs-3"><input id="ventilate_volume_max" placeholder="" value="${obj.ventilateVolumeMax!1000}" name="ventilateVolumeMax" class="form-control" type="number" required></span>
+                        </div>
+                    </div>
+
+                    <div class="hr-line-dashed"></div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;">模拟人设置</label>
+                        <label for="rhythms" class="col-sm-2 control-label">节拍音：<span style="color:red">*</span></label>
+                        <div class="col-sm-6" id="rhythms">
+                            <input type="radio" value="OFF" id="rhythm1" @if(obj.rhythm=="OFF"){
+                                   checked
+                                   @}
+                                   name="rhythm"><label for="rhythm1">OFF</label>&nbsp;
+                            <input type="radio" value="1000" id="rhythm2" @if(obj.rhythm=="1000" || !has(obj.rhythm)){
+                                   checked
+                                   @}
+                                   name="rhythm"><label for="rhythm2">1000 bmp</label>&nbsp;
+                            <input type="radio" value="1100" id="rhythm3" @if(obj.rhythm=="1100"){
+                                   checked
+                                   @}
+                                   name="rhythm"><label for="rhythm3">1100 bmp</label>&nbsp;
+                            <input type="radio" value="1200" id="rhythm4" @if(obj.rhythm=="1200"){
+                                   checked
+                                   @}
+                                   name="rhythm"><label for="rhythm4">1200 bmp</label>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="voice_prompt" class="col-sm-2 control-label">语音提示：<span style="color:red">*</span></label>
+                        <div class="col-sm-6" style="padding-top: 0.4rem;">
+                            <input id="voice_prompt" type="checkbox" name="voicePrompt" @if(obj.voicePrompt || obj.voicePrompt =="null"){
+                                   checked
+                                   @}
+                                   data-size="mini">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="defibrillations" class="col-sm-2 control-label">能否除颤：<span style="color:red">*</span></label>
+                        <div class="col-sm-6" id="defibrillations">
+                            <input type="radio" value="1" id="defibrillation1" @if(obj.defibrillation==1 || !has(obj.defibrillation)){
+                                   checked
+                                   @}
+                                   name="defibrillation"><label for="defibrillation1">能</label>&nbsp;
+                            <input type="radio" value="2" id="defibrillation2" @if(obj.defibrillation==2){
+                                   checked
+                                   @}
+                                   name="defibrillation"><label for="defibrillation2">否</label>&nbsp;
+                            <input type="radio" value="3" id="defibrillation3" @if(obj.defibrillation==3){
+                                   checked
+                                   @}
+                                   name="defibrillation"><label for="defibrillation3">忽略</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="defibrillation_times" class="col-sm-2 control-label">除颤次数(次)：</label>
+                        <div class="col-sm-6">
+                            <input id="defibrillation_times" placeholder="" value="${obj.handleTime!1}" name="defibrillationTimes" class="form-control" type="number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" style="color: #cbcbcb;"></label>
+                        <label for="success_conditions" class="col-sm-2 control-label">成功条件：<span style="color:red">*</span></label>
+                        <div class="col-sm-6" id="success_conditions">
+                            <input type="radio" id="success_condition1" value="CPR" @if(obj.successCondition=="CPR" || !has(obj.successCondition)){
+                                   checked
+                                   @}
+                                   name="successCondition"><label id="success_condition1_f" for="success_condition1">CPR</label>&nbsp;
+                            <input type="radio" id="success_condition2" value="除颤" @if(obj.successCondition=="除颤"){
+                                   checked
+                                   @}
+                                   name="successCondition"><label id="success_condition2_f" for="success_condition2">除颤</label>&nbsp;
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <input type="hidden" name="trainId" value="${trainId}" />
+                            <button class="btn btn-primary" type="submit">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@}
+</body>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="/js/plugins/bootstrap-switch/bootstrap-switch.js"></script>
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    $("[name='voicePrompt']").bootstrapSwitch({
+        onText:"开启",
+        offText:"关闭",
+        onColor:"success",
+        offColor:"danger",
+        onSwitchChange:function(event,state){
+            var mId = $(this).attr("m-id");
+            $.ajax({
+                type : "POST",
+                url:"${ctxPath}/exam/changeStatus",
+                data : {
+                    examId: mId,
+                    examStatus: state==true ? 1:0
+                }
+            });
+
+        }
+    });
+
+    $.validator.setDefaults({
+        highlight: function (e) {
+            $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+        }, success: function (e) {
+            e.closest(".form-group").removeClass("has-error").addClass("has-success")
+        }, errorElement: "span", errorPlacement: function (e, r) {
+            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+        }, errorClass: "help-block m-b-none", validClass: "help-block m-b-none"
+    }), $().ready(function () {
+        // $("#commentForm").validate();
+        $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+        var e = "<i class='fa fa-times-circle'></i> ";
+        $("#viladate_form").validate({
+            submitHandler: function() {
+                $.ajax({
+                    type : "POST",
+                    url:"${ctxPath}/train/add_setting",
+                    data : $('#viladate_form').serialize(),
+                    success: function(data){
+                        if(data['status']==1){
+                            toastr.success(data['body']);
+                            setTimeout('window.location.href="/train/index.html"',900);
+                        }else{
+                            toastr.success(data['body']);
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    $(document).ready(function(){
+        $('.if_able').each( function() {
+            if(!$(this).prop("checked")){
+                var fId = $(this).attr("f-id");
+                $("#"+fId).attr("disabled",true);
+            }
+        });
+
+        $( "#rhythms" ).buttonset();
+        $( "#defibrillations" ).buttonset();
+        $( "#success_conditions" ).buttonset();
+
+        if($("input[name='defibrillation']:checked").val()!=1){
+            $("#defibrillation_times").attr("disabled",true);
+            $("#success_condition2").button({ disabled: true });
+        }
+    });
+//ui-state-active ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right
+//ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right
+    $("input[name='defibrillation']").click(function () {
+        if($("input[name='defibrillation']:checked").val()!=1){
+            $("#defibrillation_times").attr("disabled",true);
+            $("#success_condition2").button({ disabled: true });
+            $("#success_condition2").attr(  "checked", false);
+            $("#success_condition2_f").removeClass("ui-state-active");
+            $("#success_condition1").attr( "checked", true);
+            $("#success_condition1_f").addClass("ui-state-active");
+        }else{
+            $("#defibrillation_times").attr("disabled",false);
+            $("#success_condition2").button("enable");
+        }
+    });
+
+    $(".if_able").click(function () {
+        var fId = $(this).attr("f-id");
+        if($(this).prop("checked")){
+            $("#"+fId).prop("disabled",false);
+        }else{
+            $("#"+fId).prop("disabled",true);
+        }
+    });
+
+</script>
+</html>
