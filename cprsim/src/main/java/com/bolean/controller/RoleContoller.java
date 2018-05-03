@@ -1,7 +1,6 @@
 package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
-import com.bolean.dao.RoleFolderMapper;
 import com.bolean.entity.Folder;
 import com.bolean.entity.Role;
 import com.bolean.entity.RoleFolder;
@@ -18,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 @Controller
