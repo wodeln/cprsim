@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.ArgsMapper">
+
+    <resultMap id="BaseResultMap" type="com.bolean.entity.Args">
+        <id column="args_id" jdbcType="INTEGER" property="argsId"/>
+        <result column="args_name" jdbcType="VARCHAR" property="argsName"/>
+        <result column="args_type_id" jdbcType="INTEGER" property="argsTypeId"/>
+        <result column="args_point" jdbcType="INTEGER" property="argsPoint"/>
+        <result column="args_key" jdbcType="VARCHAR" property="argsKey"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        args_id, args_name, args_type_id, args_point, args_key
+    </sql>
+    
+    <select id="selectByArgsTypeId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from cpr_args WHERE args_type_id = #{_parameter,jdbcType=VARCHAR};
+    </select>
+
+    <delete id="deleteByArgsId" parameterType="java.lang.String">
+      DELETE FROM cpr_args WHERE train_id = #{_parameter,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

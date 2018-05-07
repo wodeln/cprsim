@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_form_layout.html"){
+<link href="/css/plugins/layer/laydate.css" rel="stylesheet" type="text/css">
+<div class="row">
+    <div class="col-sm-6">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="viladate_form">
+                    <div class="form-group">
+                        <label for="args_type_id" class="col-sm-3 control-label">所属指标分类：<span style="color:red">*</span></label>
+                        <div class="col-sm-8">
+                            <select name="argsTypeId" id="args_type_id" class="input-sm form-control" style="font-size: 12px;" required>
+                                <option value="">所属指标分类</option>
+                                @for(arg in args){
+                                <option value="${arg.argsTypeId}">${arg.argsTypeName}</option>
+                                @}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="args_name" class="col-sm-3 control-label">指标名称：</label>
+                        <div class="col-sm-8">
+                            <input id="args_name" placeholder="请输入指标名称" name="argsName" class="form-control" type="text" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="args_point" class="col-sm-3 control-label">指标分值：</label>
+                        <div class="col-sm-8">
+                            <input id="args_point" placeholder="请输入指标分值" name="argsPoint" class="form-control" type="text" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8 col-sm-offset-3">
+                            <button class="btn btn-primary" type="submit">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@}
+</body>
+<script src="/js/plugins/layer/laydate/laydate.js"></script>
+<script type="text/javascript">
+    toastr.options = {
+        "closeButton": true,
+        "debug": true,
+        "progressBar": false,
+        "positionClass": "toast-top-center",
+        "showDuration": "400",
+        "hideDuration": "1000",
+        "timeOut": "500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    laydate.render({
+        elem: '#exam_time'
+    });
+
+    $.validator.setDefaults({
+        highlight: function (e) {
+            $(e).closest(".form-group").removeClass("has-success").addClass("has-error")
+        }, success: function (e) {
+            e.closest(".form-group").removeClass("has-error").addClass("has-success")
+        }, errorElement: "span", errorPlacement: function (e, r) {
+            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+        }, errorClass: "help-block m-b-none", validClass: "help-block m-b-none"
+    }), $().ready(function () {
+        // $("#commentForm").validate();
+        $(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",});
+        var e = "<i class='fa fa-times-circle'></i> ";
+        $("#viladate_form").validate({
+            rules: {
+                argsName: {
+                    required: true
+                },
+                argsTypeId:{
+                    required: true
+                }
+            },
+            messages: {
+                argsName: {
+                    required: e + "请输入指标类型名称"
+                },
+                argsTypeId:{
+                    required: e + "请选择指标所属分类"
+                }
+            },
+            submitHandler: function() {
+                $.ajax({
+                    type : "POST",
+                    url:"${ctxPath}/args/add",
+                    data : $('#viladate_form').serialize(),
+                    success: function(data){
+                        if(data['status']==1){
+                            toastr.success(data['body']);
+                            setTimeout('window.location.href="/args/index.html"',900);
+                        }else{
+                            toastr.success(data['body']);
+                        }
+                    }
+                });
+            }
+        }),$('input[required]').parent().prev().append(
+            '<span style="color:red">*</span>'
+        );
+    });
+
+</script>
+</html>

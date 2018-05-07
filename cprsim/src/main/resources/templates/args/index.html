@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .w25{
+        width: 25%;
+    }
+    .tt{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    .i-title {
+        min-height: 37px;
+        margin-bottom: 0;
+        padding: 7px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        background-color: #fff;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #f7f7f7;
+        margin-bottom: 0.63234rem;
+        font-weight: bold;
+        font-size: 1.55454rem;
+    }
+
+    .i-content {
+        min-height: 37px;
+        margin-bottom: 0;
+        padding: 7px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        background-color: #fff;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        font-size: 1.55454rem;
+    }
+    .p3{
+        padding-left: 1rem;
+    }
+    .bt2{
+        margin-bottom: 0.2934rem;
+    }
+    .d-none{
+        display: none;
+    }
+    .d-none a{
+        color: #a1a1a1;
+        font-size: 1.5rem;
+    }
+</style>
+@layout("/layout/_form_layout.html"){
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link href="/css/plugins/bootstrap-switch/bootstrap-switch.css" rel="stylesheet">
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <form class="form-horizontal m-t" id="viladate_form">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <a href="${ctxPath}/args/add_type.html">添加指标类型</a> &nbsp;&nbsp;&nbsp;<a href="${ctxPath}/args/add.html">添加指标</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 bt2">
+                            <div class="pull-left w25 tt">指标内容</div>
+                            <div class="pull-left w25 tt">指标类型</div>
+                            <div class="pull-left w25 tt">标准分值</div>
+                            <div class="pull-left w25 tt">&nbsp;</div>
+                        </div>
+                        @for(arg in args){
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <div class="i-title">
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25">${arg.argsTypeName}</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 d-none"><a href="${ctxPath}/args/edit_type.html?argsTypeId=${arg.argsTypeId}">编辑</a>&nbsp; <a href="${ctxPath}/args/del_type.html?argsTypeId=${arg.argsTypeId}">删除</a></div>
+                                </div>
+                            </div>
+                            @if(isNotEmpty(arg.args)){
+                                @for(arg1 in arg.args){
+                                    <div class="i-content">
+                                        <div class="pull-left w25 p3">${arg1.argsName}</div>
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25 text-center">${arg1.argsPoint}</div>
+                                        <div class="pull-left w25 text-center"><a href="${ctxPath}/args/edit.html?argsId=${arg1.argsId}">编辑</a>&nbsp; <a href="${ctxPath}/args/del.html?argsId=${arg1.argsId}">删除</a></div>
+                                    </div>
+                                @}
+                            @}
+                        </div>
+                        @}
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@}
+</body>
+<script>
+    $(".i-title").hover(function () {
+        $(this).children(".d-none").css("display", "block");
+    });
+    $(".i-title").mouseleave(function () {
+        $(this).children(".d-none").css("display", "none");
+    });
+</script>
+</html>
