@@ -80,6 +80,24 @@ public class TrainController extends BaseController {
         Date trainBeginTime = DateHelper.getDate4StrDate(trainBeginTimes, "yyyy-MM-dd");
         train.setTrainBeginTime(trainBeginTime);
         int res = trainService.insertSelective(train);
+        TrainSetting trainSetting = new TrainSetting();
+        trainSetting.setHandleTime(150);
+        trainSetting.setOptType(1);
+        trainSetting.setMassageSpeedMin(100);
+        trainSetting.setMassageSpeedMax(120);
+        trainSetting.setMassageDeepMin(50);
+        trainSetting.setMassageDeepMax(60);
+        trainSetting.setVentilateTimeMin(500);
+        trainSetting.setVentilateTimeMax(1500);
+        trainSetting.setVentilateVolumeMin(500);
+        trainSetting.setVentilateVolumeMax(1000);
+        trainSetting.setRhythm(1000+"");
+        trainSetting.setVoicePrompt(true);
+        trainSetting.setDefibrillation(3);
+        trainSetting.setSuccessCondition("CPR");
+        trainSetting.setTrainId(train.getTrainId());
+
+        trainSettingService.insertSelective(trainSetting);
         RSTFulBody rstFulBody = new RSTFulBody();
         if (res > 0) rstFulBody.success("添加成功！");
         else rstFulBody.fail("添加失败！");

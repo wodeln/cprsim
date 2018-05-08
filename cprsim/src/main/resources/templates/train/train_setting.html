@@ -11,9 +11,12 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" style="color: #cbcbcb;"> 操作时间</label>
                         <label for="handle_time" class="col-sm-2 control-label"> 操作时间：<span style="color:red">*</span></label>
-                        <div class="col-sm-6">
-                                <input id="handle_time" placeholder="请输入操作时间 (单位-秒)" value="${obj.handleTime!''}" name="handleTime" class="form-control" type="number" required>
-
+                        <div class="col-sm-6 input-group m-b">
+                                <input id="handle_time" placeholder="请输入操作时间 (单位-秒)" value="${obj.handleTime!150}" name="handleTime" class="form-control" type="number">
+                                <span class="input-group-addon"> <input type="checkbox" @if(obj.handleTime!0!=0){
+                                                                    checked
+                                                                    @}
+                                                                    class="if_able" f-id="handle_time"></span>
                         </div>
                     </div>
                     <div class="hr-line-dashed"></div>
