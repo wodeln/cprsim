@@ -22,4 +22,7 @@
       DELETE FROM cpr_args WHERE train_id = #{_parameter,jdbcType=VARCHAR}
     </delete>
 
+    <update id="updateVersion">
+        update cpr_args_version set args_version = args_version+0.01
+    </update>
 </mapper>

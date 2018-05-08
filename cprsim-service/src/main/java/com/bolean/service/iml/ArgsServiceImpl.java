@@ -89,4 +89,9 @@ public class ArgsServiceImpl implements ArgsService {
     public int deleteByArgsId(String argsId) {
         return argsMapper.deleteByArgsId(argsId);
     }
+
+    @Override
+    public int updateVersion() {
+        return argsMapper.updateVersion();
+    }
 }

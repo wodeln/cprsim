@@ -51,7 +51,10 @@ public class ArgsController extends BaseController {
     public RSTFulBody addType(Args args){
         int res = argsService.insertSelective(args);
         RSTFulBody rstFulBody = new RSTFulBody();
-        if (res > 0) rstFulBody.success("添加成功！");
+        if (res > 0) {
+            rstFulBody.success("添加成功！");
+            updateVersion();
+        }
         else rstFulBody.fail("添加失败！");
         return rstFulBody;
     }
@@ -61,7 +64,10 @@ public class ArgsController extends BaseController {
     public RSTFulBody add(Args args){
         int res = argsService.insertSelective(args);
         RSTFulBody rstFulBody = new RSTFulBody();
-        if (res > 0) rstFulBody.success("添加成功！");
+        if (res > 0) {
+            rstFulBody.success("添加成功！");
+            updateVersion();
+        }
         else rstFulBody.fail("添加失败！");
         return rstFulBody;
     }
@@ -80,14 +86,18 @@ public class ArgsController extends BaseController {
     public RSTFulBody edit(Args args){
         int res = argsService.updateByPrimaryKeySelective(args);
         RSTFulBody rstFulBody = new RSTFulBody();
-        if (res > 0) rstFulBody.success("添加成功！");
-        else rstFulBody.fail("添加失败！");
+        if (res > 0) {
+            rstFulBody.success("编辑成功！");
+            updateVersion();
+        }
+        else rstFulBody.fail("编辑失败！");
         return rstFulBody;
     }
 
     @RequestMapping("del.html")
     public String del(String argsId) {
         int res = argsService.deleteByPrimaryKey((long) Integer.parseInt(argsId));
+        if(res>0) updateVersion();
         return "redirect:/args/index.html";
     }
 
@@ -103,7 +113,10 @@ public class ArgsController extends BaseController {
     public RSTFulBody editType(ArgsType argsType){
         int res = argsTypeService.updateByPrimaryKeySelective(argsType);
         RSTFulBody rstFulBody = new RSTFulBody();
-        if (res > 0) rstFulBody.success("编辑成功！");
+        if (res > 0) {
+            rstFulBody.success("编辑成功！");
+            updateVersion();
+        }
         else rstFulBody.fail("编辑失败！");
         return rstFulBody;
     }
@@ -111,6 +124,13 @@ public class ArgsController extends BaseController {
     @RequestMapping("del_type.html")
     public String delType(String argsTypeId) {
         int res = argsTypeService.deleteByPrimaryKey((long) Integer.parseInt(argsTypeId));
+        if(res>0) updateVersion();
         return "redirect:/args/index.html";
+    }
+
+    private boolean updateVersion(){
+        int res = argsService.updateVersion();
+        if(res>0) return true;
+        else return false;
     }
 }
