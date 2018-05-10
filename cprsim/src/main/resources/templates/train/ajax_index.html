@@ -21,10 +21,12 @@
         <td>${list.trainName}</td>
         <td>${list.examName}</td>
         <td>
-            @if(list.trainType){
+            @if(list.trainType==1){
             考试
+            @}else if(list.trainType==0){
+            训练
             @}else{
-            练习
+            竞赛
             @}
         </td>
         <td></td>

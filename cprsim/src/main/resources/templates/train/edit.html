@@ -30,13 +30,17 @@
                         <label for="train_type" class="col-sm-3 control-label">考试类型：</label>
                         <div class="col-sm-8">
                             <div class="i-checks" id="train_type">
-                                <label><input type="radio" @if(!obj.trainType){
+                                <label><input type="radio" @if(obj.trainType==0){
                                               checked @}
-                                              value="0" name="trainType"> <i></i> 练习</label>
+                                              value="0" name="trainType"> <i></i> 训练</label>
 
-                                <label><input type="radio" @if(obj.trainType){
+                                <label><input type="radio" @if(obj.trainType==1){
                                               checked @}
                                               value="1" name="trainType"> <i></i> 考试</label>
+
+                                <label><input type="radio" @if(obj.trainType==3){
+                                              checked @}
+                                              value="3" name="trainType"> <i></i> 竞赛</label>
                             </div>
                         </div>
                     </div>
