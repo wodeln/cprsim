@@ -48,7 +48,8 @@ public class Event implements Serializable {
 
     public void setAddTime(String addTime){
         DateHelper dateHelper = new DateHelper();
-        this.addTime = DateHelper.getDate4StrDate(addTime,"yyyy-MM-dd HH:mm:ss");
+        Date timeTemp = DateHelper.getDate4StrDate(addTime,"yyyy-MM-dd HH:mm:ss");
+        this.addTime = timeTemp;
     }
 
     public String getEventName() {

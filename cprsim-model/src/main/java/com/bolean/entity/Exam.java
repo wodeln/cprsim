@@ -2,6 +2,7 @@ package com.bolean.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -23,12 +24,6 @@ public class Exam implements Serializable {
      */
     @NotEmpty
     private String examName;
-
-    /**
-     * 所属项目ID
-     */
-    @NotEmpty
-    private Integer trainId;
 
     /**
      * 培训类别 1:考试 2:练习
@@ -61,7 +56,18 @@ public class Exam implements Serializable {
 
     private String examTarget;
 
+    @Transient
+    private List<Train> trains;
+
     private static final long serialVersionUID = 1L;
+
+    public List<Train> getTrains() {
+        return trains;
+    }
+
+    public void setTrains(List<Train> trains) {
+        this.trains = trains;
+    }
 
     public String getExamTarget() {
         return examTarget;
@@ -93,14 +99,6 @@ public class Exam implements Serializable {
 
     public void setExamName(String examName) {
         this.examName = examName;
-    }
-
-    public Integer getTrainId() {
-        return trainId;
-    }
-
-    public void setTrainId(Integer trainId) {
-        this.trainId = trainId;
     }
 
     public Boolean getExamType() {
@@ -157,7 +155,6 @@ public class Exam implements Serializable {
         Exam other = (Exam) that;
         return (this.getExamId() == null ? other.getExamId() == null : this.getExamId().equals(other.getExamId()))
             && (this.getExamName() == null ? other.getExamName() == null : this.getExamName().equals(other.getExamName()))
-            && (this.getTrainId() == null ? other.getTrainId() == null : this.getTrainId().equals(other.getTrainId()))
             && (this.getExamType() == null ? other.getExamType() == null : this.getExamType().equals(other.getExamType()))
             && (this.getExamTime() == null ? other.getExamTime() == null : this.getExamTime().equals(other.getExamTime()))
             && (this.getExamMinutes() == null ? other.getExamMinutes() == null : this.getExamMinutes().equals(other.getExamMinutes()))
@@ -171,7 +168,6 @@ public class Exam implements Serializable {
         int result = 1;
         result = prime * result + ((getExamId() == null) ? 0 : getExamId().hashCode());
         result = prime * result + ((getExamName() == null) ? 0 : getExamName().hashCode());
-        result = prime * result + ((getTrainId() == null) ? 0 : getTrainId().hashCode());
         result = prime * result + ((getExamType() == null) ? 0 : getExamType().hashCode());
         result = prime * result + ((getExamTime() == null) ? 0 : getExamTime().hashCode());
         result = prime * result + ((getExamMinutes() == null) ? 0 : getExamMinutes().hashCode());
@@ -188,7 +184,6 @@ public class Exam implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", examId=").append(examId);
         sb.append(", examName=").append(examName);
-        sb.append(", trainId=").append(trainId);
         sb.append(", examType=").append(examType);
         sb.append(", examTime=").append(examTime);
         sb.append(", examMinutes=").append(examMinutes);

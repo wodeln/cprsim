@@ -94,4 +94,9 @@ public class ArgsServiceImpl implements ArgsService {
     public int updateVersion() {
         return argsMapper.updateVersion();
     }
+
+    @Override
+    public String selectArgsVersion() {
+        return argsMapper.selectArgsVersion();
+    }
 }

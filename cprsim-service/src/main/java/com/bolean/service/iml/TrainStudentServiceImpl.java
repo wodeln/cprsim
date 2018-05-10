@@ -84,4 +84,9 @@ public class TrainStudentServiceImpl implements TrainStudentService {
     public int deleteByTrainId(String trainId) {
         return trainStudentMapper.deleteByTrainId(trainId);
     }
+
+    @Override
+    public List<TrainStudent> selectByTrainId(String trainId) {
+        return trainStudentMapper.selectByTrainId(trainId);
+    }
 }

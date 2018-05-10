@@ -16,6 +16,17 @@ public class TrainStudent implements Serializable {
 
     private Long train_id;
 
+    @Transient
+    private String studentName;
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
     public Long getTrain_student_id() {
         return train_student_id;
     }

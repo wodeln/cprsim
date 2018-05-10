@@ -11,4 +11,6 @@ public interface ArgsMapper extends BaseMapper<Args> {
     int deleteByArgsId(String argsId);
 
     int updateVersion();
+
+    String selectArgsVersion();
 }

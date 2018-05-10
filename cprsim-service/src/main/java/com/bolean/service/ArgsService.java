@@ -13,4 +13,6 @@ public interface ArgsService extends BaseService<Args> {
     int deleteByArgsId(String argsId);
 
     int updateVersion();
+
+    String selectArgsVersion();
 }

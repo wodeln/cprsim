@@ -3,7 +3,7 @@ package com.bolean.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Table(name="cpr_args")
+@Table(name="cpr_score")
 public class Score implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

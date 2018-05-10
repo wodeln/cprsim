@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.bolean.entity.Exam">
     <id column="exam_id" jdbcType="INTEGER" property="examId" />
     <result column="exam_name" jdbcType="VARCHAR" property="examName" />
-    <result column="train_id" jdbcType="INTEGER" property="trainId" />
     <result column="exam_type" jdbcType="BIT" property="examType" />
     <result column="exam_time" jdbcType="TIMESTAMP" property="examTime" />
     <result column="exam_minutes" jdbcType="INTEGER" property="examMinutes" />
@@ -14,7 +13,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    exam_id, exam_name, train_id, exam_type, exam_time, exam_minutes, exam_kind, exam_place, exam_status
+    exam_id, exam_name, exam_type, exam_time, exam_minutes, exam_kind, exam_place, exam_status
   </sql>
 
   <sql id="where">

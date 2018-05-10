@@ -2,8 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bolean.dao.TrainStudentMapper">
 
+    <resultMap id="BaseResultMap" type="com.bolean.entity.TrainStudent">
+        <id column="train_student_id" jdbcType="INTEGER" property="train_student_id"/>
+        <result column="student_id" jdbcType="VARCHAR" property="student_id"/>
+        <result column="train_id" jdbcType="VARCHAR" property="train_id"/>
+        <result column="user_true_name" jdbcType="VARCHAR" property="studentName"/>
+    </resultMap>
+
     <delete id="deleteByTrainId" parameterType="java.lang.String">
       DELETE FROM cpr_train_student WHERE train_id = #{_parameter,jdbcType=VARCHAR}
     </delete>
+
+    <select id="selectByTrainId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select ts.train_student_id,ts.train_id,s.user_true_name,ts.student_id from cpr_train_student ts
+        left join cpr_student s on ts.student_id = s.user_id
+        where ts.train_id = #{_parameter,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

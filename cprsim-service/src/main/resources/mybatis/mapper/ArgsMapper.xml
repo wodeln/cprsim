@@ -25,4 +25,8 @@
     <update id="updateVersion">
         update cpr_args_version set args_version = args_version+0.01
     </update>
+
+    <select id="selectArgsVersion" resultType="java.lang.String">
+        select args_version from cpr_args_version;
+    </select>
 </mapper>

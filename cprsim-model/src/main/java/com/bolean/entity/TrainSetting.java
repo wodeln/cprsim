@@ -1,9 +1,6 @@
 package com.bolean.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "cpr_train_setting")
@@ -53,6 +50,17 @@ public class TrainSetting implements Serializable {
     private String successCondition;
 
     private Long trainId;
+
+    @Transient
+    private String argsVersion;
+
+    public String getArgsVersion() {
+        return argsVersion;
+    }
+
+    public void setArgsVersion(String argsVersion) {
+        this.argsVersion = argsVersion;
+    }
 
     public Integer getHandleTime() {
         return handleTime;
