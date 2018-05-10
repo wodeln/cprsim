@@ -1,6 +1,6 @@
 package com.bolean.entity;
 
-import utils.DateHelper;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +18,7 @@ public class Event implements Serializable {
 
     private Long projectId;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date addTime;
 
     private String eventName;
@@ -44,12 +45,6 @@ public class Event implements Serializable {
 
     public void setAddTime(Date addTime) {
         this.addTime = addTime;
-    }
-
-    public void setAddTime(String addTime){
-        DateHelper dateHelper = new DateHelper();
-        Date timeTemp = DateHelper.getDate4StrDate(addTime,"yyyy-MM-dd HH:mm:ss");
-        this.addTime = timeTemp;
     }
 
     public String getEventName() {

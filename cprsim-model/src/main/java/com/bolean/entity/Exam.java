@@ -1,12 +1,12 @@
 package com.bolean.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import utils.DateHelper;
 
 /**
  * @author 
@@ -35,6 +35,7 @@ public class Exam implements Serializable {
     /**
      * 培训时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date examTime;
 
     /**
@@ -116,12 +117,6 @@ public class Exam implements Serializable {
 
     public void setExamTime(Date examTime) {
         this.examTime = examTime;
-    }
-
-    public void setExamTime(String examTime){
-        DateHelper dateHelper = new DateHelper();
-        Date timeTemp = DateHelper.getDate4StrDate(examTime,"yyyy-MM-dd HH:mm:ss");
-        this.examTime = timeTemp;
     }
 
     public Integer getExamMinutes() {

@@ -1,12 +1,11 @@
 package com.bolean.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import utils.DateHelper;
 
 /**
  * @author 
@@ -32,6 +31,7 @@ public class Train implements Serializable {
      * 培训开始时间
      */
     @NotEmpty
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date trainBeginTime;
 
     /**
@@ -94,12 +94,6 @@ public class Train implements Serializable {
 
     public void setTrainBeginTime(Date trainBeginTime) {
         this.trainBeginTime = trainBeginTime;
-    }
-
-    public void setTrainBeginTime(String trainBeginTime){
-        DateHelper dateHelper = new DateHelper();
-        Date timeTemp = DateHelper.getDate4StrDate(trainBeginTime,"yyyy-MM-dd HH:mm:ss");
-        this.trainBeginTime = timeTemp;
     }
 
     public Integer getTrainMinites() {
