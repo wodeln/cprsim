@@ -65,10 +65,7 @@ public class ExamController extends BaseController{
 
     @ResponseBody
     @RequestMapping("add")
-    public RSTFulBody add(Exam exam,
-                          @RequestParam(required = false) String examTimes){
-        Date examTime = DateHelper.getDate4StrDate(examTimes,"yyyy-MM-dd");
-        exam.setExamTime(examTime);
+    public RSTFulBody add(Exam exam){
         int res=examService.insertSelective(exam);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("添加成功！");
@@ -92,10 +89,7 @@ public class ExamController extends BaseController{
 
     @ResponseBody
     @RequestMapping("edit")
-    public RSTFulBody edit(Exam exam,
-                           @RequestParam(required = false) String examTimes){
-        Date examTime = DateHelper.getDate4StrDate(examTimes,"yyyy-MM-dd");
-        exam.setExamTime(examTime);
+    public RSTFulBody edit(Exam exam){
         int res = examService.updateByPrimaryKeySelective(exam);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("修改成功！");

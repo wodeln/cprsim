@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import utils.DateHelper;
 
 /**
  * @author 
@@ -49,9 +50,9 @@ public class Train implements Serializable {
     private Boolean trainStatus;
 
     /**
-     * 培训分类 0:练习 1:考试
+     * 培训分类 0:练习 1:考试 3:竞赛
      */
-    private Boolean trainType;
+    private Integer trainType;
 
     /**
      * 所属培训项目ID
@@ -95,6 +96,12 @@ public class Train implements Serializable {
         this.trainBeginTime = trainBeginTime;
     }
 
+    public void setTrainBeginTime(String trainBeginTime){
+        DateHelper dateHelper = new DateHelper();
+        Date timeTemp = DateHelper.getDate4StrDate(trainBeginTime,"yyyy-MM-dd HH:mm:ss");
+        this.trainBeginTime = timeTemp;
+    }
+
     public Integer getTrainMinites() {
         return trainMinites;
     }
@@ -123,11 +130,11 @@ public class Train implements Serializable {
         return examId;
     }
 
-    public Boolean getTrainType() {
+    public Integer getTrainType() {
         return trainType;
     }
 
-    public void setTrainType(Boolean trainType) {
+    public void setTrainType(Integer trainType) {
         this.trainType = trainType;
     }
 

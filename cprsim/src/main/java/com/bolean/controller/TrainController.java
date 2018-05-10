@@ -75,10 +75,7 @@ public class TrainController extends BaseController {
 
     @ResponseBody
     @RequestMapping("add")
-    public RSTFulBody add(Train train,
-                          @RequestParam(required = true) String trainBeginTimes) {
-        Date trainBeginTime = DateHelper.getDate4StrDate(trainBeginTimes, "yyyy-MM-dd");
-        train.setTrainBeginTime(trainBeginTime);
+    public RSTFulBody add(Train train) {
         int res = trainService.insertSelective(train);
         TrainSetting trainSetting = new TrainSetting();
         trainSetting.setHandleTime(150);
@@ -122,10 +119,7 @@ public class TrainController extends BaseController {
 
     @ResponseBody
     @RequestMapping("edit")
-    public RSTFulBody edit(Train train,
-                           @RequestParam(required = true) String trainBeginTimes) {
-        Date trainBeginTime = DateHelper.getDate4StrDate(trainBeginTimes, "yyyy-MM-dd");
-        train.setTrainBeginTime(trainBeginTime);
+    public RSTFulBody edit(Train train) {
         int res = trainService.updateByPrimaryKeySelective(train);
         RSTFulBody rstFulBody = new RSTFulBody();
         if (res > 0) rstFulBody.success("修改成功！");

@@ -64,10 +64,7 @@ public class MouldController extends BaseController{
 
     @ResponseBody
     @RequestMapping("add")
-    public RSTFulBody add(Mould mould,
-                          @RequestParam(required = true) String mBuyTimes){
-        Date buyTime = DateHelper.getDate4StrDate(mBuyTimes,"yyyy-MM-dd");
-        mould.setmBuyTime(buyTime);
+    public RSTFulBody add(Mould mould){
         int res=mouldService.insertSelective(mould);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("添加成功！");
@@ -91,10 +88,7 @@ public class MouldController extends BaseController{
 
     @ResponseBody
     @RequestMapping("edit")
-    public RSTFulBody edit(Mould mould,
-                           @RequestParam(required = true) String mBuyTimes){
-        Date buyTime = DateHelper.getDate4StrDate(mBuyTimes,"yyyy-MM-dd");
-        mould.setmBuyTime(buyTime);
+    public RSTFulBody edit(Mould mould){
         int res = mouldService.updateByPrimaryKeySelective(mould);
         RSTFulBody rstFulBody=new RSTFulBody();
         if(res>0) rstFulBody.success("修改成功！");

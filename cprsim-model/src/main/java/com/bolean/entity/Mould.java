@@ -107,6 +107,12 @@ public class Mould implements Serializable {
         this.mBuyTime = mBuyTime;
     }
 
+    public void setmBuyTime(String mBuyTime){
+        DateHelper dateHelper = new DateHelper();
+        Date timeTemp = DateHelper.getDate4StrDate(mBuyTime,"yyyy-MM-dd HH:mm:ss");
+        this.mBuyTime = timeTemp;
+    }
+
     public String getmRepairDays() {
         return mRepairDays;
     }

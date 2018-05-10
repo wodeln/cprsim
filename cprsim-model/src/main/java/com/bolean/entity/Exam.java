@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import utils.DateHelper;
 
 /**
  * @author 
@@ -115,6 +116,12 @@ public class Exam implements Serializable {
 
     public void setExamTime(Date examTime) {
         this.examTime = examTime;
+    }
+
+    public void setExamTime(String examTime){
+        DateHelper dateHelper = new DateHelper();
+        Date timeTemp = DateHelper.getDate4StrDate(examTime,"yyyy-MM-dd HH:mm:ss");
+        this.examTime = timeTemp;
     }
 
     public Integer getExamMinutes() {
