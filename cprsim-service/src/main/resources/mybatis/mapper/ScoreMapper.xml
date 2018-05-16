@@ -45,5 +45,10 @@
         project_id = ${projectId}
     </select>
 
+    <select id="selectStudentByTrainid" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT s.op_success,s.sum_grade,ss.user_true_name,ss.user_id FROM cpr_score s
+        LEFT JOIN cpr_student ss ON s.user_id = ss.user_id
+        WHERE s.project_id = #{_parameter,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

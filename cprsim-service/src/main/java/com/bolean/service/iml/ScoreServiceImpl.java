@@ -99,4 +99,9 @@ public class ScoreServiceImpl implements ScoreService {
     public int selectCountGteVaule(Map<String, Object> map) {
         return scoreMapper.selectCountGteVaule(map);
     }
+
+    @Override
+    public List<Map<String, Object>> selectStudentByTrainid(String trainId) {
+        return scoreMapper.selectStudentByTrainid(trainId);
+    }
 }

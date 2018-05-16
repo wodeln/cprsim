@@ -142,4 +142,13 @@ public class CensusController extends BaseController{
         resMap.put("items",ecChats);
         return resMap;
     }
+
+    @ResponseBody
+    @RequestMapping("students")
+    public List<Map<String,Object>> getStudents(String trainId){
+        Map<String,Object> map = new HashMap<>();
+        List<Map<String,Object>> userScore = scoreService.selectStudentByTrainid(trainId);
+
+        return userScore;
+    }
 }
