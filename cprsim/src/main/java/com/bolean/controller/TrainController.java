@@ -202,4 +202,13 @@ public class TrainController extends BaseController {
         else rstFulBody.fail("设置失败！");
         return rstFulBody;
     }
+
+    @ResponseBody
+    @RequestMapping("ajax_train")
+    public List<Train> ajaxTrain(String examId){
+        Map<String,Object> map = new HashMap<>();
+        map.put("examId",examId);
+        List<Train> trains = trainService.selectByInfo(map);
+        return trains;
+    }
 }

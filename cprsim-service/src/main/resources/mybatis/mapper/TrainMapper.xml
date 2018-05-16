@@ -12,6 +12,8 @@
         <result column="train_status" jdbcType="BIT" property="trainStatus"/>
         <result column="exam_id" jdbcType="INTEGER" property="examId"/>
         <result column="exam_name" jdbcType="VARCHAR" property="examName"/>
+        <result column="student_count" jdbcType="VARCHAR" property="studentCount"/>
+        <result column="submit_score_count" jdbcType="INTEGER" property="submitScoreCount"/>
     </resultMap>
 
     <resultMap id="StudentResultMap" type="com.bolean.entity.Student">
@@ -55,7 +57,9 @@
 
     <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,
+        (SELECT COUNT(1) FROM cpr_train_student WHERE train_id = t.train_id) student_count,
+        (SELECT COUNT(1) FROM cpr_score WHERE project_id = t.train_id) submit_score_count
         from cpr_train AS t
         LEFT JOIN cpr_exam AS e ON t.exam_id = e.exam_id
         <include refid="where"/>

@@ -29,7 +29,7 @@
             竞赛
             @}
         </td>
-        <td></td>
+        <td>${list.studentCount}</td>
         <td>${list.trainBeginTime,"yyyy-MM-dd"}</td>
         <td>${list.trainMinites} 分钟</td>
         <td>
@@ -38,7 +38,14 @@
                    @}
                    train-id="${list.trainId}" data-size="mini">
         </td>
-        <td></td>
+        <td>
+            @if(list.submitScoreCount>0){
+            <a href="${ctxPath}/census/index.html?trainId=${list.trainId}"><i class="fa fa-bar-chart-o"></i></a></td>
+            @}else{
+            <i class="fa fa-bar-chart-o"></i></td>
+            @}
+
+
         <td><a href="${ctxPath}/train/train_setting.html?trainId=${list.trainId}"><i class="fa fa-cogs"></i> </a> </td>
         <td>
             <a href="${ctxPath}/train/user_add.html?trainId=${list.trainId}"><i class="fa fa-user-plus"></i></a>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_list_layout.html"){
+    <body class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="ibox float-e-margins">
+                <div class="">
+                <form id="search-form">
+                    <div class="ibox-content">
+                        <div class="row">
+
+                            <div class="pull-left" style="padding:0 0.3rem 0 0.4rem;">
+                                <div class="input-group">
+                                <select name="examId" id="exam_id" class="input-sm form-control" style="font-size: 12px;">
+                                    <option value="">选择项目</option>
+                                    @for(exam in exams){
+                                        <option value="${exam.examId}">${exam.examName}</option>
+                                    @}
+                                </select>
+                                </div>
+                            </div>
+
+                            <div class="pull-left" style="padding:0 0.3rem 0 0.4rem;">
+                                <div class="input-group">
+                                    <select name="train_id" id="train_id" class="input-sm form-control" style="font-size: 12px;">
+                                        <option value="">练考计划</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <a onclick="ajax_get_table('search-form',1)" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</a>
+
+                        </div>
+                        <div class="table-responsive" id="ajax_return">
+                            <div class="ibox float-e-margins">
+                                <div class="col-sm-6" id="pass_pie" style="height: 40rem;"></div>
+                                <div class="col-sm-6" id="error_pie" style="height: 40rem;"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+@}
+</body>
+<script src="/js/plugins/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        ajax_get_table();
+    });
+
+    function creatPassPie(names,data) {
+        var passPie = document.getElementById("pass_pie");
+        var passChart = echarts.init(passPie);
+        var app = {};
+        passChart.setOption({
+            title : {
+                text: '考试达标率',
+                x:'left',
+                y:'bottom'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: names
+            },
+            series : [
+                {
+                    type: 'pie',
+                    name: '达标率',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+    function creatErrorPie(names,data) {
+        var errorPie = document.getElementById("error_pie");
+        var errorChart = echarts.init(errorPie);
+        var app = {};
+        errorChart.setOption({
+            title : {
+                text: '考试达标率',
+                x:'left',
+                y:'bottom'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: names
+            },
+            series : [
+                {
+                    type: 'pie',
+                    name: '达标率',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+
+
+    function ajax_get_table(){
+        var train_id = $("#train_id").val();
+        $.ajax({
+            type : "POST",
+            url:"${ctxPath}/census/pass_error_percent?trainId=${trainId}",//+tab,
+            dataType : "JSON",
+            success: function(data){
+                console.log(data);
+                if(data){
+                   creatPassPie(data.pass.names,data.pass.items);
+                   creatErrorPie(data.error.names,data.error.items)
+                }
+            }
+        });
+    }
+
+    $("#exam_id").change(function () {
+        var exam_id = $("#exam_id").val();
+        $.ajax({
+            type : "POST",
+            url  : "${ctxPath}/train/ajax_train",
+            data : {
+                examId: exam_id
+            },
+            dataType: "JSON",
+            success:function(data){
+                $.each(data, function (n, value) {
+                    var option = "";
+                    option += "<option value='" + value.trainId + "'>" + value.trainName + "</option>";
+                    $("#train_id").append(option);
+                });
+            }
+        });
+    });
+
+</script>
+</html>

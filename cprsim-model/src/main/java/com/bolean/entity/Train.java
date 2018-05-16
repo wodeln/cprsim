@@ -62,6 +62,13 @@ public class Train implements Serializable {
     @Transient
     private String examName;
 
+    @Transient
+    private Integer studentCount;
+
+    //已提交分数数目
+    @Transient
+    private Integer submitScoreCount;
+
     private static final long serialVersionUID = 1L;
 
     public Long getTrainId() {
@@ -142,6 +149,22 @@ public class Train implements Serializable {
 
     public void setExamName(String examName) {
         this.examName = examName;
+    }
+
+    public Integer getStudentCount() {
+        return studentCount;
+    }
+
+    public void setStudentCount(Integer studentCount) {
+        this.studentCount = studentCount;
+    }
+
+    public Integer getSubmitScoreCount() {
+        return submitScoreCount;
+    }
+
+    public void setSubmitScoreCount(Integer submitScoreCount) {
+        this.submitScoreCount = submitScoreCount;
     }
 
     @Override

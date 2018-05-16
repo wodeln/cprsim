@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.ScoreMapper">
+    
+    <select id="selectSetFilds" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT
+          handle_time op_time,
+          interruption_time interrupt_time,
+          massage_time_percent CCF,
+          massage_right_percent pressure_pce,
+          ventilate_right_percent breath_pce,
+          massage_frequency_percent p_rate_pce
+        FROM cpr_train_setting
+        WHERE
+          train_id = #{_parameter,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectInfosByTrainId" parameterType="java.util.HashMap" resultType="java.util.Map">
+        SELECT
+        <foreach collection="fieldsList" item="v" separator=",">
+            sum(${v}) ${v}
+        </foreach>
+        FROM cpr_score
+        WHERE
+        project_id = ${projectId}
+    </select>
+
+    <select id="selectCountGtVaule" parameterType="java.util.HashMap" resultType="int">
+        SELECT
+            count(1)
+        FROM cpr_score
+        WHERE
+        ${field} &lt; ${value}
+        AND
+        project_id = ${projectId}
+    </select>
+
+    <select id="selectCountGteVaule" parameterType="java.util.HashMap" resultType="int">
+        SELECT
+            count(1)
+        FROM cpr_score
+        WHERE
+        ${field} &lt;= ${value}
+        AND
+        project_id = ${projectId}
+    </select>
+
+
+</mapper>

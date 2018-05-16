@@ -79,4 +79,24 @@ public class ScoreServiceImpl implements ScoreService {
     public List<Score> selectByInfo(Map<String, Object> map) {
         return scoreMapper.selectByInfo(map);
     }
+
+    @Override
+    public Map<String, Object> selectSetFilds(String trainId) {
+        return scoreMapper.selectSetFilds(trainId);
+    }
+
+    @Override
+    public Map<String, Object> selectInfosByTrainId(Map<String, Object> map) {
+        return scoreMapper.selectInfosByTrainId(map);
+    }
+
+    @Override
+    public int selectCountGtVaule(Map<String, Object> map) {
+        return scoreMapper.selectCountGtVaule(map);
+    }
+
+    @Override
+    public int selectCountGteVaule(Map<String, Object> map) {
+        return scoreMapper.selectCountGteVaule(map);
+    }
 }
