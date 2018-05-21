@@ -3,7 +3,6 @@ package com.bolean.controller;
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Role;
 import com.bolean.entity.User;
-import com.bolean.entity.UserRole;
 import com.bolean.service.RoleService;
 import com.bolean.service.UserRoleService;
 import com.bolean.service.UserService;
