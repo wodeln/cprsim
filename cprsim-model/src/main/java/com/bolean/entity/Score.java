@@ -40,7 +40,7 @@ public class Score implements Serializable {
     private Integer interruptTime;
 
     //按压比例 CCF > 60%
-    private Float CCF;
+    private Float ccf;
 
     //除颤次数
     private Integer defibrNum;
@@ -121,7 +121,7 @@ public class Score implements Serializable {
     private Integer bOverNum;
 
     //吹气少吹次数
-    private Integer bLowerNume;
+    private Integer bLowerNum;
 
     //用户ID
     private Long userId;
@@ -228,12 +228,12 @@ public class Score implements Serializable {
         this.interruptTime = interruptTime;
     }
 
-    public Float getCCF() {
-        return CCF;
+    public Float getCcf() {
+        return ccf;
     }
 
-    public void setCCF(Float CCF) {
-        this.CCF = CCF;
+    public void setCcf(Float ccf) {
+        this.ccf = ccf;
     }
 
     public Integer getDefibrNum() {
@@ -444,12 +444,12 @@ public class Score implements Serializable {
         this.bOverNum = bOverNum;
     }
 
-    public Integer getbLowerNume() {
-        return bLowerNume;
+    public Integer getbLowerNum() {
+        return bLowerNum;
     }
 
-    public void setbLowerNume(Integer bLowerNume) {
-        this.bLowerNume = bLowerNume;
+    public void setbLowerNum(Integer bLowerNum) {
+        this.bLowerNum = bLowerNum;
     }
 
     public Long getUserId() {

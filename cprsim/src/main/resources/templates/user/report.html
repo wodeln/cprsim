@@ -1,0 +1,118 @@
+<style>
+    .table-responsive{
+        padding: 10px 10px 10px;
+    }
+    .report_title{
+        height: 30px;
+        line-height: 30px;
+    }
+    .report_title span{
+        height: 30px;
+        line-height: 30px;
+        margin-right: 0;
+    }
+</style>
+<div class="table-responsive">
+    <div class="report_title">
+        <h3 class="pull-left">心肺复苏报告单</h3>
+        <span class="pull-right">施救者:test  |  结果 <b>
+            @if(score.opSuccess){
+                成功
+            @}else{
+                失败
+            @}
+        </b></span>
+    </div>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>项目</th>
+        <th>操作标准</th>
+        <th>操作结果</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!--循环 begin-->
+    <tr>
+        <td>循环</td>
+        <td>
+            最大时间：@if(trainSetting.handleTime>0){
+                ${trainSetting.handleTime}
+            @}else{
+                //
+            @}
+        </td>
+        <td>实际用时：${score.opTime} 秒</td>
+    </tr>
+    <!--循环 end-->
+
+    <!--按压 begin-->
+    <tr>
+        <td>按压</td>
+        <td>
+            按压深度： ${trainSetting.massageDeepMin} ~ ${trainSetting.massageDeepMax}
+            &nbsp;达标率： @if(trainSetting.massageRightPercent>0){
+                        ${trainSetting.massageRightPercent}%
+                    @}else{
+                        //
+                    @}
+        </td>
+        <td><b>错误 ${score.pError}</b> | 正确率 ${score.pressurePce}% | 正确 ${score.pRight} | 位置错误 ${score.posError} | 未充分回弹 ${score.releaseError} | 过大 ${score.pOver} | 过小 ${score.pLower} | 多按 ${score.pOverNum} | 少按 ${score.pLowerNum}</td>
+    </tr>
+    <!--按压 end-->
+
+
+    <!--按压中断 begin-->
+    <tr>
+        <td>按压中断</td>
+        <td>
+            按压中断小于：
+            @if(trainSetting.interruptionTime>0){
+                 ${trainSetting.interruptionTime} 秒
+            @}else{
+                //
+            @}
+        </td>
+        <td>
+            按压中断大于${trainSetting.interruptionTime}秒 ${score.interruptTime}次
+        </td>
+    </tr>
+    <!--按压中断 end-->
+
+    <!--吹气 begin-->
+    <tr>
+        <td>吹气</td>
+        <td>
+            吹气量： ${trainSetting.ventilateVolumeMin} ~ ${trainSetting.ventilateVolumeMax}
+            达标率： @if(trainSetting.ventilateRightPercent>0){
+                        ${trainSetting.ventilateRightPercent}%
+                    @}else{
+                        //
+                    @}
+
+        </td>
+        <td>
+            <b>错误 ${score.bError}</b> | 正确率 ${score.breathPce}% | 正确 ${score.bRight} | 过大 ${score.bOver} | 过小 ${score.bLower} | 多吹 ${score.bOverNum} | 少吹 ${score.bLowerNum}
+        </td>
+    </tr>
+    <!--吹气 end-->
+
+    <!--除颤 begin-->
+    <tr>
+        <td>吹气</td>
+        <td>至少除颤 @if(trainSetting.defibrillation==1){
+                        ${trainSetting.defibrillation}次
+                    @}else{
+                        //
+                    @}
+        </td>
+        <td>总除颤次数 ${score.defibrNum} | 正确次数 </td>
+    </tr>
+    <!--除颤 end-->
+    </tbody>
+</table>
+
+    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+
+</div>

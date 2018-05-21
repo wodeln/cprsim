@@ -35,8 +35,18 @@
                 </div>
             </div>
         </div>
+
 @}
+        <div class="modal inmodal" id="user_report" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content animated bounceInRight">
+
+                </div>
+            </div>
+        </div>
+
 </body>
+
 <script src="/js/plugins/echarts/echarts.min.js"></script>
 <script type="text/javascript">
 
@@ -153,9 +163,9 @@
                     tableStr+="<td>"+item.user_true_name+"</td>";
                     tableStr+="<td>"+item.sum_grade+"</td>";
                     tableStr+="<td>"+ifPass+"</td>";
-                    tableStr+="<td><a href='${ctxPath}/census/all_info?trainId=${trainId}&studentId="+item.user_id+"'>查看详情</a> </td>";
-                    tableStr+="<td><a href='${ctxPath}/census/census_info?trainId=${trainId}&studentId="+item.user_id+"'>查看统计</a> </td>";
-                    tableStr+="<td><a href='${ctxPath}/census/print?trainId=${trainId}&studentId="+item.user_id+"' target='_blank'><i class='fa fa-print'></i></a></td>";
+                    tableStr+="<td><a data-toggle='modal' data-target='#user_report' href='${ctxPath}/census/user_report?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看详情</a> </td>";
+                    tableStr+="<td><a href='${ctxPath}/census/census_info?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看统计</a> </td>";
+                    tableStr+="<td><a href='${ctxPath}/census/print?sid="+item.id+"}&trainId=${trainId}&studentId="+item.user_id+"' target='_blank'><i class='fa fa-print'></i></a></td>";
                     tableStr+="</tr>";
                 });
                 $("#students").html(tableStr);

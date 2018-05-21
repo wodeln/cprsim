@@ -3,8 +3,11 @@ package com.bolean.controller;
 import com.bolean.entity.EcChats;
 import com.bolean.entity.Exam;
 import com.bolean.entity.Score;
+import com.bolean.entity.TrainSetting;
 import com.bolean.service.ExamService;
 import com.bolean.service.ScoreService;
+import com.bolean.service.TrainService;
+import com.bolean.service.TrainSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +29,13 @@ public class CensusController extends BaseController{
     @Autowired
     private ScoreService scoreService;
 
+    @Autowired
+    private TrainSettingService trainSettingService;
+
     private final Map<String,Object> namesMap = new HashMap<String,Object>(){{
                 put("op_time", "操作超时错误");
                 put("interrupt_time", "中断时间错误");
-                put("CCF", "按压时间占比错误");
+                put("ccf", "按压时间占比错误");
                 put("pressure_pce", "按压百分比错误");
                 put("breath_pce", "吹气百分比错误");
                 put("p_rate_pce", "按压频率百分比错误");
@@ -150,5 +156,14 @@ public class CensusController extends BaseController{
         List<Map<String,Object>> userScore = scoreService.selectStudentByTrainid(trainId);
 
         return userScore;
+    }
+
+    @RequestMapping("user_report")
+    public String userReport(String sid,Model model){
+        Score score = scoreService.selectByPrimaryKey((long)Integer.parseInt(sid));
+        TrainSetting trainSetting = trainSettingService.selectByTrainId(score.getProjectId()+"");
+        model.addAttribute("score",score);
+        model.addAttribute("trainSetting",trainSetting);
+        return "/user/report.html";
     }
 }
