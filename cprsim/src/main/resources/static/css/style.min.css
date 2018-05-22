@@ -3321,11 +3321,11 @@ body.mini-navbar.canvas-menu .footer.fixed
     border-width: 1px;
     border-style: solid;
     border-color: #ddd #ddd rgba(0,0,0,0);
-    border-bottom: #f3f3f4;
+    /*border-bottom: #f3f3f4;*/
     -webkit-border-image: none;
          -o-border-image: none;
             border-image: none;
-    background: 0 0;
+    /*background: 0 0;*/
 
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;

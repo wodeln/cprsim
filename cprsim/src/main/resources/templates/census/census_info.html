@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<style>
+    .top_title{
+        float: left;
+        width: 24.8%;
+        text-align: center;
+        padding:15px 30px 15px 30px;
+        font-weight: 600;
+    }
+    .border_1{
+        border: 1px solid #c6c6c6;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+    .hr-line{
+        height: 1px;
+        background-color: #c6c6c6;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .sign{
+        height: 3rem;
+        width: 1px;
+        background-color: #c6c6c6;
+        float: left;
+        margin-top: 3rem;
+    }
+    .sign2{
+        height: 10rem;
+        width: 1px;
+        background-color: #c6c6c6;
+        float: left;
+        margin-top: 5rem;
+    }
+    .w50{
+        width: 50%;
+    }
+    .w49{
+        width: 49.8%;
+        float: left;
+    }
+    .des{
+        font-size: 14px;
+        font-weight: 100;
+        color: #c6c6c6;
+    }
+    .other-info{
+        height: 3rem;
+        line-height: 3rem;
+        font-weight: 500;
+        float: left;
+        margin-left: 5rem;
+        width: 100%;
+    }
+    .pie-chart{
+        width: 33.33%;
+        float: left;
+        height: 300px;
+    }
+    .bottom{
+        margin-top: 160px;
+    }
+    .breath{
+        width: 50%;
+        height: 250px;
+        border: 1px solid #c6c6c6;
+        margin-right: 80px;
+        margin-top: 20px;
+    }
+    .grade{
+        height: 80px;
+        line-height: 80px;
+        margin-left: 30px;
+    }
+    .grade-info{
+        text-align: center;
+        font-size: 20px;
+    }
+    .point{
+        font-size: 50px;
+    }
+    .point-des{
+        font-size: 20px;
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+</style>
+<html>
+@layout("/layout/_list_layout.html"){
+    <body class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="ibox float-e-margins">
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#opt_chart" data-toggle="tab">
+                            操作统计
+                        </a>
+                    </li>
+                    <li><a href="#opt_tendency_chart" data-toggle="tab">操作趋势图</a></li>
+                    <li>
+                        <a href="#opt_census" data-toggle="tab">操作数据详情统计
+                        </a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="opt_chart">
+                       <div class="col-lg-12 border_1">
+                           <div class="top">
+                               <div class="top_title">
+                                   有效按压
+                                   <div class="hr-line"></div>
+                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                               </div>
+                               <div class="sign"></div>
+                               <div class="top_title">
+                                   按压次数
+                                   <div class="hr-line"></div>
+                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                               </div>
+                               <div class="sign"></div>
+                               <div class="top_title">
+                                   评价深度
+                                   <div class="hr-line"></div>
+                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                               </div>
+                               <div class="sign"></div>
+                               <div class="top_title">
+                                   按压正确频率
+                                   <div class="hr-line"></div>
+                                   <div class="pull-left w50 text-right">50</div> <div class="text-center pull-right w50">（%）</div>
+                                   <div class="des">(正确范围100-120次/min)</div>
+                               </div>
+                               <div class="other-info">中断时间 10S</div>
+                           </div>
+                           <div class="bottom">
+                                <div class="pie-chart" id="deep"></div>
+                                <div class="pie-chart" id="position"></div>
+                                <div class="pie-chart" id="release"></div>
+                           </div>
+                       </div>
+
+                        <div class="col-lg-12 border_1">
+                            <div class="top">
+                                <div class="top_title">
+                                    有效吹气
+                                    <div class="hr-line"></div>
+                                    <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                </div>
+                                <div class="sign"></div>
+                                <div class="top_title">
+                                    吹气次数
+                                    <div class="hr-line"></div>
+                                    <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                </div>
+                                <div class="sign"></div>
+                                <div class="top_title">
+                                    平均吹气量
+                                    <div class="hr-line"></div>
+                                    <div class="pull-left w50 text-right">1000</div> <div class="text-center pull-right w50">（ml）</div>
+                                </div>
+                                <div class="sign"></div>
+                                <div class="top_title">
+                                    平均吹气频率
+                                    <div class="hr-line"></div>
+                                    <div class="pull-left w50 text-right">50</div> <div class="text-center pull-right w50">（次/min）</div>
+                                    <div class="des">(正确范围6-8次/min)</div>
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <div class="pie-chart" id="correct"></div>
+                                <div class="breath pull-right">
+                                    <div class="w49">
+                                        <div class="grade">总分:</div>
+                                        <div class="grade-info">
+                                            <div>
+                                                <span class="point">20</span><span>%</span>
+                                                <div class="point-des">(操作成功)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sign2"></div>
+                                    <div class="w49">
+                                        <div class="grade"></div>
+                                        <div class="grade-info">
+                                            <div>
+                                                <span class="point green"><i class="fa fa-user-o"></i></span>
+                                                <div><i class="fa fa-heartbeat point-des">30%</i>  | <i class="fa fa-heartbeat point-des"> 40%</i> </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="opt_tendency_chart">
+                        <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
+                            TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+                    </div>
+                    <div class="tab-pane fade" id="opt_census">
+                        <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+@}
+</body>
+
+<script src="/js/plugins/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        creatDeepPie();
+        creatPositionPie();
+        creatReleasePie();
+        creatCorrectPie();
+    });
+
+    function creatCorrectPie() {
+        var dom = document.getElementById("correct");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        myChart.setOption({
+            title : {
+                text: '准确率',
+                x:'right',
+                y:'top'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                y: '50px',
+                data:['吹气适当','吹气不足','吹气过量']
+            },
+            series: [
+                {
+                    name:'吹气正确率',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'吹气适当'},
+                        {value:310, name:'吹气不足'},
+                        {value:234, name:'吹气过量'}
+                    ]
+                }
+            ]
+        });
+    }
+
+    function creatDeepPie() {
+        var dom = document.getElementById("deep");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        myChart.setOption({
+            title : {
+                text: '按压深度',
+                x:'right',
+                y:'top'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                y: '50px',
+                data:['充足按压','不足按压','过大按压']
+            },
+            series: [
+                {
+                    name:'按压深度',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'充足按压'},
+                        {value:310, name:'不足按压'},
+                        {value:234, name:'过大按压'}
+                    ]
+                }
+            ]
+        });
+    }
+
+    function creatPositionPie() {
+        var dom = document.getElementById("position");
+        var myChart = echarts.init(dom);
+        var app = {};
+
+        myChart.setOption({
+            title : {
+                text: '按压位置',
+                x:'right',
+                y:'top'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                y: '50px',
+                data:['中心','上部','下部','左部','右部']
+            },
+            series: [
+                {
+                    name:'按压位置',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'中心'},
+                        {value:310, name:'上部'},
+                        {value:234, name:'下部'},
+                        {value:322, name:'左部'},
+                        {value:412, name:'右部'},
+                    ]
+                }
+            ]
+        });
+    }
+
+    function creatReleasePie() {
+        var dom = document.getElementById("release");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+
+        myChart.setOption({
+            title : {
+                text: '释放正确',
+                x:'right',
+                y:'top'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                y: '50px',
+                data:['释放正确','释放不足']
+            },
+            series: [
+                {
+                    name:'释放正确',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:[
+                        {value:335, name:'释放正确'},
+                        {value:310, name:'释放不足'}
+                    ]
+                }
+            ]
+        });
+    }
+
+</script>
+</html>

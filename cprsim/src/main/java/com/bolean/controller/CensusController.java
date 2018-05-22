@@ -166,4 +166,13 @@ public class CensusController extends BaseController{
         model.addAttribute("trainSetting",trainSetting);
         return "/user/report.html";
     }
+
+    @RequestMapping("census_info")
+    public String censusInfo(String sid,Model model){
+        Score score = scoreService.selectByPrimaryKey((long)Integer.parseInt(sid));
+        TrainSetting trainSetting = trainSettingService.selectByTrainId(score.getProjectId()+"");
+        model.addAttribute("score",score);
+        model.addAttribute("trainSetting",trainSetting);
+        return "/census/census_info.html";
+    }
 }
