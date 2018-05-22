@@ -86,7 +86,80 @@
     .green{
         color: green;
     }
+    .table-responsive{
+        padding: 10px 10px 10px;
+    }
+    .report_title{
+        height: 30px;
+        line-height: 30px;
+    }
+    .report_title span{
+        height: 30px;
+        line-height: 30px;
+        margin-right: 0;
+    }
+
+    .w25{
+        width: 25%;
+    }
+    .tt{
+        text-align: center;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    .i-title {
+        min-height: 30px;
+        margin-bottom: 0;
+        padding: 5px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        background-color: #fff;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #c0d5f6;
+        margin-bottom: 0.63234rem;
+        font-weight: bold;
+        font-size: 1.32144rem;
+    }
+
+    .i-content {
+        min-height: 32px;
+        margin-bottom: 0;
+        padding: 7px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        background-color: #fff;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        font-size: 1.42454rem;
+    }
+    .p3{
+        padding-left: 1rem;
+    }
+    .bt2{
+        margin-bottom: 0.2934rem;
+    }
+    .d-none{
+        display: none;
+    }
+    .d-none a{
+        color: #a1a1a1;
+        font-size: 1.5rem;
+    }
+    .score{
+        padding: 30px 20px 0 20px;
+    }
 </style>
+<link href="/css/plugins/horizontal-timeline/reset.css" rel="stylesheet">
+<link href="/css/plugins/horizontal-timeline/style.css" rel="stylesheet">
 <html>
 @layout("/layout/_list_layout.html"){
     <body class="wrapper wrapper-content animated fadeInRight">
@@ -196,11 +269,237 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="opt_tendency_chart">
-                        <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-                            TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+                        <div class="table-responsive">
+                            <div class="report_title">
+                                <h3 class="pull-left">心肺复苏报告单</h3>
+                                <span class="pull-right">施救者:test  |  结果 <b>
+                                        @if(score.opSuccess){
+                                            成功
+                                        @}else{
+                                            失败
+                                        @}
+                                        </b>
+                                </span>
+                            </div>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>项目</th>
+                                    <th>操作标准</th>
+                                    <th>操作结果</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <!--循环 begin-->
+                                <tr>
+                                    <td>循环</td>
+                                    <td>
+                                        最大时间：@if(trainSetting.handleTime>0){
+                                        ${trainSetting.handleTime}
+                                        @}else{
+                                        //
+                                        @}
+                                    </td>
+                                    <td>实际用时：${score.opTime} 秒</td>
+                                </tr>
+                                <!--循环 end-->
+
+                                <!--按压 begin-->
+                                <tr>
+                                    <td>按压</td>
+                                    <td>
+                                        按压深度： ${trainSetting.massageDeepMin} ~ ${trainSetting.massageDeepMax}
+                                        &nbsp;达标率： @if(trainSetting.massageRightPercent>0){
+                                        ${trainSetting.massageRightPercent}%
+                                        @}else{
+                                        //
+                                        @}
+                                    </td>
+                                    <td><b>错误 ${score.pError}</b> | 正确率 ${score.pressurePce}% | 正确 ${score.pRight} | 位置错误 ${score.posError} | 未充分回弹 ${score.releaseError} | 过大 ${score.pOver} | 过小 ${score.pLower} | 多按 ${score.pOverNum} | 少按 ${score.pLowerNum}</td>
+                                </tr>
+                                <!--按压 end-->
+
+
+                                <!--按压中断 begin-->
+                                <tr>
+                                    <td>按压中断</td>
+                                    <td>
+                                        按压中断小于：
+                                        @if(trainSetting.interruptionTime>0){
+                                        ${trainSetting.interruptionTime} 秒
+                                        @}else{
+                                        //
+                                        @}
+                                    </td>
+                                    <td>
+                                        按压中断大于${trainSetting.interruptionTime}秒 ${score.interruptTime}次
+                                    </td>
+                                </tr>
+                                <!--按压中断 end-->
+
+                                <!--吹气 begin-->
+                                <tr>
+                                    <td>吹气</td>
+                                    <td>
+                                        吹气量： ${trainSetting.ventilateVolumeMin} ~ ${trainSetting.ventilateVolumeMax}
+                                        达标率： @if(trainSetting.ventilateRightPercent>0){
+                                        ${trainSetting.ventilateRightPercent}%
+                                        @}else{
+                                        //
+                                        @}
+
+                                    </td>
+                                    <td>
+                                        <b>错误 ${score.bError}</b> | 正确率 ${score.breathPce}% | 正确 ${score.bRight} | 过大 ${score.bOver} | 过小 ${score.bLower} | 多吹 ${score.bOverNum} | 少吹 ${score.bLowerNum}
+                                    </td>
+                                </tr>
+                                <!--吹气 end-->
+
+                                <!--除颤 begin-->
+                                <tr>
+                                    <td>吹气</td>
+                                    <td>至少除颤 @if(trainSetting.defibrillation==1){
+                                        ${trainSetting.defibrillation}次
+                                        @}else{
+                                        //
+                                        @}
+                                    </td>
+                                    <td>总除颤次数 ${score.defibrNum} | 正确次数 </td>
+                                </tr>
+                                <!--除颤 end-->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <section class="cd-horizontal-timeline">
+                            <div class="timeline">
+                                <div class="events-wrapper">
+                                    <div class="events">
+                                        <ol>
+                                            <li><a href="#0" data-date="16/01/2014" class="selected">气道开放</a></li>
+                                            <li><a href="#0" data-date="28/02/2014">过度伸展</a></li>
+                                            <li><a href="#0" data-date="20/04/2014">吹气过量</a></li>
+                                            <li><a href="#0" data-date="20/05/2014">吹气不足</a></li>
+                                            <li><a href="#0" data-date="09/07/2014">正常按压</a></li>
+                                            <li><a href="#0" data-date="30/08/2014">按压不足</a></li>
+                                            <li><a href="#0" data-date="15/09/2014">释放不足</a></li>
+                                            <li><a href="#0" data-date="01/11/2014">正常按压</a></li>
+                                            <li><a href="#0" data-date="10/12/2014">正常按压</a></li>
+                                            <li><a href="#0" data-date="19/01/2015">正常按压</a></li>
+                                            <li><a href="#0" data-date="03/03/2015">正常按压</a></li>
+                                        </ol>
+
+                                        <span class="filling-line" aria-hidden="true"></span>
+                                    </div> <!-- .events -->
+                                </div> <!-- .events-wrapper -->
+
+                                <ul class="cd-timeline-navigation">
+                                    <li><a href="#0" class="prev inactive">Prev</a></li>
+                                    <li><a href="#0" class="next">Next</a></li>
+                                </ul> <!-- .cd-timeline-navigation -->
+                            </div> <!-- .timeline -->
+
+                            <!-- .events-content -->
+                        </section>
+                        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+                        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+                        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+                        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
                     </div>
                     <div class="tab-pane fade" id="opt_census">
-                        <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+
+                        <div class="score">
+                            <div>成绩：83 平均分：80 满分：100</div>
+                            <h3>成绩明细表</h3>
+                        </div>
+                        <div class="form-group">
+
+                            <div class="col-sm-12">
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">CPR质量客观考点</div>
+                                        <div class="pull-left w25">得分</div>
+                                    </div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">客观评价</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">43</div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">环境评估</div>
+                                        <div class="pull-left w25"></div>
+                                    </div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">观察周围环境</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">50</div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">判断意识和呼吸</div>
+                                        <div class="pull-left w25"></div>
+                                    </div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">拍患者双肩</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">5</div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">呼叫声音响亮有效</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">10</div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">观察胸廓起伏，同时检查动脉脉搏方法正确</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">10</div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">启动BLS</div>
+                                        <div class="pull-left w25"></div>
+                                    </div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">呼救</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">10</div>
+                                </div>
+
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">摆放位置</div>
+                                        <div class="pull-left w25"></div>
+                                    </div>
+                                </div>
+
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">医生与患者体位正确</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">10</div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,6 +509,7 @@
 </body>
 
 <script src="/js/plugins/echarts/echarts.min.js"></script>
+<script src="/js/plugins/horizontal-timeline/main.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         creatDeepPie();
