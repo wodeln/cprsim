@@ -79,5 +79,9 @@ public class ArgsScoreServiceImpl implements ArgsScoreService {
     public List<ArgsScore> selectByInfo(Map<String, Object> map) {
         return argsScoreMapper.selectByInfo(map);
     }
-    
+
+    @Override
+    public Integer selectScoreByUserIdArgsId(Map<String, Object> map) {
+        return argsScoreMapper.selectScoreByUserIdArgsId(map);
+    }
 }

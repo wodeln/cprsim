@@ -184,28 +184,28 @@
                                <div class="top_title">
                                    有效按压
                                    <div class="hr-line"></div>
-                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                   <div class="pull-left w50 text-right">${score.pRight}</div> <div class="text-center pull-right w50">（次）</div>
                                </div>
                                <div class="sign"></div>
                                <div class="top_title">
                                    按压次数
                                    <div class="hr-line"></div>
-                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                   <div class="pull-left w50 text-right">${score.pSumNum}</div> <div class="text-center pull-right w50">（次）</div>
                                </div>
                                <div class="sign"></div>
                                <div class="top_title">
-                                   评价深度
+                                   平均深度
                                    <div class="hr-line"></div>
-                                   <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                   <div class="pull-left w50 text-right">${score.pAverageDepth}</div> <div class="text-center pull-right w50">（次）</div>
                                </div>
                                <div class="sign"></div>
                                <div class="top_title">
                                    按压正确频率
                                    <div class="hr-line"></div>
-                                   <div class="pull-left w50 text-right">50</div> <div class="text-center pull-right w50">（%）</div>
+                                   <div class="pull-left w50 text-right">${score.pRatePce}</div> <div class="text-center pull-right w50">（%）</div>
                                    <div class="des">(正确范围100-120次/min)</div>
                                </div>
-                               <div class="other-info">中断时间 10S</div>
+                               <div class="other-info">中断时间 ${score.interruptTime}S</div>
                            </div>
                            <div class="bottom">
                                 <div class="pie-chart" id="deep"></div>
@@ -219,25 +219,25 @@
                                 <div class="top_title">
                                     有效吹气
                                     <div class="hr-line"></div>
-                                    <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                    <div class="pull-left w50 text-right">${score.bRight}</div> <div class="text-center pull-right w50">（次）</div>
                                 </div>
                                 <div class="sign"></div>
                                 <div class="top_title">
                                     吹气次数
                                     <div class="hr-line"></div>
-                                    <div class="pull-left w50 text-right">5</div> <div class="text-center pull-right w50">（次）</div>
+                                    <div class="pull-left w50 text-right">${score.bSumNum}</div> <div class="text-center pull-right w50">（次）</div>
                                 </div>
                                 <div class="sign"></div>
                                 <div class="top_title">
                                     平均吹气量
                                     <div class="hr-line"></div>
-                                    <div class="pull-left w50 text-right">1000</div> <div class="text-center pull-right w50">（ml）</div>
+                                    <div class="pull-left w50 text-right">${score.bAverageVolume}</div> <div class="text-center pull-right w50">（ml）</div>
                                 </div>
                                 <div class="sign"></div>
                                 <div class="top_title">
                                     平均吹气频率
                                     <div class="hr-line"></div>
-                                    <div class="pull-left w50 text-right">50</div> <div class="text-center pull-right w50">（次/min）</div>
+                                    <div class="pull-left w50 text-right">${score.bAverageRate}</div> <div class="text-center pull-right w50">（次/min）</div>
                                     <div class="des">(正确范围6-8次/min)</div>
                                 </div>
                             </div>
@@ -248,8 +248,14 @@
                                         <div class="grade">总分:</div>
                                         <div class="grade-info">
                                             <div>
-                                                <span class="point">20</span><span>%</span>
-                                                <div class="point-des">(操作成功)</div>
+                                                <span class="point">${score.gradeObj}</span>
+                                                <div class="point-des">
+                                                    @if(score.opSuccess){
+                                                        操作成功
+                                                    @}else{
+                                                        操作失败
+                                                    @}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -259,7 +265,7 @@
                                         <div class="grade-info">
                                             <div>
                                                 <span class="point green"><i class="fa fa-user-o"></i></span>
-                                                <div><i class="fa fa-heartbeat point-des">30%</i>  | <i class="fa fa-heartbeat point-des"> 40%</i> </div>
+                                                <div><i class="fa fa-heartbeat point-des">${score.pRatePce}%</i>  | <i class="fa fa-heartbeat point-des"> ${score.bRatePce}%</i> </div>
                                             </div>
 
                                         </div>
@@ -414,8 +420,27 @@
                             <h3>成绩明细表</h3>
                         </div>
                         <div class="form-group">
-
+                            @for(arg in args){
                             <div class="col-sm-12">
+                                <div class="text-center">
+                                    <div class="i-title">
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25">${arg.argsTypeName}</div>
+                                        <div class="pull-left w25">得分</div>
+                                    </div>
+                                </div>
+                                @if(isNotEmpty(arg.args)){
+                                @for(arg1 in arg.args){
+                                <div class="i-content">
+                                    <div class="pull-left w25 p3">${arg1.argsName}</div>
+                                    <div class="pull-left w25">&nbsp;</div>
+                                    <div class="pull-left w25 text-center">${arg1.argsPoint}</div>
+                                </div>
+                                @}
+                                @}
+                            </div>
+                            @}
+                            <!--<div class="col-sm-12">
                                 <div class="text-center">
                                     <div class="i-title">
                                         <div class="pull-left w25">&nbsp;</div>
@@ -498,7 +523,7 @@
                                     <div class="pull-left w25 text-center">10</div>
                                 </div>
 
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -521,8 +546,7 @@
     function creatCorrectPie() {
         var dom = document.getElementById("correct");
         var myChart = echarts.init(dom);
-        var app = {};
-
+        var crectObj = ${breathPie};
         myChart.setOption({
             title : {
                 text: '准确率',
@@ -537,7 +561,7 @@
                 orient: 'vertical',
                 x: 'right',
                 y: '50px',
-                data:['吹气适当','吹气不足','吹气过量']
+                data:crectObj.names
             },
             series: [
                 {
@@ -563,11 +587,7 @@
                             show: false
                         }
                     },
-                    data:[
-                        {value:335, name:'吹气适当'},
-                        {value:310, name:'吹气不足'},
-                        {value:234, name:'吹气过量'}
-                    ]
+                    data:crectObj.items
                 }
             ]
         });
@@ -576,8 +596,8 @@
     function creatDeepPie() {
         var dom = document.getElementById("deep");
         var myChart = echarts.init(dom);
-        var app = {};
 
+        var deepObj = ${pressDeepPie};
         myChart.setOption({
             title : {
                 text: '按压深度',
@@ -592,7 +612,7 @@
                 orient: 'vertical',
                 x: 'right',
                 y: '50px',
-                data:['充足按压','不足按压','过大按压']
+                data:deepObj.names
             },
             series: [
                 {
@@ -618,11 +638,7 @@
                             show: false
                         }
                     },
-                    data:[
-                        {value:335, name:'充足按压'},
-                        {value:310, name:'不足按压'},
-                        {value:234, name:'过大按压'}
-                    ]
+                    data:deepObj.items
                 }
             ]
         });
@@ -631,8 +647,8 @@
     function creatPositionPie() {
         var dom = document.getElementById("position");
         var myChart = echarts.init(dom);
-        var app = {};
 
+        var positionObj = ${pressPositionPie};
         myChart.setOption({
             title : {
                 text: '按压位置',
@@ -647,7 +663,7 @@
                 orient: 'vertical',
                 x: 'right',
                 y: '50px',
-                data:['中心','上部','下部','左部','右部']
+                data:positionObj.names
             },
             series: [
                 {
@@ -673,13 +689,7 @@
                             show: false
                         }
                     },
-                    data:[
-                        {value:335, name:'中心'},
-                        {value:310, name:'上部'},
-                        {value:234, name:'下部'},
-                        {value:322, name:'左部'},
-                        {value:412, name:'右部'},
-                    ]
+                    data:positionObj.items
                 }
             ]
         });
@@ -688,9 +698,8 @@
     function creatReleasePie() {
         var dom = document.getElementById("release");
         var myChart = echarts.init(dom);
-        var app = {};
-        option = null;
 
+        var releaseObj = ${pressPie};
         myChart.setOption({
             title : {
                 text: '释放正确',
@@ -705,7 +714,7 @@
                 orient: 'vertical',
                 x: 'right',
                 y: '50px',
-                data:['释放正确','释放不足']
+                data:releaseObj.names
             },
             series: [
                 {
@@ -731,10 +740,7 @@
                             show: false
                         }
                     },
-                    data:[
-                        {value:335, name:'释放正确'},
-                        {value:310, name:'释放不足'}
-                    ]
+                    data:releaseObj.items
                 }
             ]
         });

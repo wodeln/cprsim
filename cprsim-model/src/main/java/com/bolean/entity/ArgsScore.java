@@ -16,7 +16,7 @@ public class ArgsScore implements Serializable {
 
     private String argsName;
 
-    private float argsScore;
+    private Integer argsScore;
 
     private Long userId;
 
@@ -46,11 +46,11 @@ public class ArgsScore implements Serializable {
         this.argsName = argsName;
     }
 
-    public float getArgsScore() {
+    public Integer getArgsScore() {
         return argsScore;
     }
 
-    public void setArgsScore(float argsScore) {
+    public void setArgsScore(Integer argsScore) {
         this.argsScore = argsScore;
     }
 

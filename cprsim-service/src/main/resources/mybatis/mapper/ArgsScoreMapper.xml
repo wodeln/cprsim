@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.ArgsScoreMapper">
+    
+    <select id="selectScoreByUserIdArgsId" parameterType="java.util.Map" resultType="Integer">
+        SELECT
+          args_score
+        FROM cpr_args_score
+        WHERE
+          args_id = #{argsId,jdbcType=INTEGER}
+        AND
+          user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

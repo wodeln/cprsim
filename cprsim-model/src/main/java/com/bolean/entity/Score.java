@@ -10,16 +10,16 @@ public class Score implements Serializable {
     private Long id;
 
     //总成绩
-    private Float sumGrade;
+    private Integer sumGrade;
 
     //客观评分值
-    private Float gradeObj;
+    private Integer gradeObj;
 
     //主观评分值
-    private Float gradeSub;
+    private Integer gradeSub;
 
     //满分值
-    private Float fullMark;
+    private Integer fullMark;
 
     //最大用时（单位：秒）
     private Integer sumTime;
@@ -40,16 +40,16 @@ public class Score implements Serializable {
     private Integer interruptTime;
 
     //按压比例 CCF > 60%
-    private Float ccf;
+    private Integer ccf;
 
     //除颤次数
     private Integer defibrNum;
 
     //按压正确百分比
-    private Float pressurePce;
+    private Integer pressurePce;
 
     //breath_pce
-    private Float breathPce;
+    private Integer breathPce;
 
     //按压总次数
     private Integer pSumNum;
@@ -123,6 +123,24 @@ public class Score implements Serializable {
     //吹气少吹次数
     private Integer bLowerNum;
 
+    //平均吹气频率
+    private Integer bAverageRate;
+
+    //平均吹气量
+    private Integer bAverageVolume;
+
+    //吹气正确频率百分比
+    private Integer bRatePce;
+
+    //通气时间正确次数
+    private Integer ventilaTimeRight;
+
+    //通气时间过短次数
+    private Integer ventilaTimeShort;
+
+    //通气时间过长次数
+    private Integer ventilaTimeLong;
+
     //用户ID
     private Long userId;
 
@@ -148,35 +166,35 @@ public class Score implements Serializable {
         this.id = id;
     }
 
-    public Float getSumGrade() {
+    public Integer getSumGrade() {
         return sumGrade;
     }
 
-    public void setSumGrade(Float sumGrade) {
+    public void setSumGrade(Integer sumGrade) {
         this.sumGrade = sumGrade;
     }
 
-    public Float getGradeObj() {
+    public Integer getGradeObj() {
         return gradeObj;
     }
 
-    public void setGradeObj(Float gradeObj) {
+    public void setGradeObj(Integer gradeObj) {
         this.gradeObj = gradeObj;
     }
 
-    public Float getGradeSub() {
+    public Integer getGradeSub() {
         return gradeSub;
     }
 
-    public void setGradeSub(Float gradeSub) {
+    public void setGradeSub(Integer gradeSub) {
         this.gradeSub = gradeSub;
     }
 
-    public Float getFullMark() {
+    public Integer getFullMark() {
         return fullMark;
     }
 
-    public void setFullMark(Float fullMark) {
+    public void setFullMark(Integer fullMark) {
         this.fullMark = fullMark;
     }
 
@@ -228,11 +246,11 @@ public class Score implements Serializable {
         this.interruptTime = interruptTime;
     }
 
-    public Float getCcf() {
+    public Integer getCcf() {
         return ccf;
     }
 
-    public void setCcf(Float ccf) {
+    public void setCcf(Integer ccf) {
         this.ccf = ccf;
     }
 
@@ -244,19 +262,19 @@ public class Score implements Serializable {
         this.defibrNum = defibrNum;
     }
 
-    public Float getPressurePce() {
+    public Integer getPressurePce() {
         return pressurePce;
     }
 
-    public void setPressurePce(Float pressurePce) {
+    public void setPressurePce(Integer pressurePce) {
         this.pressurePce = pressurePce;
     }
 
-    public Float getBreathPce() {
+    public Integer getBreathPce() {
         return breathPce;
     }
 
-    public void setBreathPce(Float breathPce) {
+    public void setBreathPce(Integer breathPce) {
         this.breathPce = breathPce;
     }
 
@@ -466,5 +484,53 @@ public class Score implements Serializable {
 
     public void setProjectId(Long projectId) {
         this.projectId = projectId;
+    }
+
+    public Integer getbAverageRate() {
+        return bAverageRate;
+    }
+
+    public void setbAverageRate(Integer bAverageRate) {
+        this.bAverageRate = bAverageRate;
+    }
+
+    public Integer getbAverageVolume() {
+        return bAverageVolume;
+    }
+
+    public void setbAverageVolume(Integer bAverageVolume) {
+        this.bAverageVolume = bAverageVolume;
+    }
+
+    public Integer getVentilaTimeRight() {
+        return ventilaTimeRight;
+    }
+
+    public void setVentilaTimeRight(Integer ventilaTimeRight) {
+        this.ventilaTimeRight = ventilaTimeRight;
+    }
+
+    public Integer getVentilaTimeShort() {
+        return ventilaTimeShort;
+    }
+
+    public void setVentilaTimeShort(Integer ventilaTimeShort) {
+        this.ventilaTimeShort = ventilaTimeShort;
+    }
+
+    public Integer getVentilaTimeLong() {
+        return ventilaTimeLong;
+    }
+
+    public void setVentilaTimeLong(Integer ventilaTimeLong) {
+        this.ventilaTimeLong = ventilaTimeLong;
+    }
+
+    public Integer getbRatePce() {
+        return bRatePce;
+    }
+
+    public void setbRatePce(Integer bRatePce) {
+        this.bRatePce = bRatePce;
     }
 }

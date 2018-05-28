@@ -1,13 +1,10 @@
 package com.bolean.controller;
 
-import com.bolean.entity.EcChats;
-import com.bolean.entity.Exam;
-import com.bolean.entity.Score;
-import com.bolean.entity.TrainSetting;
-import com.bolean.service.ExamService;
-import com.bolean.service.ScoreService;
-import com.bolean.service.TrainService;
-import com.bolean.service.TrainSettingService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.bolean.entity.*;
+import com.bolean.service.*;
+import com.bolean.util.CountUitl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +28,15 @@ public class CensusController extends BaseController{
 
     @Autowired
     private TrainSettingService trainSettingService;
+
+    @Autowired
+    private ArgsTypeService argsTypeService;
+
+    @Autowired
+    private ArgsService argsService;
+
+    @Autowired
+    private ArgsScoreService argsScoreService;
 
     private final Map<String,Object> namesMap = new HashMap<String,Object>(){{
                 put("op_time", "操作超时错误");
@@ -171,7 +177,36 @@ public class CensusController extends BaseController{
     public String censusInfo(String sid,Model model){
         Score score = scoreService.selectByPrimaryKey((long)Integer.parseInt(sid));
         TrainSetting trainSetting = trainSettingService.selectByTrainId(score.getProjectId()+"");
+        CountUitl countUitl = new CountUitl();
+
+        //按压深度PIE数据
+        JSONObject pressDeepPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressDeepPie(score)));
+        //按压位置PIE数据
+        JSONObject pressPositionPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressPositionPie(score)));
+        //按压PIE数据
+        JSONObject pressPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressPie(score)));
+        //吹气正确PIE数据
+        JSONObject breathPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getBreathPie(score)));
+
+
+        List<ArgsType> argsTypes = argsTypeService.selectAll();
+        for (ArgsType argsType : argsTypes) {
+            List<Args> args = argsService.selectByArgsTypeId(argsType.getArgsTypeId()+"");
+            for (Args arg : args){
+                Map<String,Object> map = new HashMap<>();
+                map.put("argsId",arg.getArgsId());
+                map.put("userId",score.getUserId());
+                Integer point = argsScoreService.selectScoreByUserIdArgsId(map);
+                arg.setArgsPoint(point == null ? 0 : point);
+            }
+            argsType.setArgs(args);
+        }
+        model.addAttribute("args",argsTypes);
         model.addAttribute("score",score);
+        model.addAttribute("pressDeepPie",pressDeepPie);
+        model.addAttribute("pressPositionPie",pressPositionPie);
+        model.addAttribute("pressPie",pressPie);
+        model.addAttribute("breathPie",breathPie);
         model.addAttribute("trainSetting",trainSetting);
         return "/census/census_info.html";
     }
