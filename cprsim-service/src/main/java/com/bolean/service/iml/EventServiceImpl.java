@@ -79,4 +79,9 @@ public class EventServiceImpl implements EventService {
     public List<Event> selectByInfo(Map<String, Object> map) {
         return eventMapper.selectByInfo(map);
     }
+
+    @Override
+    public List<Event> selectByUseridAndprojectId(Map<String, Object> map) {
+        return eventMapper.selectByUseridAndprojectId(map);
+    }
 }

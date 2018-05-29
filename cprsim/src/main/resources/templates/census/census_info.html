@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <style>
     .top_title{
         float: left;
@@ -157,13 +158,47 @@
     .score{
         padding: 30px 20px 0 20px;
     }
+    .timeline{
+        /*margin: 20px  0 0 0 ;*/
+        padding: 0 40px;
+        list-style: none;
+        width: 100%;
+
+    }
+    .timeline li{
+        text-align: right;
+        float: left;
+        border-top: #49bef4 1px solid;
+    }
+
+
+    .timeline>li::after{
+        content: "";
+        width: 1px;
+        height: 20px;
+        border-right:1px solid #49bef4;
+    }
+
+    #timeline-content{
+        margin: 0;
+        width: 100%;
+        height: 80px;
+        display: block;
+        /*position: relative;*/
+    }
+
+    .clear{
+        clear: both;
+    }
+
+    /*#t-top{
+        margin-left: 26px;
+    }*/
+
 </style>
-<link href="/css/plugins/horizontal-timeline/reset.css" rel="stylesheet">
-<link href="/css/plugins/horizontal-timeline/style.css" rel="stylesheet">
-<html>
 @layout("/layout/_list_layout.html"){
     <body class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
+        <div class="row" id="myc">
             <div class="ibox float-e-margins">
                 <ul id="myTab" class="nav nav-tabs">
                     <li class="active">
@@ -378,36 +413,18 @@
                             </table>
                         </div>
 
-                        <section class="cd-horizontal-timeline">
-                            <div class="timeline">
-                                <div class="events-wrapper">
-                                    <div class="events">
-                                        <ol>
-                                            <li><a href="#0" data-date="16/01/2014" class="selected">气道开放</a></li>
-                                            <li><a href="#0" data-date="28/02/2014">过度伸展</a></li>
-                                            <li><a href="#0" data-date="20/04/2014">吹气过量</a></li>
-                                            <li><a href="#0" data-date="20/05/2014">吹气不足</a></li>
-                                            <li><a href="#0" data-date="09/07/2014">正常按压</a></li>
-                                            <li><a href="#0" data-date="30/08/2014">按压不足</a></li>
-                                            <li><a href="#0" data-date="15/09/2014">释放不足</a></li>
-                                            <li><a href="#0" data-date="01/11/2014">正常按压</a></li>
-                                            <li><a href="#0" data-date="10/12/2014">正常按压</a></li>
-                                            <li><a href="#0" data-date="19/01/2015">正常按压</a></li>
-                                            <li><a href="#0" data-date="03/03/2015">正常按压</a></li>
-                                        </ol>
+                        <div id="timeline-content">
+                            <div id="t-top"></div>
+                            <div class="clear"></div>
+                            <ul class="timeline">
+                                @for(event in events){
+                                    <li><span class="timeline-t">${event.addTime}</span> <span class="des-t">${event.eventName}</span></li>
+                                @}
+                            </ul>
+                            <div class="clear"></div>
+                            <div id="t-bottom"></div>
+                        </div>
 
-                                        <span class="filling-line" aria-hidden="true"></span>
-                                    </div> <!-- .events -->
-                                </div> <!-- .events-wrapper -->
-
-                                <ul class="cd-timeline-navigation">
-                                    <li><a href="#0" class="prev inactive">Prev</a></li>
-                                    <li><a href="#0" class="next">Next</a></li>
-                                </ul> <!-- .cd-timeline-navigation -->
-                            </div> <!-- .timeline -->
-
-                            <!-- .events-content -->
-                        </section>
                         <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
                         <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
                         <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
@@ -430,100 +447,17 @@
                                     </div>
                                 </div>
                                 @if(isNotEmpty(arg.args)){
-                                @for(arg1 in arg.args){
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">${arg1.argsName}</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">${arg1.argsPoint}</div>
-                                </div>
-                                @}
+                                    @for(arg1 in arg.args){
+                                    <div class="i-content">
+                                        <div class="pull-left w25 p3">${arg1.argsName}</div>
+                                        <div class="pull-left w25">&nbsp;</div>
+                                        <div class="pull-left w25 text-center">${arg1.argsPoint}</div>
+                                    </div>
+                                    @}
                                 @}
                             </div>
                             @}
-                            <!--<div class="col-sm-12">
-                                <div class="text-center">
-                                    <div class="i-title">
-                                        <div class="pull-left w25">&nbsp;</div>
-                                        <div class="pull-left w25">CPR质量客观考点</div>
-                                        <div class="pull-left w25">得分</div>
-                                    </div>
-                                </div>
 
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">客观评价</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">43</div>
-                                </div>
-
-                                <div class="text-center">
-                                    <div class="i-title">
-                                        <div class="pull-left w25">&nbsp;</div>
-                                        <div class="pull-left w25">环境评估</div>
-                                        <div class="pull-left w25"></div>
-                                    </div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">观察周围环境</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">50</div>
-                                </div>
-
-                                <div class="text-center">
-                                    <div class="i-title">
-                                        <div class="pull-left w25">&nbsp;</div>
-                                        <div class="pull-left w25">判断意识和呼吸</div>
-                                        <div class="pull-left w25"></div>
-                                    </div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">拍患者双肩</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">5</div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">呼叫声音响亮有效</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">10</div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">观察胸廓起伏，同时检查动脉脉搏方法正确</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">10</div>
-                                </div>
-
-                                <div class="text-center">
-                                    <div class="i-title">
-                                        <div class="pull-left w25">&nbsp;</div>
-                                        <div class="pull-left w25">启动BLS</div>
-                                        <div class="pull-left w25"></div>
-                                    </div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">呼救</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">10</div>
-                                </div>
-
-                                <div class="text-center">
-                                    <div class="i-title">
-                                        <div class="pull-left w25">&nbsp;</div>
-                                        <div class="pull-left w25">摆放位置</div>
-                                        <div class="pull-left w25"></div>
-                                    </div>
-                                </div>
-
-                                <div class="i-content">
-                                    <div class="pull-left w25 p3">医生与患者体位正确</div>
-                                    <div class="pull-left w25">&nbsp;</div>
-                                    <div class="pull-left w25 text-center">10</div>
-                                </div>
-
-                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -534,14 +468,52 @@
 </body>
 
 <script src="/js/plugins/echarts/echarts.min.js"></script>
-<script src="/js/plugins/horizontal-timeline/main.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         creatDeepPie();
         creatPositionPie();
         creatReleasePie();
         creatCorrectPie();
+        makeTimeLine();
     });
+
+    function makeTimeLine(){
+        var liNum =  $(".timeline").children("li").length
+        var div=document.getElementById('myc');
+
+        var divWidth = div.offsetWidth;
+
+        var liWidth = 100/liNum*0.01*(divWidth-80);
+        $(".timeline>li").css("width",liWidth);
+        $(".timeline>li:first-child").css("width","1px");
+
+        var tTop = $("#t-top");
+        var tBottom = $("#t-bottom");
+        var preTime=0;
+
+        $(".timeline").children("li").each(function (i,v) {
+            var time= $(v).find(".timeline-t");
+            var des= $(v).find(".des-t");
+            var strLen = $(des).html().length;
+            var strWidth = [0,13,26,39,52,65];
+
+            if(i==0) {
+                $(time).css("margin-left",15);
+                var des0Width = 40-strWidth[strLen]/2;
+                $(des).css("margin-left",des0Width);
+            }else {
+                $(time).css("margin-left",liWidth-52);
+                var desWidth=strWidth[preTime]/2+strWidth[strLen]/2;
+                $(des).css("margin-left",liWidth-desWidth);
+            }
+            preTime = strLen;
+
+            $(tBottom).append(time);
+            $(tTop).append(des);
+
+            $(v).html("");
+        });
+    }
 
     function creatCorrectPie() {
         var dom = document.getElementById("correct");

@@ -38,6 +38,9 @@ public class CensusController extends BaseController{
     @Autowired
     private ArgsScoreService argsScoreService;
 
+    @Autowired
+    private EventService eventService;
+
     private final Map<String,Object> namesMap = new HashMap<String,Object>(){{
                 put("op_time", "操作超时错误");
                 put("interrupt_time", "中断时间错误");
@@ -188,7 +191,53 @@ public class CensusController extends BaseController{
         //吹气正确PIE数据
         JSONObject breathPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getBreathPie(score)));
 
+        List<ArgsType> argsTypes = getData(score);
 
+        Map<String,Object> map = new HashMap<>();
+        map.put("projectId",score.getProjectId());
+        map.put("userId",score.getUserId());
+        List<Event> events = eventService.selectByUseridAndprojectId(map);
+
+        model.addAttribute("events",events);
+        model.addAttribute("args",argsTypes);
+        model.addAttribute("score",score);
+        model.addAttribute("pressDeepPie",pressDeepPie);
+        model.addAttribute("pressPositionPie",pressPositionPie);
+        model.addAttribute("pressPie",pressPie);
+        model.addAttribute("breathPie",breathPie);
+        model.addAttribute("trainSetting",trainSetting);
+        return "/census/census_info.html";
+    }
+
+    @RequestMapping("print")
+    public String print(String sid,Model model){
+        Score score = scoreService.selectByPrimaryKey((long)Integer.parseInt(sid));
+        TrainSetting trainSetting = trainSettingService.selectByTrainId(score.getProjectId()+"");
+        CountUitl countUitl = new CountUitl();
+
+        //按压深度PIE数据
+        JSONObject pressDeepPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressDeepPie(score)));
+        //按压位置PIE数据
+        JSONObject pressPositionPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressPositionPie(score)));
+        //按压PIE数据
+        JSONObject pressPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getPressPie(score)));
+        //吹气正确PIE数据
+        JSONObject breathPie = JSONObject.parseObject(JSON.toJSONString(countUitl.getBreathPie(score)));
+
+
+        List<ArgsType> argsTypes = getData(score);
+
+        model.addAttribute("args",argsTypes);
+        model.addAttribute("score",score);
+        model.addAttribute("pressDeepPie",pressDeepPie);
+        model.addAttribute("pressPositionPie",pressPositionPie);
+        model.addAttribute("pressPie",pressPie);
+        model.addAttribute("breathPie",breathPie);
+        model.addAttribute("trainSetting",trainSetting);
+        return "/census/print.html";
+    }
+
+    private List<ArgsType> getData(Score score){
         List<ArgsType> argsTypes = argsTypeService.selectAll();
         for (ArgsType argsType : argsTypes) {
             List<Args> args = argsService.selectByArgsTypeId(argsType.getArgsTypeId()+"");
@@ -201,13 +250,7 @@ public class CensusController extends BaseController{
             }
             argsType.setArgs(args);
         }
-        model.addAttribute("args",argsTypes);
-        model.addAttribute("score",score);
-        model.addAttribute("pressDeepPie",pressDeepPie);
-        model.addAttribute("pressPositionPie",pressPositionPie);
-        model.addAttribute("pressPie",pressPie);
-        model.addAttribute("breathPie",breathPie);
-        model.addAttribute("trainSetting",trainSetting);
-        return "/census/census_info.html";
+
+        return argsTypes;
     }
 }

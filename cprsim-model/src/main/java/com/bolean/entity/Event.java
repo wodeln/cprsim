@@ -1,25 +1,22 @@
 package com.bolean.entity;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
-@Table(name="cpr_log")
+@Table(name="cpr_event")
 public class Event implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long logId;
+    private Long eventId;
 
     private Long projectId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date addTime;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String addTime;
 
     private String eventName;
 
@@ -33,12 +30,12 @@ public class Event implements Serializable {
         this.userId = userId;
     }
 
-    public Long getLogId() {
-        return logId;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setLogId(Long logId) {
-        this.logId = logId;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public Long getProjectId() {
@@ -49,11 +46,11 @@ public class Event implements Serializable {
         this.projectId = projectId;
     }
 
-    public Date getAddTime() {
+    public String getAddTime() {
         return addTime;
     }
 
-    public void setAddTime(Date addTime) {
+    public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
 

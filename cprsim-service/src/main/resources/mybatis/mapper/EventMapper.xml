@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bolean.dao.EventMapper">
+
+    <resultMap id="BaseResultMap" type="com.bolean.entity.Event">
+        <id column="event_id" jdbcType="INTEGER" property="eventId"/>
+        <result column="project_id" jdbcType="INTEGER" property="projectId"/>
+        <result column="add_time" jdbcType="VARCHAR" property="addTime"/>
+        <result column="event_name" jdbcType="VARCHAR" property="eventName"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        event_id, project_id, add_time, event_name, user_id
+    </sql>
+    
+    <select id="selectByUseridAndprojectId" parameterType="Map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from
+        cpr_event
+        WHERE user_id = #{userId,jdbcType=INTEGER}
+        AND project_id = #{projectId,jdbcType=INTEGER}
+        ORDER BY add_time ASC
+    </select>
+
+
+</mapper>
