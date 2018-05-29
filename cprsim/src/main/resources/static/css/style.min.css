@@ -6762,3 +6762,10 @@ body.rtls.top-navigation .footer.fixed
     vertical-align: middle;
     cursor: pointer;
 }
+
+@media print {
+    #p-score .i-title {
+        background-color: #c0d5f6 !important;
+        -webkit-print-color-adjust: exact;
+    }
+}

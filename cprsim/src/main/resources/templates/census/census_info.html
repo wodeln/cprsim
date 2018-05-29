@@ -313,7 +313,7 @@
                         <div class="table-responsive">
                             <div class="report_title">
                                 <h3 class="pull-left">心肺复苏报告单</h3>
-                                <span class="pull-right">施救者:test  |  结果 <b>
+                                <span class="pull-right">施救者:${student.userTrueName}  |  结果 <b>
                                         @if(score.opSuccess){
                                             成功
                                         @}else{
@@ -433,7 +433,7 @@
                     <div class="tab-pane fade" id="opt_census">
 
                         <div class="score">
-                            <div>成绩：83 平均分：80 满分：100</div>
+                            <div>成绩：${score.sumGrade} 满分：${score.fullMark}</div>
                             <h3>成绩明细表</h3>
                         </div>
                         <div class="form-group">

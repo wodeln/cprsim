@@ -41,6 +41,9 @@ public class CensusController extends BaseController{
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private StudentService studentService;
+
     private final Map<String,Object> namesMap = new HashMap<String,Object>(){{
                 put("op_time", "操作超时错误");
                 put("interrupt_time", "中断时间错误");
@@ -198,6 +201,9 @@ public class CensusController extends BaseController{
         map.put("userId",score.getUserId());
         List<Event> events = eventService.selectByUseridAndprojectId(map);
 
+        Student student = studentService.selectByPrimaryKey(score.getUserId());
+
+        model.addAttribute("student",student);
         model.addAttribute("events",events);
         model.addAttribute("args",argsTypes);
         model.addAttribute("score",score);
@@ -227,6 +233,15 @@ public class CensusController extends BaseController{
 
         List<ArgsType> argsTypes = getData(score);
 
+        Map<String,Object> map = new HashMap<>();
+        map.put("projectId",score.getProjectId());
+        map.put("userId",score.getUserId());
+        List<Event> events = eventService.selectByUseridAndprojectId(map);
+
+        Student student = studentService.selectByPrimaryKey(score.getUserId());
+
+        model.addAttribute("student",student);
+        model.addAttribute("events",events);
         model.addAttribute("args",argsTypes);
         model.addAttribute("score",score);
         model.addAttribute("pressDeepPie",pressDeepPie);

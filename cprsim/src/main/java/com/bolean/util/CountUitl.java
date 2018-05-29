@@ -21,26 +21,26 @@ public class CountUitl {
 
         if(score.getpRight()>0) {
             EcChats ecChat = new EcChats();
-            ecChat.setName("按压充足");
+            ecChat.setName("充足");
             ecChat.setValue(score.getpRight());
             ecChats.add(ecChat);
-            names.add("按压充足");
+            names.add("充足");
         }
 
         if(score.getbLower()>0) {
             EcChats ecChat = new EcChats();
-            ecChat.setName("不足按压");
+            ecChat.setName("不足");
             ecChat.setValue(score.getbLower());
             ecChats.add(ecChat);
-            names.add("不足按压");
+            names.add("不足");
         }
 
         if(score.getbOver()>0){
             EcChats ecChat = new EcChats();
-            ecChat.setName("过大按压");
+            ecChat.setName("过大");
             ecChat.setValue(score.getbOver());
             ecChats.add(ecChat);
-            names.add("过大按压");
+            names.add("过大");
         }
         Map<String,Object> resMap = new HashMap<>();
         resMap.put("names",names);

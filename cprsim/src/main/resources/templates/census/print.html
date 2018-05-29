@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>${site_title}</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 8]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <link href="/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link rel="shortcut icon" href="favicon.ico">
+
+</head>
+<style type="text/css">
+    <!--
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
+    .paper {
+        width: 210mm;
+        padding:2mm 2mm 0 2mm;
+        font-size:11pt;
+        background: #ffffff;
+    }
+    .stick {
+        position: relative;
+        float:left;
+        display: block;
+        width: 210mm;
+        height: 283mm;
+    }
+    .t-top{
+        width: 100%;
+        margin: 5mm 0 7mm 0;
+    }
+    .t-top .t-info span{
+        width: 80mm;
+        display: inline-block;
+    }
+    .t-top .t-info{
+        margin: 2mm 0 1mm 0;
+        padding-left: 1mm;
+    }
+    #t-title{
+        width: 100%;
+        text-align: center;
+    }
+    .t-line{
+        height: 1px;
+        width: 100%;
+        border-top:1px solid black ;
+    }
+
+    .student_str{
+        margin-top: 3mm;
+        padding-left: 1mm;
+    }
+    .t-student{
+        margin-bottom: 2mm;
+        padding-left: 1mm;
+    }
+    .t-student span{
+        display: inline-block;
+        width: 32.3333%;
+        height: 7mm;
+        line-height: 7mm;
+    }
+    .table{
+        font-size: 9pt;
+    }
+    .pull-right{
+        padding-top: 2mm;
+    }
+
+
+
+
+    .top_title{
+        float: left;
+        width: 24.8%;
+        text-align: center;
+        padding:3mm 4mm 1mm 4mm;
+    }
+    .border_1{
+        border: 1px solid #c6c6c6;
+        margin-top: 0;
+        font-size: 3pt;
+        font-weight: 100;
+        padding: 0mm 1mm 0 1mm;
+        height: 80mm;
+    }
+    .hr-line{
+        height: 1px;
+        /*background-color: #c6c6c6;*/
+        border-top: #c6c6c6 1px solid;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+    .sign{
+        height: 6mm;
+        width: 1px;
+        /*background-color: #c6c6c6;*/
+        border: 1px solid #c6c6c6;
+        float: left;
+        margin-top: 6mm;
+    }
+    .sign2{
+        height: 15mm;
+        width: 1px;
+        border: 1px solid #c6c6c6;
+        float: left;
+        margin-top: 11mm;
+    }
+    .w50{
+        width: 50%;
+    }
+    .w49{
+        width: 45%;
+        float: left;
+        height: 200mm;
+    }
+    .des{
+        font-size: 0.2pt;
+        font-weight: 100;
+        color: #c6c6c6;
+    }
+    .other-info{
+        height: 4mm;
+        line-height: 4mm;
+        font-weight: 500;
+        float: left;
+        margin-left: 5mm;
+        width: 100%;
+    }
+    .pie-chart{
+        width: 33.33%;
+        float: left;
+        height: 200px;
+    }
+    .bottom{
+        margin-top: 30mm;
+    }
+
+    #correct{
+        width: 40%;
+    }
+    .breath{
+        width: 45%;
+        height: 40mm;
+        border: 1px solid #c6c6c6;
+        margin-right: 10mm;
+    }
+    .grade{
+        height: 10mm;
+        line-height: 10mm;
+        margin-left: 5mm;
+    }
+    .grade-info{
+        text-align: center;
+        font-size: 5mm;
+    }
+    .point{
+        font-size: 20pt;
+    }
+    .point-des{
+        font-size: 14pt;
+        color: red;
+    }
+    .green{
+        color: green;
+    }
+    .table-responsive{
+        padding: 10px 10px 10px;
+    }
+    .report_title{
+        height: 30px;
+        line-height: 30px;
+    }
+    .report_title span{
+        height: 30px;
+        line-height: 30px;
+        margin-right: 0;
+    }
+
+    .d-none a{
+        color: #a1a1a1;
+        font-size: 1.5rem;
+    }
+    .score{
+        padding: 30px 20px 0 20px;
+    }
+    .timeline{
+        /*margin: 20px  0 0 0 ;*/
+        padding: 0 40px;
+        list-style: none;
+        width: 100%;
+
+    }
+    .timeline li{
+        text-align: right;
+        float: left;
+        border-top: #49bef4 1px solid;
+    }
+
+
+    .timeline>li::after{
+        content: "";
+        width: 1px;
+        height: 20px;
+        border-right:1px solid #49bef4;
+    }
+
+    .pull-right{
+        padding: 0;
+    }
+
+    #timeline-content{
+        margin: 16mm 0 0 0;
+        width: 100%;
+        height: 80px;
+        display: block;
+        /*position: relative;*/
+    }
+
+    .clear{
+        clear: both;
+    }
+
+    .w25{
+        width: 25%;
+    }
+    .i-title {
+        min-height: 30px;
+        margin-bottom: 0;
+        padding: 5px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        background-color: #c0d5f6;
+        margin-bottom: 0.63234rem;
+        font-weight: bold;
+        font-size: 1.32144rem;
+    }
+
+    .i-content {
+        min-height: 32px;
+        margin-bottom: 0;
+        padding: 7px 15px 0px;
+        color: inherit;
+        -webkit-border-image: none;
+        -o-border-image: none;
+        border-image: none;
+        background-color: #fff;
+        -moz-border-bottom-colors: none;
+        -moz-border-left-colors: none;
+        -moz-border-right-colors: none;
+        -moz-border-top-colors: none;
+        font-size: 1.42454rem;
+    }
+    .p3{
+        padding-left: 1rem;
+    }
+    -->
+</style>
+
+<body>
+<div class="paper">
+    <div class="stick">
+        <div class="t-top">
+            <div id="t-title">
+                <h3>心肺复苏量化培训报告</h3>
+            </div>
+            <div class="t-info">
+                <span>评估时间：2018-05-29</span>
+                <span>评估导师：</span>
+            </div>
+            <div class="student_str">学员信息：</div>
+            <div class="t-line"></div>
+            <div class="t-student">
+                <span>姓名：${student.userTrueName}</span>
+                <span>性别：
+                    @if(student.userSex){
+                        男
+                    @}else{
+                        女
+                    @}
+                </span>
+                <span>编号：</span>
+                <span>单位：${student.userCompany}</span>
+                <span>科室：</span>
+                <span>职务：</span>
+                <span>手机：${student.userPhone}</span>
+                <span>邮箱：${student.userEmail}</span>
+                <span>成绩：${score.sumGrade}</span>
+            </div>
+            <div class="t-line"></div>
+
+            <div class="table-responsive">
+                <div class="report_title">
+                    <h3 class="pull-left">心肺复苏报告单</h3>
+                    <span class="pull-right">施救者:${student.userTrueName}  |  结果 <b>
+                                        @if(score.opSuccess){
+                                            成功
+                                        @}else{
+                                            失败
+                                        @}
+                                        </b>
+                                </span>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>项目</th>
+                        <th>操作标准</th>
+                        <th>操作结果</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <!--循环 begin-->
+                    <tr>
+                        <td>循环</td>
+                        <td>
+                            最大时间：@if(trainSetting.handleTime>0){
+                            ${trainSetting.handleTime}
+                            @}else{
+                            //
+                            @}
+                        </td>
+                        <td>实际用时：${score.opTime} 秒</td>
+                    </tr>
+                    <!--循环 end-->
+
+                    <!--按压 begin-->
+                    <tr>
+                        <td>按压</td>
+                        <td>
+                            按压深度： ${trainSetting.massageDeepMin} ~ ${trainSetting.massageDeepMax}
+                            &nbsp;达标率： @if(trainSetting.massageRightPercent>0){
+                            ${trainSetting.massageRightPercent}%
+                            @}else{
+                            //
+                            @}
+                        </td>
+                        <td><b>错误 ${score.pError}</b> | 正确率 ${score.pressurePce}% | 正确 ${score.pRight} | 位置错误 ${score.posError} | 未充分回弹 ${score.releaseError} | 过大 ${score.pOver} | 过小 ${score.pLower} | 多按 ${score.pOverNum} | 少按 ${score.pLowerNum}</td>
+                    </tr>
+                    <!--按压 end-->
+
+
+                    <!--按压中断 begin-->
+                    <tr>
+                        <td>按压中断</td>
+                        <td>
+                            按压中断小于：
+                            @if(trainSetting.interruptionTime>0){
+                            ${trainSetting.interruptionTime} 秒
+                            @}else{
+                            //
+                            @}
+                        </td>
+                        <td>
+                            按压中断大于${trainSetting.interruptionTime}秒 ${score.interruptTime}次
+                        </td>
+                    </tr>
+                    <!--按压中断 end-->
+
+                    <!--吹气 begin-->
+                    <tr>
+                        <td>吹气</td>
+                        <td>
+                            吹气量： ${trainSetting.ventilateVolumeMin} ~ ${trainSetting.ventilateVolumeMax}
+                            达标率： @if(trainSetting.ventilateRightPercent>0){
+                            ${trainSetting.ventilateRightPercent}%
+                            @}else{
+                            //
+                            @}
+
+                        </td>
+                        <td>
+                            <b>错误 ${score.bError}</b> | 正确率 ${score.breathPce}% | 正确 ${score.bRight} | 过大 ${score.bOver} | 过小 ${score.bLower} | 多吹 ${score.bOverNum} | 少吹 ${score.bLowerNum}
+                        </td>
+                    </tr>
+                    <!--吹气 end-->
+
+                    <!--除颤 begin-->
+                    <tr>
+                        <td>吹气</td>
+                        <td>至少除颤 @if(trainSetting.defibrillation==1){
+                            ${trainSetting.defibrillation}次
+                            @}else{
+                            //
+                            @}
+                        </td>
+                        <td>总除颤次数 ${score.defibrNum} | 正确次数 </td>
+                    </tr>
+                    <!--除颤 end-->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="opt_chart">
+                <div class="col-lg-12 border_1">
+                    <div class="top">
+                        <div class="top_title">
+                            有效按压
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.pRight}</div> <div class="text-center pull-right w50">（次）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            按压次数
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.pSumNum}</div> <div class="text-center pull-right w50">（次）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            平均深度
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.pAverageDepth}</div> <div class="text-center pull-right w50">（次）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            按压正确频率
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.pRatePce}</div> <div class="text-center pull-right w50">（%）</div>
+                            <div class="des">(正确范围100-120次/m)</div>
+                        </div>
+                        <div class="other-info">中断时间 ${score.interruptTime}S</div>
+                    </div>
+                    <div class="bottom">
+                        <div class="pie-chart" id="deep"></div>
+                        <div class="pie-chart" id="position"></div>
+                        <div class="pie-chart" id="release"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 border_1">
+                    <div class="top">
+                        <div class="top_title">
+                            有效吹气
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.bRight}</div> <div class="text-center pull-right w50">（次）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            吹气次数
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.bSumNum}</div> <div class="text-center pull-right w50">（次）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            平均吹气量
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.bAverageVolume}</div> <div class="text-center pull-right w50">（ml）</div>
+                        </div>
+                        <div class="sign"></div>
+                        <div class="top_title">
+                            平均吹气频率
+                            <div class="hr-line"></div>
+                            <div class="pull-left w50 text-right">${score.bAverageRate}</div> <div class="text-center pull-right w50">（次/min）</div>
+                            <div class="des">(正确范围6-8次/min)</div>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="pie-chart" id="correct"></div>
+                        <div class="breath pull-right">
+                            <div class="w49">
+                                <div class="grade">总分:</div>
+                                <div class="grade-info">
+                                    <div>
+                                        <span class="point">${score.gradeObj}</span>
+                                        <div class="point-des">
+                                            @if(score.opSuccess){
+                                            操作成功
+                                            @}else{
+                                            操作失败
+                                            @}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sign2"></div>
+                            <div>
+                                <div class="grade"></div>
+                                <div class="grade-info">
+                                    <div>
+                                        <span class="point green"><i class="fa fa-user-o"></i></span>
+                                        <div><i class="fa fa-heartbeat point-des">${score.pRatePce}%</i>  | <i class="fa fa-heartbeat point-des"> ${score.bRatePce}%</i> </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stick">
+        <div id="timeline-content">
+            <div id="t-top"></div>
+            <div class="clear"></div>
+            <ul class="timeline">
+                @for(event in events){
+                <li><span class="timeline-t">${event.addTime}</span> <span class="des-t">${event.eventName}</span></li>
+                @}
+            </ul>
+            <div class="clear"></div>
+            <div id="t-bottom"></div>
+        </div>
+
+        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+        <div><img src="/img/wave.jpg" style="width: 100%;"/> </div>
+    </div>
+
+    <div class="stick" style="margin-top: 20mm;">
+        <div class="score">
+            <h3>成绩明细表</h3>
+        </div>
+        <div class="form-group" id="p-score">
+            @for(arg in args){
+            <div class="col-sm-12">
+                <div class="text-center">
+                    <div class="i-title">
+                        <div class="pull-left w25">&nbsp;</div>
+                        <div class="pull-left w25">${arg.argsTypeName}</div>
+                        <div class="pull-left w25">得分</div>
+                    </div>
+                </div>
+                @if(isNotEmpty(arg.args)){
+                @for(arg1 in arg.args){
+                <div class="i-content">
+                    <div class="pull-left w25 p3">${arg1.argsName}</div>
+                    <div class="pull-left w25">&nbsp;</div>
+                    <div class="pull-left w25 text-center">${arg1.argsPoint}</div>
+                </div>
+                @}
+                @}
+            </div>
+            @}
+
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/plugins/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        creatDeepPie();
+        creatPositionPie();
+        creatReleasePie();
+        creatCorrectPie();
+        makeTimeLine();
+    });
+
+    function makeTimeLine(){
+        var liNum =  $(".timeline").children("li").length
+        var div=document.getElementById('timeline-content');
+
+        var divWidth = div.offsetWidth;
+
+        var liWidth = 100/liNum*0.01*(divWidth-80);
+        $(".timeline>li").css("width",liWidth);
+        $(".timeline>li:first-child").css("width","1px");
+
+        var tTop = $("#t-top");
+        var tBottom = $("#t-bottom");
+        var preTime=0;
+
+        $(".timeline").children("li").each(function (i,v) {
+            var time= $(v).find(".timeline-t");
+            var des= $(v).find(".des-t");
+            var strLen = $(des).html().length;
+            var strWidth = [0,14.66,29.31,43.97,58.63,73.3];
+
+            if(i==0) {
+                $(time).css("margin-left",15);
+                var des0Width = 40-strWidth[strLen]/2;
+                $(des).css("margin-left",des0Width);
+            }else {
+                $(time).css("margin-left",liWidth-59);
+                var desWidth=strWidth[preTime]/2+strWidth[strLen]/2;
+                $(des).css("margin-left",liWidth-desWidth);
+            }
+            preTime = strLen;
+
+            $(tBottom).append(time);
+            $(tTop).append(des);
+
+            $(v).html("");
+        });
+    }
+
+    function creatCorrectPie() {
+        var dom = document.getElementById("correct");
+        var myChart = echarts.init(dom);
+        var crectObj = ${breathPie};
+        myChart.setOption({
+            title : {
+                text: '准确率',
+                x:'7mm',
+                /*y:'top'*/
+                textStyle: {
+                    fontSize: 15
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                /*y: '50px',*/
+                data:crectObj.names
+            },
+            series: [
+                {
+                    name:'吹气正确率',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:crectObj.items
+                }
+            ]
+        });
+    }
+
+    function creatDeepPie() {
+        var dom = document.getElementById("deep");
+        var myChart = echarts.init(dom);
+
+        var deepObj = ${pressDeepPie};
+        myChart.setOption({
+            title : {
+                text: '按压深度',
+                x:'7mm',
+                /*y:'top'*/
+                textStyle: {
+                    fontSize: 15
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                /*y: '50px',*/
+                data:deepObj.names
+            },
+            series: [
+                {
+                    name:'按压深度',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:deepObj.items
+                }
+            ]
+        });
+    }
+
+    function creatPositionPie() {
+        var dom = document.getElementById("position");
+        var myChart = echarts.init(dom);
+
+        var positionObj = ${pressPositionPie};
+        myChart.setOption({
+            title : {
+                text: '按压位置',
+                x:'7mm',
+                /*y:'top'*/
+                textStyle: {
+                    fontSize: 15
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+               /* y: '50px',*/
+                data:positionObj.names
+            },
+            series: [
+                {
+                    name:'按压位置',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:positionObj.items
+                }
+            ]
+        });
+    }
+
+    function creatReleasePie() {
+        var dom = document.getElementById("release");
+        var myChart = echarts.init(dom);
+
+        var releaseObj = ${pressPie};
+        myChart.setOption({
+            title : {
+                text: '释放正确',
+                x:'7mm',
+                /*y:'top'*/
+                textStyle: {
+                    fontSize: 15
+                }
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                /*y: '50px',*/
+                data:releaseObj.names
+            },
+            series: [
+                {
+                    name:'释放正确',
+                    type:'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: false,
+                            position: 'right'
+                        },
+                        emphasis: {
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: ''
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data:releaseObj.items
+                }
+            ]
+        });
+    }
+
+</script>
+</html>
+

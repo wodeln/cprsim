@@ -165,7 +165,7 @@
                     tableStr+="<td>"+ifPass+"</td>";
                     tableStr+="<td><a data-toggle='modal' data-target='#user_report' href='${ctxPath}/census/user_report?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看详情</a> </td>";
                     tableStr+="<td><a href='${ctxPath}/census/census_info?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看统计</a> </td>";
-                    tableStr+="<td><a href='${ctxPath}/census/print?sid="+item.id+"}&trainId=${trainId}&studentId="+item.user_id+"' target='_blank'><i class='fa fa-print'></i></a></td>";
+                    tableStr+="<td><a href='${ctxPath}/census/print?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"' target='_blank'><i class='fa fa-print'></i></a></td>";
                     tableStr+="</tr>";
                 });
                 $("#students").html(tableStr);
