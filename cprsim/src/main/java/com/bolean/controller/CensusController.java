@@ -44,6 +44,9 @@ public class CensusController extends BaseController{
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TrainStudentService trainStudentService;
+
     private final Map<String,Object> namesMap = new HashMap<String,Object>(){{
                 put("op_time", "操作超时错误");
                 put("interrupt_time", "中断时间错误");
@@ -250,6 +253,120 @@ public class CensusController extends BaseController{
         model.addAttribute("breathPie",breathPie);
         model.addAttribute("trainSetting",trainSetting);
         return "/census/print.html";
+    }
+
+    @RequestMapping("train.html")
+    public String train(Model model,String trainId){
+
+        model.addAttribute("trainId",trainId);
+        return "/census/train.html";
+    }
+
+    @RequestMapping("train_user.html")
+    public String trainUser(Model model,String userId){
+
+        model.addAttribute("userId",userId);
+        return "/census/train_user.html";
+    }
+
+    @ResponseBody
+    @RequestMapping("train_user")
+    public Map<String,Object> trainUserData(String userId){
+        Map<String,Object> resMap = new HashMap<>();
+        ArrayList<Object> barArr = new ArrayList<>();
+        ArrayList subArr = new ArrayList();
+
+        subArr.add("pass");
+        subArr.add("总次数");
+        subArr.add("合格次数");
+        barArr.add(subArr);
+        List<Map<String,Object>> barMaps = scoreService.selectTrainByUserId(userId);
+        for (Map<String, Object> barMap : barMaps) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("userId",userId);
+            map.put("projectId",barMap.get("train_id"));
+            int passTimes = scoreService.selectTrainPassCountByUserId(map);
+            ArrayList subArr1 = new ArrayList();
+            subArr1.add(barMap.get("tn"));
+            subArr1.add(barMap.get("c"));
+            subArr1.add(passTimes);
+            barArr.add(subArr1);
+        }
+
+        Map<String,Object> pieMap = new HashMap<>();
+
+        //合格数量
+        int rightCount = scoreService.selectSumFalTrainCountByUserid(userId);
+
+        //挂掉数量
+        int errorCount = scoreService.selectSumPassTrainCountByUserid(userId);
+
+        List<EcChats> passErrors = new ArrayList<>();
+
+        //挂
+        Map<String,Object> errorStyleMap = new HashMap<>();
+        Map<String,Object> errorColorMap = new HashMap<>();
+        EcChats errorItem = new EcChats();
+        errorColorMap.put("color","#c23531");
+        errorStyleMap.put("normal",errorColorMap);
+        errorItem.setName("不达标");
+        errorItem.setValue(errorCount);
+        errorItem.setItemStyle(errorStyleMap);
+        passErrors.add(errorItem);
+
+        //合格
+        Map<String,Object> rithtStyleMap = new HashMap<>();
+        Map<String,Object> rightColorMap = new HashMap<>();
+        EcChats rightItem = new EcChats();
+        rightColorMap.put("color","#61a0a8");
+        rithtStyleMap.put("normal",rightColorMap);
+        rightItem.setName("达标");
+        rightItem.setValue(rightCount);
+        rightItem.setItemStyle(rithtStyleMap);
+        passErrors.add(rightItem);
+
+        String[] names = {"不达标","达标"};
+
+        pieMap.put("names",names);
+        pieMap.put("items",passErrors);
+
+
+        resMap.put("bar",barArr);
+        resMap.put("pie",pieMap);
+        return resMap;
+    }
+
+    @ResponseBody
+    @RequestMapping("train")
+    public ArrayList<Object> train(String trainId){
+        //个人总次数
+//        List<Student> students = studentService.s
+        ArrayList<Object> resArr = new ArrayList<>();
+        ArrayList subArr = new ArrayList();
+
+        subArr.add("pass");
+        subArr.add("总次数");
+        subArr.add("合格次数");
+        resArr.add(subArr);
+        List<TrainStudent> trainStudents = trainStudentService.selectByTrainId(trainId);
+        for (TrainStudent trainStudent : trainStudents) {
+            Map<String,Object> sumMap = new HashMap<>();
+            sumMap.put("projectId",trainId);
+            sumMap.put("userId",trainStudent.getStudent_id());
+            List<Map<String,Object>> sumInfoMaps = scoreService.selectCountByTrainId(sumMap);
+            for (Map<String, Object> sumInfoMap : sumInfoMaps) {
+
+                if(sumInfoMap.get("c")!="0"){
+                    Integer passTimes = scoreService.selectPassCountByTrainId(sumMap);
+                    ArrayList subArr1 = new ArrayList();
+                    subArr1.add(sumInfoMap.get("utn"));
+                    subArr1.add(sumInfoMap.get("c"));
+                    subArr1.add(passTimes);
+                    resArr.add(subArr1);
+                }
+            }
+        }
+        return resArr;
     }
 
     private List<ArgsType> getData(Score score){

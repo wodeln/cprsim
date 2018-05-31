@@ -51,4 +51,94 @@
         WHERE s.project_id = #{_parameter,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectCountByTrainId" parameterType="Map" resultType="java.util.Map">
+        SELECT ss.user_true_name utn,COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_student ss ON s.user_id = ss.user_id
+        WHERE s.project_id = #{projectId,jdbcType=VARCHAR}
+        AND s.user_id = #{userId,jdbcType=VARCHAR}
+        GROUP BY s.user_id
+    </select>
+
+    <select id="selectPassCountByTrainId" parameterType="Map" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_student ss ON s.user_id = ss.user_id
+        WHERE s.project_id = #{projectId,jdbcType=VARCHAR}
+        AND s.user_id = #{userId,jdbcType=VARCHAR}
+        AND s.op_success = 1
+        GROUP BY s.user_id
+    </select>
+
+    <select id="selectSumFalTrainCountByUserid" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+        AND s.op_success = 0
+    </select>
+
+    <select id="selectSumPassTrainCountByUserid" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+        AND s.op_success = 1
+    </select>
+
+    <select id="selectTrainCountByUserid" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+    </select>
+
+    <select id="selectTrainByUserId" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT t.train_name tn, COUNT(1) c, t.train_id FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{userId,jdbcType=INTEGER}
+        AND t.train_type = 0
+        GROUP BY s.project_id
+    </select>
+
+    <select id="selectTrainPassCountByUserId" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{userId,jdbcType=VARCHAR}
+        AND t.train_type = 0
+        AND s.op_success = 1
+        AND s.project_id = #{projectId,jdbcType=INTEGER}
+    </select>
+
+    <!--参加过的所有练习次数
+    <select id="selectTrainCountByUserId" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+    </select>
+
+    <select id="selectTrainPassCountByUserId1" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+    </select>
+
+    <select id="selectTrainPassCountByUserId" parameterType="java.lang.String" resultType="java.util.Map">
+        SELECT t.train_name tn, COUNT(1) c, t.train_id FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{_parameter,jdbcType=VARCHAR}
+        AND t.train_type = 0
+        AND s.op_success = 1
+        GROUP BY s.project_id
+    </select>
+
+    <select id="selectTrainSumCountByUserId" parameterType="java.util.Map" resultType="int">
+        SELECT COUNT(1) c FROM cpr_score s
+        LEFT JOIN cpr_train t ON s.project_id = t.train_id
+        WHERE s.user_id = #{userId,jdbcType=INTEGER}
+        AND t.train_type = 0
+        AND s.project_id = #{projectId,jdbcType=INTEGER}
+        GROUP BY s.project_id
+    </select>-->
+
 </mapper>

@@ -52,7 +52,12 @@ public class Student implements Serializable {
     /**
      * 项目id
      */
-    private Integer examId;
+    private Long examId;
+
+
+    private String examName;
+
+    private int trainCount;
 
     /**
      * 用户联系电话
@@ -60,6 +65,22 @@ public class Student implements Serializable {
     private String userPhone;
 
     private static final long serialVersionUID = 1L;
+
+    public int getTrainCount() {
+        return trainCount;
+    }
+
+    public void setTrainCount(int trainCount) {
+        this.trainCount = trainCount;
+    }
+
+    public String getExamName() {
+        return examName;
+    }
+
+    public void setExamName(String examName) {
+        this.examName = examName;
+    }
 
     public Long getUserId() {
         return userId;
@@ -125,11 +146,11 @@ public class Student implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public Integer getExamId() {
+    public Long getExamId() {
         return examId;
     }
 
-    public void setExamId(Integer examId) {
+    public void setExamId(Long examId) {
         this.examId = examId;
     }
 

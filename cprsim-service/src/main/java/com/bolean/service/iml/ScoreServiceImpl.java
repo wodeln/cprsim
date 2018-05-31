@@ -104,4 +104,41 @@ public class ScoreServiceImpl implements ScoreService {
     public List<Map<String, Object>> selectStudentByTrainid(String trainId) {
         return scoreMapper.selectStudentByTrainid(trainId);
     }
+
+    @Override
+    public List<Map<String, Object>> selectCountByTrainId(Map<String, Object> map) {
+        return scoreMapper.selectCountByTrainId(map);
+    }
+
+    @Override
+    public Integer selectPassCountByTrainId(Map<String, Object> map) {
+        return scoreMapper.selectPassCountByTrainId(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> selectTrainByUserId(String userId) {
+        return scoreMapper.selectTrainByUserId(userId);
+    }
+
+    @Override
+    public int selectTrainPassCountByUserId(Map<String, Object> map) {
+        return scoreMapper.selectTrainPassCountByUserId(map);
+    }
+
+    @Override
+    public int selectSumFalTrainCountByUserid(String userId) {
+        return scoreMapper.selectSumFalTrainCountByUserid(userId);
+    }
+
+    @Override
+    public int selectSumPassTrainCountByUserid(String userId) {
+        return scoreMapper.selectSumPassTrainCountByUserid(userId);
+    }
+
+    @Override
+    public int selectTrainCountByUserid(String userId) {
+        return scoreMapper.selectTrainCountByUserid(userId);
+    }
+
+
 }

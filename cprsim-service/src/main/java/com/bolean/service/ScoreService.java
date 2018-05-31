@@ -17,4 +17,18 @@ public interface ScoreService extends BaseService<Score> {
     int selectCountGteVaule(Map<String,Object> map);
 
     List<Map<String,Object>> selectStudentByTrainid(String trainId);
+
+    List<Map<String,Object>> selectCountByTrainId(Map<String,Object> map);
+
+    Integer selectPassCountByTrainId(Map<String,Object> map);
+
+    List<Map<String,Object>> selectTrainByUserId(String userId);
+
+    int selectTrainPassCountByUserId(Map<String,Object> map);
+
+    int selectSumFalTrainCountByUserid(String userId);
+
+    int selectSumPassTrainCountByUserid(String userId);
+
+    int selectTrainCountByUserid(String userId);
 }

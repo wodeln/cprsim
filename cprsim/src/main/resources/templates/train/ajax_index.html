@@ -40,19 +40,22 @@
         </td>
         <td>
             @if(list.submitScoreCount>0){
-            <a href="${ctxPath}/census/index.html?trainId=${list.trainId}"><i class="fa fa-bar-chart-o"></i></a></td>
+                @if(list.trainType==1){
+                    <a href="${ctxPath}/census/index.html?trainId=${list.trainId}"><i class="fa fa-bar-chart-o"></i></a>
+                @}else if(list.trainType==0){
+                    <a href="${ctxPath}/census/train.html?trainId=${list.trainId}"><i class="fa fa-bar-chart-o"></i></a>
+                @}
             @}else{
-            <i class="fa fa-bar-chart-o"></i></td>
+            <i class="fa fa-bar-chart-o"></i>
             @}
-
+        </td>
 
         <td><a href="${ctxPath}/train/train_setting.html?trainId=${list.trainId}"><i class="fa fa-cogs"></i> </a> </td>
         <td>
             <a href="${ctxPath}/train/user_add.html?trainId=${list.trainId}"><i class="fa fa-user-plus"></i></a>
             &nbsp;&nbsp;
-            @if(so.hasPermission('TRAIN_EDIT')){
             <a href="${ctxPath}/train/edit.html?trainId=${list.trainId}"><i class="glyphicon glyphicon-pencil"></i></a>
-            @}
+
         </td>
     </tr>
     @}

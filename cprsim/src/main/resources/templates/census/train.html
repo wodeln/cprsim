@@ -9,41 +9,15 @@
                     <div class="ibox-content">
                         <div class="table-responsive" id="ajax_return">
                             <div class="ibox float-e-margins">
-                                <div class="col-sm-6" id="pass_pie" style="height: 40rem;"></div>
-                                <div class="col-sm-6" id="error_pie" style="height: 40rem;"></div>
+                                <div class="col-sm-12" id="pass_bar" style="height: 600px;"></div>
                             </div>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>姓名</th>
-                                    <th>总分</th>
-                                    <th>是否达标</th>
-                                    <th>操作结果</th>
-                                    <th>查看</th>
-                                    <th>打印</th>
-                                </tr>
-                                </thead>
-                                <tbody id="students">
-
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </form>
                 </div>
             </div>
         </div>
-
 @}
-        <div class="modal inmodal" id="user_report" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content animated bounceInRight">
-
-                </div>
-            </div>
-        </div>
 
 </body>
 
@@ -51,126 +25,56 @@
 <script type="text/javascript">
 
     $(document).ready(function(){
-        ajax_get_table();
-        ajax_get_students();
+        creat_pass_bar();
     });
 
-    function creatPassPie(names,data) {
-        var passPie = document.getElementById("pass_pie");
-        var passChart = echarts.init(passPie);
-        var app = {};
+    function creatPassBar(data) {
+        var passBar = document.getElementById("pass_bar");
+        var passChart = echarts.init(passBar);
         passChart.setOption({
-            title : {
-                text: '考试达标率',
-                x:'left',
-                y:'bottom'
+            color: [ '#4cabce','#e5323e',],
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: data
             },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            xAxis: {
+                type: 'category',
+                max: 5
             },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: names
-            },
-            series : [
-                {
-                    type: 'pie',
-                    name: '达标率',
-                    radius : '55%',
-                    center: ['50%', '60%'],
-                    data:data,
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }
-            ]
-        });
-    }
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
 
-    function creatErrorPie(names,data) {
-        var errorPie = document.getElementById("error_pie");
-        var errorChart = echarts.init(errorPie);
-        var app = {};
-        errorChart.setOption({
-            title : {
-                text: '考试达标率',
-                x:'left',
-                y:'bottom'
-            },
-            tooltip : {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                left: 'left',
-                data: names
-            },
-            series : [
+            series: [
                 {
-                    type: 'pie',
-                    name: '达标率',
-                    radius : '55%',
-                    center: ['50%', '60%'],
-                    data:data,
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
+                    type:'bar',
+                    barWidth:30
+
+                },
+                {
+                    type:'bar',
+                    barWidth:30
                 }
             ]
         });
     }
 
 
-
-    function ajax_get_table(){
+    function creat_pass_bar(){
         var train_id = $("#train_id").val();
         $.ajax({
             type : "POST",
-            url:"${ctxPath}/census/pass_error_percent?trainId=${trainId}",//+tab,
+            url:"${ctxPath}/census/train?trainId=${trainId}",//+tab,
             dataType : "JSON",
             success: function(data){
                 if(data){
-                   creatPassPie(data.pass.names,data.pass.items);
-                   creatErrorPie(data.error.names,data.error.items)
+                    creatPassBar(data);
+
                 }
             }
         });
     }
 
-    function ajax_get_students(){
-        var train_id = $("#train_id").val();
-        $.ajax({
-            type : "POST",
-            url:"${ctxPath}/census/students?trainId=${trainId}",//+tab,
-            dataType : "JSON",
-            success: function(data){
-                var tableStr ="";
-                $(data).each(function (index,item) {
-                    var ifPass = "是";
-                    if(!item.op_success) ifPass="否";
-                    tableStr+="<tr>";
-                    tableStr+="<td>"+item.user_true_name+"</td>";
-                    tableStr+="<td>"+item.sum_grade+"</td>";
-                    tableStr+="<td>"+ifPass+"</td>";
-                    tableStr+="<td><a data-toggle='modal' data-target='#user_report' href='${ctxPath}/census/user_report?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看详情</a> </td>";
-                    tableStr+="<td><a href='${ctxPath}/census/census_info?sid="+item.id+"&trainId=${trainId}&studentId="+item.user_id+"'>查看统计</a> </td>";
-                    tableStr+="<td><a href='${ctxPath}/census/print?sid="+item.id+"}&trainId=${trainId}&studentId="+item.user_id+"' target='_blank'><i class='fa fa-print'></i></a></td>";
-                    tableStr+="</tr>";
-                });
-                $("#students").html(tableStr);
-            }
-        });
-    }
 </script>
 </html>

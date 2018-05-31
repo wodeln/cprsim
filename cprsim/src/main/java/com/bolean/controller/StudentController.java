@@ -2,8 +2,10 @@ package com.bolean.controller;
 
 import bolean.RSTFul.RSTFulBody;
 import com.bolean.entity.Exam;
+import com.bolean.entity.Score;
 import com.bolean.entity.Student;
 import com.bolean.service.ExamService;
+import com.bolean.service.ScoreService;
 import com.bolean.service.StudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -28,6 +30,9 @@ public class StudentController extends BaseController {
     @Autowired
     private ExamService examService;
 
+    @Autowired
+    private ScoreService scoreService;
+
     @RequestMapping("/index.html")
     public String getAll(Model model){
         List<Exam> exams = examService.selectAll();
@@ -50,6 +55,11 @@ public class StudentController extends BaseController {
         //分页查询
         PageHelper.startPage(pageNum, pageSize);
         List<Student> students = studentService.selectByInfo(map);
+        for (Student student : students) {
+            Exam exam = examService.selectByPrimaryKey(student.getExamId());
+            student.setTrainCount(scoreService.selectTrainCountByUserid(student.getUserId()+""));
+            student.setExamName(exam.getExamName());
+        }
         PageInfo<Student> pageInfo= new PageInfo<>(students);
         String pageStr = makePageHtml(pageInfo);
         model.addAttribute("page_info",pageInfo);

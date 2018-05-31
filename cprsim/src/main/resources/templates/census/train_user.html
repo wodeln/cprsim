@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+@layout("/layout/_list_layout.html"){
+    <body class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="ibox float-e-margins">
+                <div class="">
+                <form id="search-form">
+                    <div class="ibox-content">
+
+                        <div class="ibox float-e-margins">
+                            <div class="col-sm-12" id="pass_pie" style="height: 400px;"></div>
+                        </div>
+
+                        <div class="ibox float-e-margins">
+                            <div class="col-sm-12" id="pass_bar" style="height: 400px;"></div>
+                        </div>
+
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+@}
+
+</body>
+
+<script src="/js/plugins/echarts/echarts.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        creat_pass_bar();
+    });
+
+    function creatPassBar(data) {
+        var passBar = document.getElementById("pass_bar");
+        var passChart = echarts.init(passBar);
+        passChart.setOption({
+            title : {
+                text: '各次练习达标统计',
+                x:'left',
+                y:'top'
+            },
+            color: [ '#4cabce','#e5323e',],
+            legend: {},
+            tooltip: {},
+            dataset: {
+                source: data
+            },
+            xAxis: {
+                type: 'category',
+                max: 5
+            },
+            yAxis: {},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+
+            series: [
+                {
+                    type:'bar',
+                    barWidth:30
+
+                },
+                {
+                    type:'bar',
+                    barWidth:30
+                }
+            ]
+        });
+    }
+
+    function creatPassPie(names,data) {
+        var passPie = document.getElementById("pass_pie");
+        var passChart = echarts.init(passPie);
+        var app = {};
+        passChart.setOption({
+            title : {
+                text: '考试达标率',
+                x:'left',
+                y:'top'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                left: 'center',
+                data: names
+            },
+            series : [
+                {
+                    type: 'pie',
+                    name: '达标率',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:data,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+    function creat_pass_bar(){
+        var train_id = $("#train_id").val();
+        $.ajax({
+            type : "POST",
+            url:"${ctxPath}/census/train_user?userId=${userId}",//+tab,
+            dataType : "JSON",
+            success: function(data){
+                console.log(data);
+                if(data){
+                    creatPassBar(data.bar);
+                    creatPassPie(data.pie.names,data.pie.items);
+                }
+            }
+        });
+    }
+
+</script>
+</html>
