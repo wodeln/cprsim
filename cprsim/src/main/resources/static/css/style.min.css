@@ -3265,7 +3265,7 @@ body.mini-navbar.canvas-menu .footer.fixed
 {
     overflow: hidden;
 
-    height: calc(100% - 140px);
+    height: calc(100% - 80px);
 }.fixed-nav #content-main
 {
     overflow: hidden;
@@ -4161,12 +4161,10 @@ body.mini-navbar.canvas-menu .footer.fixed
 {
     font-size: 180px;
     font-weight: 800;
-
     margin-bottom: 0;
-
     letter-spacing: -10px;
-
     color: #e6e6e6;
+    text-align: left;
 }.middle-box h1
 {
     font-size: 170px;
