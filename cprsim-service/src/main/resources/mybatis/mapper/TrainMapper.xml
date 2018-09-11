@@ -73,7 +73,13 @@
     SELECT
       user_id,user_true_name
     FROM cpr_student
-    WHERE user_id NOT IN (
+    WHERE
+    exam_id=(
+        SELECT exam_id FROM cpr_train
+        WHERE train_id = #{_parameter,jdbcType=VARCHAR}
+    )
+    AND
+    user_id NOT IN (
       SELECT
         student_id
       FROM cpr_train_student

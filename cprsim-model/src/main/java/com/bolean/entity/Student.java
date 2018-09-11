@@ -54,9 +54,10 @@ public class Student implements Serializable {
      */
     private Long examId;
 
-
+    @Transient
     private String examName;
 
+    @Transient
     private int trainCount;
 
     /**

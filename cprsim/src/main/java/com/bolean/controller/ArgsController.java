@@ -48,8 +48,8 @@ public class ArgsController extends BaseController {
 
     @ResponseBody
     @RequestMapping("/add_type")
-    public RSTFulBody addType(Args args){
-        int res = argsService.insertSelective(args);
+    public RSTFulBody addType(ArgsType argsType){
+        int res = argsTypeService.insertSelective(argsType);
         RSTFulBody rstFulBody = new RSTFulBody();
         if (res > 0) {
             rstFulBody.success("添加成功！");

@@ -61,6 +61,9 @@ public class Exam implements Serializable {
     @Transient
     private List<Train> trains;
 
+    @Transient
+    private Integer studentCount;
+
     private static final long serialVersionUID = 1L;
 
     public List<Train> getTrains() {
@@ -141,6 +144,14 @@ public class Exam implements Serializable {
 
     public void setExamStatus(Boolean examStatus) {
         this.examStatus = examStatus;
+    }
+
+    public Integer getStudentCount() {
+        return studentCount;
+    }
+
+    public void setStudentCount(Integer studentCount) {
+        this.studentCount = studentCount;
     }
 
     @Override

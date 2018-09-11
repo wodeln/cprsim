@@ -48,7 +48,7 @@ public class ApiController extends BaseController {
 
     /**
      * 客观操作统计数据提交
-     * @param score springBoot @RequestBody 自动将json字符串转换/注入Score对象
+     * @param score springBoot @RequestBody json字符串转换/注入Score对象
      * @return
      */
     @ResponseBody
@@ -60,6 +60,9 @@ public class ApiController extends BaseController {
        /* JSONObject jsonObject = JSONObject.fromObject(jsonStr);
         Score score = (Score)JSONObject.toBean(jsonObject, Score.class);*/
 
+       System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+       System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+       System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         int res = 0;
         if(score.getUserIds().length()>1){
             String[] userIdArr = score.getUserIds().split(",");
@@ -168,6 +171,13 @@ public class ApiController extends BaseController {
         TrainSetting trainSettings = trainSettingService.selectByTrainId(project_id);
         trainSettings.setArgsVersion(argsVersion);
         return trainSettings;
+    }
+
+    @ResponseBody
+    @RequestMapping("args_version")
+    public String getArgsVersion(){
+        String argsVersion = argsService.selectArgsVersion();
+        return argsVersion;
     }
 
     /**

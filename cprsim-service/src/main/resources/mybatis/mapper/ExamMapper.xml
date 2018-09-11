@@ -10,6 +10,7 @@
     <result column="exam_place" jdbcType="VARCHAR" property="examPlace" />
     <result column="exam_kind" jdbcType="VARCHAR" property="examKind" />
     <result column="exam_status" jdbcType="BIT" property="examStatus" />
+    <result column="student_count" jdbcType="BIT" property="studentCount" />
   </resultMap>
 
   <sql id="Base_Column_List">
@@ -37,14 +38,17 @@
       <if test="examStatus != null and examStatus !=''">
         AND exam_status = #{examStatus,jdbcType=BIT}
       </if>
-
+      <if test="examKind != null and examKind !=''">
+        AND exam_kind = #{examKind,jdbcType=BIT}
+      </if>
     </where>
   </sql>
 
   <select id="selectByInfo" resultMap="BaseResultMap" parameterType="java.lang.Object">
     select
-    <include refid="Base_Column_List"/>
-    from cpr_exam
+    <include refid="Base_Column_List"/>,
+    (SELECT COUNT(1) FROM cpr_student WHERE exam_id = e.exam_id) student_count
+    from cpr_exam as e
     <include refid="where"/>
   </select>
 

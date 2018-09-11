@@ -19,6 +19,27 @@ public class TrainStudent implements Serializable {
     @Transient
     private String studentName;
 
+    @Transient
+    private Integer studentSex;
+
+    @Transient
+    private String studentDegree;
+
+    @Transient
+    private String studentCardNo;
+
+    @Transient
+    private String studentCompany;
+
+    @Transient
+    private String studentHomeAddress;
+
+    @Transient
+    private String studentEmail;
+
+    @Transient
+    private String studentPhone;
+
     public String getStudentName() {
         return studentName;
     }
@@ -49,5 +70,61 @@ public class TrainStudent implements Serializable {
 
     public void setTrain_id(Long train_id) {
         this.train_id = train_id;
+    }
+
+    public Integer getStudentSex() {
+        return studentSex;
+    }
+
+    public void setStudentSex(Integer studentSex) {
+        this.studentSex = studentSex;
+    }
+
+    public String getStudentDegree() {
+        return studentDegree;
+    }
+
+    public void setStudentDegree(String studentDegree) {
+        this.studentDegree = studentDegree;
+    }
+
+    public String getStudentCardNo() {
+        return studentCardNo;
+    }
+
+    public void setStudentCardNo(String studentCardNo) {
+        this.studentCardNo = studentCardNo;
+    }
+
+    public String getStudentCompany() {
+        return studentCompany;
+    }
+
+    public void setStudentCompany(String studentCompany) {
+        this.studentCompany = studentCompany;
+    }
+
+    public String getStudentHomeAddress() {
+        return studentHomeAddress;
+    }
+
+    public void setStudentHomeAddress(String studentHomeAddress) {
+        this.studentHomeAddress = studentHomeAddress;
+    }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
+
+    public String getStudentPhone() {
+        return studentPhone;
+    }
+
+    public void setStudentPhone(String studentPhone) {
+        this.studentPhone = studentPhone;
     }
 }
